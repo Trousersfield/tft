@@ -1,25 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import './App.css'
+/// import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-function App() {
+const Combs = React.lazy(() => import('./views/Combs'))
+const Items = React.lazy(() => import('./views/Items'))
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul className="bg-black">
+            <li>
+              <Link to="/">Combs</Link>
+            </li>
+            <li>
+              <Link to="/items">Items</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route path="/items">
+              <Items />
+            </Route>
+            <Route path="/">
+              <Combs />
+            </Route>
+          </Switch>
+        </Suspense>
+      </div>
+    </Router>
   );
 }
 
