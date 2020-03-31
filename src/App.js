@@ -16,7 +16,7 @@ const App = () => {
     <Router>
       <div>
         <nav>
-          <ul className="bg-black">
+          <ul className="bg-grey">
             <li>
               <Link to="/">Combs</Link>
             </li>
