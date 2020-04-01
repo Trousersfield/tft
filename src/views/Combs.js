@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import Data from '../static/ComboStatsDiamond.json'
 
 const Comb = React.lazy(() => import('../components/Comb'))
+const BarChart = React.lazy(() => import('../components/BarChart'))
 
 class Combs extends React.Component {
   constructor(props) {
@@ -32,11 +33,14 @@ class Combs extends React.Component {
     return (
       <div>
         <h1>Hi! I am the Combs Component</h1>
+        <Suspense fallback={<div>Loading Chart...</div>}>
+          <BarChart data={data}></BarChart>
+        </Suspense>
         <div className="flex flex-col">
           {data.map((comb) =>
-            <Suspense fallback={<div>Loading Comb...</div>}>
-              <Comb key={comb.id}
-                comb={comb}></Comb>
+            <Suspense key={comb.id}
+              fallback={<div>Loading Comb...</div>}>
+              <Comb comb={comb}></Comb>
             </Suspense>
           )}
         </div>

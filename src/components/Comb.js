@@ -8,7 +8,9 @@ class Comb extends React.Component {
 
   render () {
     return (
-      <div>Hey! I am a single comb: {this.state.comb}</div>
+      <div>
+        <div>Comb: {this.props.comb.name}</div>
+      </div>
     )
   }
 }
