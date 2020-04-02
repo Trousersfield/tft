@@ -1,6 +1,7 @@
 import React from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { makePercent } from '../util/formatter'
 
 Chart.plugins.unregister(ChartDataLabels)
 
@@ -28,6 +29,14 @@ class BarChart extends React.Component {
       result[1].push(curr.totalAmount - result[0][result[0].length - 1])
       return result
     }, [[], []])
+
+    // prepare percentage labels
+    const percentLabels = slicedData.reduce((result, curr, currIndex) => {
+        result[0].push(makePercent(loss[currIndex] / curr.totalAmount))
+        result[1].push(makePercent(win[currIndex] / curr.totalAmount))
+        return result
+      }, [[], []])
+
     this.myChart = new Chart(this.chartRef.current, {
       type: 'bar',
       plugins: [ChartDataLabels],
@@ -52,7 +61,11 @@ class BarChart extends React.Component {
             align: 'center',
             anchor: 'center',
             formatter: (value, context) => {
-              return context.chart.data.labels[context.dataIndex]
+              if (context.dataIndex === 0) {
+                console.log(context.chart.data.datasets[context.datasetIndex])
+              }
+              // return context.chart.data.datasets[context.datasetIndex].label
+              return percentLabels[context.datasetIndex][context.dataIndex]
             }
           }
         },
