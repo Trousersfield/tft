@@ -1,46 +1,66 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from 'react'
 import './App.css'
-/// import logo from './logo.svg';
+/// import logo from './logo.svg'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
-} from "react-router-dom";
-
-const Combs = React.lazy(() => import('./views/Combs'))
-const Items = React.lazy(() => import('./views/Items'))
+} from "react-router-dom"
+import Routes from './routes'
 
 const App = () => {
+  const routes = Routes.routes
+
   return (
     <Router>
       <div>
         <nav>
-          <ul className="bg-grey">
-            <li>
-              <Link to="/">Combs</Link>
-            </li>
-            <li>
-              <Link to="/items">Items</Link>
-            </li>
-          </ul>
+          <div className="flex justify-start">
+            {routes.map((route) =>
+              <TopMenuItem key={'menu-item-' + route.path}
+                {...route}
+              />
+            )}
+          </div>
         </nav>
 
         {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+          renders the first one that matches the current URL. */}
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
-            <Route path="/items">
-              <Items />
-            </Route>
-            <Route path="/">
-              <Combs />
-            </Route>
+            {routes.map((route) =>
+              <RouteWithSubRoutes
+                key={'route-to-' + route.path}
+                {...route}
+              />
+            )}
           </Switch>
         </Suspense>
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+const RouteWithSubRoutes = (route) => {
+  return (
+    <Route
+      path={route.path}
+      render={props => (
+        <route.component {...props} routes = {route.routes} />
+      )}
+    />
+  )
+}
+
+const TopMenuItem = (item) => {
+  return (
+    <div className="p-2">
+      <Link to={item.path || ''}>
+        {item.name}
+      </Link>
+    </div>
+  )
+}
+
+export default App

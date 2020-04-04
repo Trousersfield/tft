@@ -20,7 +20,6 @@ class BarChart extends React.Component {
     })
     const bestX = this.state.bestX
     const slicedData = bestX < data.length ? data.slice(0, bestX) : data
-    console.log('cut data: ', slicedData)
 
     // construct gained and lost LP datasets
     const [ win, loss ] = slicedData.reduce((result, curr) => {
@@ -61,12 +60,12 @@ class BarChart extends React.Component {
             align: 'center',
             anchor: 'center',
             formatter: (value, context) => {
-              if (context.dataIndex === 0) {
-                console.log(context.chart.data.datasets[context.datasetIndex])
-              }
-              // return context.chart.data.datasets[context.datasetIndex].label
               return percentLabels[context.datasetIndex][context.dataIndex]
             }
+          },
+          events: ['click'],
+          onclick: (event, item) => {
+            console.log('item ', item)
           }
         },
         onClick: this.graphClickEvent,
