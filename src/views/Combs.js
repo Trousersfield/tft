@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import Data from '../static/ComboStatsDiamond.json'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 
-const BarChart = React.lazy(() => import('../components/BarChart'))
+const BarChart = React.lazy(() => import('../components/charts/BarChart'))
 
 class Combs extends React.Component {
   constructor(props) {

@@ -8,8 +8,11 @@ import {
   Link
 } from "react-router-dom"
 import Routes from './routes'
+import { importSetData } from './util/setDataImporter'
 
 const App = () => {
+  // import static set data
+  importSetData()
   const routes = Routes.routes
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import { makePercent } from '../util/formatter'
+import { makePercent } from '../../util/formatter'
 
 Chart.plugins.unregister(ChartDataLabels)
 
