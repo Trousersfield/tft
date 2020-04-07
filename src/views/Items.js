@@ -26,19 +26,19 @@ class Items extends React.Component {
     return (
       <div>
           <h1>Hi! I am the Items Component</h1>
-          <div className="flex">
-            <div className="flex-1 flex flex-col">
+          <div className="flex flex-col">
+            <div>
+              <Suspense fallback={<div>Loading Item Chart...</div>}>
+                <ItemChart data={data}/>
+              </Suspense>
+            </div>
+            <div className="flex flex-col">
               {data.map((item, i) =>
                 <ItemRow key={'item-row-' + i}
                   rowIndex={i}
                   item={item}
                 />
               )}
-            </div>
-            <div className="flex-1">
-              <Suspense fallback={<div>Loading Item Chart...</div>}>
-                <ItemChart data={data}/>
-              </Suspense>
             </div>
           </div>
       </div>
