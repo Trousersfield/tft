@@ -2,22 +2,62 @@ import React from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { makePercent } from '../../util/formatter'
+import { buttonBase } from '../../util/stylings'
 
 Chart.plugins.unregister(ChartDataLabels)
+
+let debounce = null
 
 class ItemChart extends React.Component {
   constructor (props) {
     super (props)
     this.chartRef = React.createRef()
-    this.state = {}
+    this.state = {
+      data: [],
+      includeBasicItems: false,
+      width: 0,
+      height: 0,
+      itemChart: null
+    }
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    await this.setData()
+    this.makeGraph()
+  }
+
+  componentWillUnmount () {
+    document.getElementById('item-chart-container')
+      .removeEventListener('resize', this.resizeCanvas())
+
+    if (debounce) clearTimeout(debounce)
+  }
+
+  async setData () {
+    const rawData = this.props.data
+    if (this.state.includeBasicItems) {
+      this.setState({ data: rawData })
+    } else {
+      this.setState({
+        data: rawData.filter(dataRow => dataRow.itemId > 9)
+      })
+    }
+  }
+
+  toggleItemInclusion = async () => {
+    await this.setState(state => ({
+      includeBasicItems: !state.includeBasicItems
+    }))
+    await this.setData()
+    this.state.itemChart.destroy()
+    this.makeGraph()
+  }
+
+  makeGraph () {
+    const { data } = this.state
     // add resize listener
-    // document.getElementById('item-chart-container')
     window.addEventListener('resize', this.resizeCanvas)
-    this.resizeCanvas()
-    const data = this.props.data
+    this.setChartWidth()
     let min = data[0].count
     let max = data[0].count
 
@@ -34,7 +74,7 @@ class ItemChart extends React.Component {
       return result
     }, [[], []])
 
-    this.itemBar = new Chart(this.chartRef.current, {
+    this.state.itemChart = new Chart(this.chartRef.current, {
       type: 'horizontalBar',
       plugins: [ChartDataLabels],
       data: {
@@ -63,10 +103,11 @@ class ItemChart extends React.Component {
         plugins: {
           datalabels: {
             display: true,
-            align: 'end',
             anchor: 'end',
+            align: 'left',
+            color: 'grey',
             formatter: (value, context) => {
-              return makePercent(value)
+              return makePercent(value, 4)
             }
           }
         }
@@ -74,30 +115,46 @@ class ItemChart extends React.Component {
     })
   }
 
-  componentWillUnmount () {
-    document.getElementById('item-chart-container')
-      .removeEventListener('resize', this.resizeCanvas())
-  }
-
   render () {
+    const { includeBasicItems } = this.state
+
     return (
-      <div className="w-full mx-4" id="item-chart-container">
-        <canvas
-          ref={this.chartRef}
-          height={2000}
-        />
+      <div className="flex flex-col">
+        <div className="flex justify-start">
+          <button
+            className={buttonBase}
+            onClick={this.toggleItemInclusion}
+          >
+            {(includeBasicItems ? 'Exclude' : 'Include') + ' Basic Items'}
+          </button>
+        </div>
+        <div
+          id="item-chart-container"
+          className="relative w-full mx-4"
+        >
+          <canvas
+            ref={this.chartRef}
+            height={2000}
+          />
+        </div>
       </div>
     )
   }
 
   resizeCanvas = () => {
-    console.log('resizing!')
+    if (debounce) clearTimeout(debounce)
+
+    debounce = setTimeout(() => {
+      this.setChartWidth()
+      this.state.itemChart.resize()
+    }, 500)
+  }
+
+  setChartWidth = () => {
     const chartContainer = document.getElementById('item-chart-container')
       .getBoundingClientRect()
 
-    console.log('chart ref: ', this.chartRef)
     this.chartRef.current.width = chartContainer.width
-    console.log('container: ', chartContainer)
   }
 }
 

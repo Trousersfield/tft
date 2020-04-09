@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  NavLink
 } from "react-router-dom"
 import Routes from './routes'
 import { importSetData } from './util/setDataImporter'
@@ -18,8 +18,11 @@ const App = () => {
   return (
     <Router>
       <div>
-        <nav>
-          <div className="flex justify-start">
+        <nav className="pb-2 bg-indigo-100">
+          <div className="flex justify-start text-xl">
+            <div className="mx-2 my-auto">
+              <p className="uppercase">Team Fight Stats</p>
+            </div>
             {routes.map((route) =>
               <TopMenuItem key={'menu-item-' + route.path}
                 {...route}
@@ -58,11 +61,14 @@ const RouteWithSubRoutes = (route) => {
 
 const TopMenuItem = (item) => {
   return (
-    <div className="p-2">
-      <Link to={item.path || ''}>
-        {item.name}
-      </Link>
-    </div>
+    <NavLink
+      to={item.path || ''}
+      exact
+      activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
+      className="p-2 mx-1"
+    >
+      {item.name}
+    </NavLink>
   )
 }
 

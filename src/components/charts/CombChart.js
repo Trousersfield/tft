@@ -2,6 +2,7 @@ import React from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { makePercent } from '../../util/formatter'
+import { cache as imageCache, importImages } from '../../util/imageImporter'
 
 Chart.plugins.unregister(ChartDataLabels)
 
@@ -10,12 +11,24 @@ class BarChart extends React.Component {
     super (props)
     this.chartRef = React.createRef()
     this.state = {
+      data: {},
       bestX: 10
     }
+
+    if (!imageCache['ranked-emblems']) importImages('ranked-emblems')
   }
 
-  componentDidMount () {
-    const data = this.props.data.sort((a, b) => {
+  async componentDidMount () {
+    await this.setData()
+    this.makeGraph()
+  }
+
+  async setData () {
+    this.setState({ data: { name: 'diamond', data: this.props.data } })
+  }
+
+  makeGraph () {
+    const data = this.state.data['data'].sort((a, b) => {
       return a.totalAmount >= b.totalAmount ? -1 : 1
     })
     const bestX = this.state.bestX
@@ -105,10 +118,31 @@ class BarChart extends React.Component {
   }
 
   render () {
+    const leagueName = 'diamond'
     return (
-      <canvas ref={this.chartRef} />
+      <div className="flex flex-col">
+        <LeagueHeader leagueName={leagueName} />
+        <canvas ref={this.chartRef} />
+      </div>
     )
   }
+}
+
+const LeagueHeader = (props) => {
+  const importName = props.leagueName.charAt(0).toUpperCase() + props.leagueName.slice(1)
+  return (
+    <div className="flex justify-between p-5">
+      <div className="flex flex-no-wrap">
+        <div>Frequently played Combs in {props.leagueName}</div>
+      </div>
+      <div className="w-8 h-8">
+        <img
+          src={imageCache['ranked-emblems'][`./Emblem_${importName}.png`]}
+          alt="country_flag"
+        />
+      </div>
+    </div>
+  )
 }
 
 export default BarChart

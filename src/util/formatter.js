@@ -1,5 +1,7 @@
 const makePercent = (number, decimals = 2) => {
-  return Math.floor(number.toFixed(decimals) * 100).toString() + '%'
+  const pow = Math.pow(10, decimals)
+  return (Math.floor(number.toFixed(decimals) * pow)) /
+    Math.pow(10, decimals-2).toString() + '%'
 }
 
 export {

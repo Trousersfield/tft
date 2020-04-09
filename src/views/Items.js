@@ -3,18 +3,22 @@ import { cache as imageCache, importImages } from '../util/imageImporter'
 import { cache as setData } from '../util/setDataImporter'
 import { basicItems, combinedItems } from '../util/itemFactory'
 
-import data from '../static/itemPopularityDiamond.json'
+import rawData from '../static/itemPopularityDiamond.json'
 
 const ItemChart = React.lazy(() => import('../components/charts/ItemChart'))
 
 class Items extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      data: []
+    }
 
     if (!imageCache['items']) importImages('items')
   }
 
   render () {
+    const { data, includeBasicItems } = this.state
     const items = setData['items']
 
     const bi = basicItems({id: 34})
@@ -24,16 +28,16 @@ class Items extends React.Component {
     console.log(ci)
 
     return (
-      <div>
-          <h1>Hi! I am the Items Component</h1>
+      <div className="flex flex-col">
+          <div className="text-lg">
+            Items in all compositions aggregated by median
+          </div>
           <div className="flex flex-col">
-            <div>
-              <Suspense fallback={<div>Loading Item Chart...</div>}>
-                <ItemChart data={data}/>
-              </Suspense>
-            </div>
+            <Suspense fallback={<div>Loading Item Chart...</div>}>
+              <ItemChart data={rawData}/>
+            </Suspense>
             <div className="flex flex-col">
-              {data.map((item, i) =>
+              {rawData.map((item, i) =>
                 <ItemRow key={'item-row-' + i}
                   rowIndex={i}
                   item={item}
