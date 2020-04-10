@@ -1,15 +1,14 @@
 import React, { Suspense } from 'react'
-import Data from '../static/ComboStatsDiamond.json'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 
+// components
 const CombChart = React.lazy(() => import('../components/charts/CombChart'))
 
 class Combs extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
-      data: []
+      loading: false
     }
 
     if (!imageCache['ranked-emblems']) importImages('ranked-emblems')
@@ -19,14 +18,11 @@ class Combs extends React.Component {
     this.setState({ loading: true })
     /* const { data } = await axios.get(
       "http://localhost:3000/comboStats/diamond") */
-    this.setState({ data: Data, loading: false })
+    this.setState({ loading: false })
   }
 
   render () {
-    const { data, loading } = this.state
-    const betaData = [
-      { name: 'diamond', data: data }
-    ]
+    const { loading } = this.state
 
     if (loading) {
       return (
@@ -37,10 +33,7 @@ class Combs extends React.Component {
     return (
       <div>
         <Suspense fallback={<div>Loading Comb...</div>}>
-          <CombChart
-            key={'comb-chart-' + data.name}
-            data={data}
-          />
+          <CombChart />
         </Suspense>
       </div>
     )

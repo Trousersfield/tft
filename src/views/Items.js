@@ -29,22 +29,17 @@ class Items extends React.Component {
 
     return (
       <div className="flex flex-col">
-          <div className="text-lg">
-            Items in all compositions aggregated by median
-          </div>
-          <div className="flex flex-col">
-            <Suspense fallback={<div>Loading Item Chart...</div>}>
-              <ItemChart data={rawData}/>
-            </Suspense>
-            <div className="flex flex-col">
-              {rawData.map((item, i) =>
-                <ItemRow key={'item-row-' + i}
-                  rowIndex={i}
-                  item={item}
-                />
-              )}
-            </div>
-          </div>
+        <Suspense fallback={<div>Loading Item Chart...</div>}>
+          <ItemChart data={rawData}/>
+        </Suspense>
+        <div className="flex flex-col">
+          {rawData.map((item, i) =>
+            <ItemRow key={'item-row-' + i}
+              rowIndex={i}
+              item={item}
+            />
+          )}
+        </div>
       </div>
     )
   }
