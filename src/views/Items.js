@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
-import { cache as setData } from '../util/setDataImporter'
-import { basicItems, combinedItems } from '../util/itemFactory'
+// import { cache as setData } from '../util/setDataImporter'
+// import { basicItems, combinedItems } from '../util/itemFactory'
 
 import rawData from '../static/itemPopularityDiamond.json'
 
@@ -18,14 +18,14 @@ class Items extends React.Component {
   }
 
   render () {
-    const { data, includeBasicItems } = this.state
-    const items = setData['items']
+    // const { data, includeBasicItems } = this.state
+    // const items = setData['items']
 
-    const bi = basicItems({id: 34})
-    console.log(bi)
+    // const bi = basicItems({id: 34})
+    // console.log(bi)
 
-    const ci = combinedItems({id: 1 })
-    console.log(ci)
+    // const ci = combinedItems({id: 1 })
+    // console.log(ci)
 
     return (
       <div className="flex flex-col">
@@ -51,6 +51,7 @@ const ItemRow = (props) => {
     <div className="flex justify-start">
       <img
         src={imageCache['items'][`./${itemId < 10 ? '0' : ''}${itemId}.png`]}
+        alt={itemName}
       />
       <div>
         id: {itemId}

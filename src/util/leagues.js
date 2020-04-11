@@ -22,4 +22,16 @@ export default [{
   name: 'Diamond',
   key: 'diamond',
   image: './Emblem_Diamond.png'
+}, {
+  name: 'Master',
+  key: 'master',
+  image: './Emblem_Master.png'
+}, {
+  name: 'Grandmaster',
+  key: 'grandmaster',
+  image: './Emblem_Grandmaster.png'
+}, {
+  name: 'Challenger',
+  key: 'challenger',
+  image: './Emblem_Challenger.png'
 }]

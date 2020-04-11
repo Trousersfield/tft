@@ -54,7 +54,7 @@ class CombChart extends React.Component {
     })
   }
 
-  setSelected = async (value) => {
+  setSelected = (value) => {
     this.setState({ selectedLeague: value })
   }
 
@@ -129,7 +129,7 @@ class CombChart extends React.Component {
             scaleStartValue: 0,
             scaleLabel: {
               display: true,
-              labelString: 'Popularity',
+              labelString: 'Comb Count',
             },
             stacked: true,
             ticks: {
@@ -196,13 +196,14 @@ class CombChart extends React.Component {
           <div className="w-12 h-12">
             <img
               src={imageCache['ranked-emblems'][imageName]}
-              alt="country_flag"
+              alt={imageName}
             />
           </div>
         </div>
         <canvas ref={this.chartRef} />
         {selectedComb &&
           <DetailCombChart
+            key={'detail-comb-' + selectedComb.id}
             data={selectedComb}
           />}
       </div>

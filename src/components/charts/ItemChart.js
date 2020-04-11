@@ -3,6 +3,7 @@ import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { buttonBase } from '../../util/styles'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
+import InfoTag from '../InfoTag'
 
 import DATA from '../../static/itemPopularityDiamond.json'
 
@@ -145,12 +146,10 @@ class ItemChart extends React.Component {
               {(includeBasicItems ? 'Exclude' : 'Include') + ' Basic Items'}
             </button>
           </div>
-          <div className="flex flex-no-wrap items-center border-2 border-indigo-500 rounded">
-            <p className="px-3">Average</p>
-            <p className="px-3 py-3 tracking-wider bg-indigo-500 font-bold text-white">
-              {Math.floor(currentAverage)}
-            </p>
-          </div>
+          <InfoTag
+            title={'Average'}
+            value={Math.floor(currentAverage)}
+          />
         </div>
         <div className="flex flex-no-wrap">
           <div className="flex-none flex flex-col bg-yellow-500">
@@ -161,6 +160,7 @@ class ItemChart extends React.Component {
                   '0' : ''}${item.itemId}.png`]}
                 style={{width: `${itemImageSize}px`,
                   height: `${itemImageSize}px`}}
+                alt={item.name}
               />
             ))}
           </div>

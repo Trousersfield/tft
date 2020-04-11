@@ -27,6 +27,11 @@ const importAll = (directory, r) => {
   r.keys().forEach(key => cache[directory][key] = r(key))
 }
 
+const getImageName = (value) => {
+  const regex = /[|&;$%@"<>()+,\s]|(TFT_)/
+  return `./${value.replace(regex, '').toLowerCase()}.png`
+}
+
 /**
  * unfortunately require.context function parameters must be literals
  * the path must be statically analyzable
@@ -62,5 +67,6 @@ const importTraits = (directory) => {
 
 export {
   cache,
-  importImages
+  importImages,
+  getImageName
 }
