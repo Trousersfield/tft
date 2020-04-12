@@ -47,6 +47,7 @@ class CombChart extends React.Component {
       const rawData = DATA
       const selectedLeague = this.state.selectedLeague
       this.setState(state => {
+        // set data itself
         const data = Object.assign({}, state.data)
         data[selectedLeague] = rawData
         return { data }
@@ -200,7 +201,9 @@ class CombChart extends React.Component {
             />
           </div>
         </div>
-        <canvas ref={this.chartRef} />
+        <div className="relative w-full">
+          <canvas ref={this.chartRef} />
+        </div>
         {selectedComb &&
           <DetailCombChart
             key={'detail-comb-' + selectedComb.id}

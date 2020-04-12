@@ -22,16 +22,9 @@ class Combs extends React.Component {
   }
 
   render () {
-    const { loading } = this.state
-
-    if (loading) {
-      return (
-        <p>Loading Data...</p>
-      )
-    }
-
     return (
-      <div>
+      <div className="w-full border border-black">
+        <div>asdf</div>
         <Suspense fallback={<div>Loading Comb...</div>}>
           <CombChart />
         </Suspense>

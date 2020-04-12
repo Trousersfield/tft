@@ -1,6 +1,16 @@
-const tailwindConfig = () => {
-  const r = require.context('../..', false, /tailwind.config.js$/)
-  return r(r.keys()[0])
+// do not access directly, use getTailwindCache()
+let tailwindCache = null
+
+const getTailwindConfig = async () => {
+  if (!tailwindCache) await loadTailwindConfig()
+  return tailwindCache
+}
+
+const loadTailwindConfig = async () => {
+  new Promise(resolve => {
+    const r = require.context('../..', false, /tailwind.config.js$/)
+    tailwindCache = r(r.keys()[0]).then(() => resolve())
+  })
 }
 
 const buttonBase = 'bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded'
@@ -14,7 +24,7 @@ const dropdownStyle = {
 }
 
 const placementColors = () => {
-  const colors = tailwindConfig().theme.colors
+  const colors = getTailwindConfig().theme.colors
   return [colors.green[600],
     colors.green[500],
     colors.green[400],
@@ -25,8 +35,15 @@ const placementColors = () => {
     colors.red[600]]
 }
 
+const costColor = (cost) => {
+  const costColors = { 1: 'gray', 2: 'green', 3: 'blue', 4: 'purple',
+    5: 'orange', 7: 'red' }
+  return costColors[cost]
+}
+
 export {
   buttonBase,
   dropdownStyle,
-  placementColors
+  placementColors,
+  costColor
 }

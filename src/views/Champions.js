@@ -54,10 +54,9 @@ class Champions extends React.Component {
   }
 
   render () {
-    const {selectedLeague, dropdownOptions, championsByCost } = this.state
+    const {selectedLeague, dropdownOptions, championsByCost, data } = this.state
     const imageName = leagues.find(league =>
       selectedLeague === league.key).image
-
 
     console.log('selected league: ', selectedLeague)
     console.log('dropdown options: ', dropdownOptions)
@@ -82,7 +81,8 @@ class Champions extends React.Component {
         {championsByCost.map((champions, index) =>
           <ChampionCategory
             key={'champion-' + index}
-            data={champions}
+            champions={champions}
+            data={data[selectedLeague]}
           />
         )}
       </div>

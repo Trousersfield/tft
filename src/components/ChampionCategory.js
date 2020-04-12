@@ -1,61 +1,44 @@
 import React from 'react'
-import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
+import { cache as imageCache, importImages } from '../util/imageImporter'
+
+const Champion = React.lazy(() => import('./Champion.js'))
 
 class ChampionCategory extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
+      champions: this.props.champions,
       data: this.props.data
     }
 
     if (!imageCache['champions']) importImages('champions')
   }
 
+  championData (id) {
+    return this.state.data.find(entry => entry.championId === id)
+  }
+
   render () {
-    const data = this.state.data
+    const { champions } = this.state
+    const cost = champions[0].cost
 
     return (
       <div className="flex flex-col">
         <div className="flex flex-no-wrap">
           <div className="p-2">ICON</div>
-          <div className="p-2">costs</div>
+          <div className="p-2">{cost} Gold</div>
           <div className="p-2">line</div>
         </div>
-        {data.map(champion =>
+        {champions.map((champion, index) =>
           <Champion
             key={'champion-entry-' + champion.championId}
-            data={champion}
+            champion={champion}
+            data={this.championData(champion.championId)}
           />
         )}
       </div>
     )
   }
-}
-
-const Champion = (props) => {
-  const { name, championId, cost, traits } = props.data
-  const imageName = getImageName(name)
-  console.log('image name: ', imageName)
-
-  return (
-    <div className="flex flex-no-wrap">
-      <div className="p-2">
-        <img
-          src={imageCache['champions'][imageName]}
-          alt={name}
-        />
-      </div>
-      <div className="p-2">name: {name}</div>
-      <div className="p-2">cost: {cost}</div>
-      <div className="p-2">
-        traits: {traits.map((trait, index) =>
-        <div key={'trait-' + index + '-' + championId}>
-          {trait}
-        </div>
-      )}
-      </div>
-    </div>
-  )
 }
 
 export default ChampionCategory

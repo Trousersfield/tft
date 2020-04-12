@@ -28,7 +28,7 @@ const importAll = (directory, r) => {
 }
 
 const getImageName = (value) => {
-  const regex = /[|&;$%@"<>()+,\s]|(TFT_)/
+  const regex = /[|&;$%@"'-<>()+,\s]|(TFT_)/
   return `./${value.replace(regex, '').toLowerCase()}.png`
 }
 
