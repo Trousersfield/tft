@@ -21,9 +21,10 @@ class DetailCombChart extends React.Component {
     }
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     const data = this.state.data
     let placement = 0
+    const colors = await placementColors()
 
     const [ datasets, rawData ] = Object.keys(data)
       .reduce((result, key) => {
@@ -31,7 +32,7 @@ class DetailCombChart extends React.Component {
         result[0].push({
           data: [data[key]],
           // barThickness: '50',
-          backgroundColor: placementColors()[placement],
+          backgroundColor: colors[placement],
           borderColor: 'rgb(194, 72, 38)'
         })
         result[1].push(data[key])

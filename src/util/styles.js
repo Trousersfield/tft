@@ -1,5 +1,6 @@
 // do not access directly, use getTailwindCache()
 let tailwindCache = null
+let loading = false
 
 const getTailwindConfig = async () => {
   if (!tailwindCache) await loadTailwindConfig()
@@ -7,9 +8,13 @@ const getTailwindConfig = async () => {
 }
 
 const loadTailwindConfig = async () => {
+  if (loading) return
   new Promise(resolve => {
+    loading = true
     const r = require.context('../..', false, /tailwind.config.js$/)
-    tailwindCache = r(r.keys()[0]).then(() => resolve())
+    tailwindCache = r(r.keys()[0])
+    loading = false
+    resolve()
   })
 }
 
@@ -23,8 +28,9 @@ const dropdownStyle = {
   option: 'flex flex-no-wrap cursor-pointer hover:bg-indigo-400'
 }
 
-const placementColors = () => {
-  const colors = getTailwindConfig().theme.colors
+const placementColors = async () => {
+  const cache = await getTailwindConfig()
+  const colors = cache.theme.colors
   return [colors.green[600],
     colors.green[500],
     colors.green[400],

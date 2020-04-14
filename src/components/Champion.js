@@ -1,6 +1,7 @@
 import React from 'react'
 import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
 import { costColor } from '../util/styles'
+import { GoStar } from 'react-icons/go'
 
 const Traits = React.lazy(() => import('./Traits'))
 
@@ -52,10 +53,22 @@ class Champion extends React.Component {
               data={traits}
             />
           </div>
-          <div className="flex-1">
-            {tier1Count}
-            {tier2Count}
-            {tier3Count}
+          <div className="w-1/3 flex flex-no-wrap items-center border-2 border-indigo-500 rounded">
+            <p className="px-3">Tier Count</p>
+            <div className="flex-1 flex justify-between p-3 tracking-wider bg-indigo-500 font-bold text-white">
+              <StarsCount
+                tierCount={1}
+                quantity={tier1Count}
+              />
+              <StarsCount
+                tierCount={2}
+                quantity={tier2Count}
+              />
+              <StarsCount
+                tierCount={3}
+                quantity={tier3Count}
+              />
+            </div>
           </div>
         </div>
         {showDetails &&
@@ -65,6 +78,21 @@ class Champion extends React.Component {
       </div>
     )
   }
+}
+
+const StarsCount = (props) => {
+  const stars = Array(props.tierCount).fill(0)
+  const quantity = props.quantity
+  return (
+    <div className="flex flex-no-wrap">
+      <div className="inline-flex justify-center mr-1">
+        {stars.map((x, index) =>
+          <GoStar key={'star-' + index} className="m-auto"/>
+        )}
+      </div>
+      <p className="text-center">{quantity}</p>
+    </div>
+  )
 }
 
 export default Champion
