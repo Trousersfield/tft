@@ -53,9 +53,11 @@ class Champion extends React.Component {
               data={traits}
             />
           </div>
-          <div className="w-1/3 flex flex-no-wrap items-center border-2 border-indigo-500 rounded">
-            <p className="px-3">Tier Count</p>
-            <div className="flex-1 flex justify-between p-3 tracking-wider bg-indigo-500 font-bold text-white">
+          <div className={`w-1/3 flex flex-no-wrap items-center border-2
+            border-${color}-500 rounded-full`}>
+            <p className="px-3">Star Count</p>
+            <div className={`flex-1 flex justify-between p-3 tracking-wider
+              bg-${color}-500 font-bold text-white rounded-r-full`}>
               <StarsCount
                 tierCount={1}
                 quantity={tier1Count}

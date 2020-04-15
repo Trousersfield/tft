@@ -9,11 +9,17 @@ const importImages = (directory) => {
     case 'champions':
       importChampions(directory)
       break
-      case 'items':
-        importItems(directory)
-        break
+    case 'items':
+      importItems(directory)
+      break
+    case 'other':
+      importOther(directory)
+      break
     case 'ranked-emblems':
       importRankedEmblems(directory)
+      break
+    case 'tiers':
+      importTiers(directory)
       break
     case 'traits':
       importTraits(directory)
@@ -28,7 +34,8 @@ const importAll = (directory, r) => {
 }
 
 const getImageName = (value) => {
-  const regex = /[|&;$%@"'-<>()+,\s]|(TFT_)/
+  // eslint-disable-next-line
+  const regex = /[|&;$%@"'<>()+,\s\-]|(TFT_)/
   return `./${value.replace(regex, '').toLowerCase()}.png`
 }
 
@@ -51,10 +58,24 @@ const importItems = (directory) => {
   )
 }
 
+const importOther = (directory) => {
+  importAll(
+    directory,
+    require.context('../../public/riot/other', true, /\.png$/)
+  )
+}
+
 const importRankedEmblems = (directory) => {
   importAll(
     directory,
     require.context('../../public/riot/ranked-emblems', true, /\.png$/)
+  )
+}
+
+const importTiers = (directory) => {
+  importAll(
+    directory,
+    require.context('../../public/riot/tiers', true, /\.png$/)
   )
 }
 
