@@ -32,7 +32,7 @@ class Champions extends React.Component {
   }
 
   componentDidMount () {
-    console.log('champions: ', this.state.championsByCost)
+    // console.log('champions: ', this.state.championsByCost)
     this.setData()
   }
 
@@ -58,8 +58,8 @@ class Champions extends React.Component {
     const imageName = leagues.find(league =>
       selectedLeague === league.key).image
 
-    console.log('selected league: ', selectedLeague)
-    console.log('dropdown options: ', dropdownOptions)
+    // console.log('selected league: ', selectedLeague)
+    // console.log('dropdown options: ', dropdownOptions)
     return (
       <div className="flex flex-col">
         <div className="flex justify-between p-5">

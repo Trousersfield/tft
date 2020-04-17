@@ -41,7 +41,7 @@ const getImageName = (value) => {
 
 /**
  * unfortunately require.context function parameters must be literals
- * the path must be statically analyzable
+ * the path must be statically analyzable --> put each path into a function
  */
 
 const importChampions = (directory) => {
