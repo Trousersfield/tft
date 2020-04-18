@@ -2,6 +2,7 @@ import React from 'react'
 import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
 import { costColor } from '../util/styles'
 import { GoStar } from 'react-icons/go'
+import { useRouteMatch, NavLink } from 'react-router-dom'
 
 const Traits = React.lazy(() => import('./Traits'))
 
@@ -9,7 +10,8 @@ class Champion extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      showDetails: false
+      showDetails: false,
+      data: this.props.data
     }
 
     if (!imageCache['champions']) importImages('champions')
@@ -76,6 +78,14 @@ class Champion extends React.Component {
         {showDetails &&
           <div>
             Hi! I will contain details!
+            <NavLink
+              to={`/champions/profile/${name}`}
+              exact
+              activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
+              className="p-2 mx-1"
+            >
+              Link to aurelion
+            </NavLink>
           </div>}
       </div>
     )

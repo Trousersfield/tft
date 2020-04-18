@@ -36,6 +36,7 @@ class CombChart extends React.Component {
   }
 
   async componentDidMount () {
+    console.log('chart component did mount')
     await this.setData()
     this.makeGraph()
   }

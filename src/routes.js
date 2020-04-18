@@ -2,7 +2,8 @@ import React from 'react'
 
 const Combs = React.lazy(() => import('./views/Combs'))
 const Items = React.lazy(() => import('./views/Items'))
-const Champions = React.lazy(() => import('./views/Champions'))
+const ChampionsByTier = React.lazy(() => import('./views/ChampionsByTier'))
+const ChampionProfile = React.lazy(() => import('./views/ChampionProfile'))
 const PatchNotes = React.lazy(() => import('./views/Patchnotes'))
 
 export default {
@@ -21,7 +22,13 @@ export default {
     }, {
       path: '/champions',
       name: 'Champions',
-      component: Champions,
+      component: ChampionsByTier,
+      exact: true,
+    }, {
+      path: '/champions/profile/:championName',
+      category: '/champions',
+      name: 'Profile',
+      component: ChampionProfile,
       exact: true
     }, {
       path: '/patch-notes',

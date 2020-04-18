@@ -14,6 +14,14 @@ const App = () => {
   // import static set data
   importSetData()
   const routes = Routes.routes
+  const menuItems = routes.reduce((result, curr) => {
+    if (curr.category) {
+      const contained = result.find(r => r.path === curr.category)
+      if (contained) return result
+    }
+    result.push(curr)
+    return result
+  }, [])
 
   return (
     <Router>
@@ -23,7 +31,7 @@ const App = () => {
             <div className="mx-2 my-auto">
               <p className="uppercase">Team Fight Stats</p>
             </div>
-            {routes.map((route) =>
+            {menuItems.map((route) =>
               <TopMenuItem key={'menu-item-' + route.path}
                 {...route}
               />
@@ -52,8 +60,18 @@ const RouteWithSubRoutes = (route) => {
   return (
     <Route
       path={route.path}
-      render={props => (
-        <route.component {...props} routes = {route.routes} />
+      render={(props) => (
+        <>
+          <route.component {...props} exact />
+          <Switch>
+            {route.routes && route.routes.map((subRoute) =>
+              <RouteWithSubRoutes
+                key={'route-to-' + subRoute.path}
+                {...subRoute}
+              />
+            )}
+          </Switch>
+        </>
       )}
     />
   )

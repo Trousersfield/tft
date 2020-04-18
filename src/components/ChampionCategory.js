@@ -1,5 +1,8 @@
 import React from 'react'
 import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
+import { costColor } from '../util/styles'
+
+import DATA from '../static/championPopularityDiamond.json'
 
 const Champion = React.lazy(() => import('./Champion.js'))
 
@@ -8,7 +11,8 @@ class ChampionCategory extends React.Component {
     super (props)
     this.state = {
       champions: this.props.champions,
-      data: this.props.data,
+      league: this.props.league,
+      data: [],
       width: 0
     }
 
@@ -17,7 +21,8 @@ class ChampionCategory extends React.Component {
     if (!imageCache['other']) importImages('other')
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    await this.loadData()
     window.addEventListener('resize', this.sizeHeader)
 
     // set default window width value
@@ -33,22 +38,30 @@ class ChampionCategory extends React.Component {
   }
 
   sizeHeader = async () => {
-    console.log('sizing header')
-    // await this.waitABit()
     const width = document.getElementById('champ-header-lines')
       .getBoundingClientRect().width
 
     if (width !== this.state.width) this.setState({ width: width })
   }
 
+  async loadData () {
+    if (this.state.loading) return
+    new Promise(resolve => {
+      // load data here!
+      const rawData = DATA
+      this.setState({ data: rawData }, () => { resolve() })
+    })
+  }
+
   championData (id) {
-    return this.state.data.find(entry => entry.championId === id)
+    return this.state.data.find(entry => entry.championId === id) || []
   }
 
   render () {
     const { champions, width } = this.state
     const cost = champions[0].cost
     const imageName = getImageName(`tier${cost}`)
+    const strokeColor = costColor(cost)
 
     // svg sizing
     const center = width/2
@@ -60,13 +73,8 @@ class ChampionCategory extends React.Component {
         className="flex flex-col w-full"
       >
         <div
-          key={width}
-          className="flex-1 h-4 bg-red-500">
-          {width}
-        </div>
-        <div
           id="champ-header-lines"
-          className="w-full flex justify-center relative bg-yellow-500"
+          className="w-full flex justify-center relative"
         >
           <img
             src={imageCache['tiers'][imageName]}
@@ -83,32 +91,22 @@ class ChampionCategory extends React.Component {
               L ${center} 46
               L ${center+30} 16
               H ${width-25}`}
-              stroke="blue" strokeWidth="2" fill="none" />
+              stroke={strokeColor} strokeWidth="2" fill="none" />
             <path
               d={`M 0 20
               H ${center-20}
               L ${center} 40
               L ${center+20} 20
               H ${width}`}
-              stroke="red" strokeWidth="2" fill="none" />
+              stroke={strokeColor} strokeWidth="2" fill="none" />
             <path
               d={`M 10 24
               H ${center-10}
               L ${center} 34
               L ${center+10} 24
               H ${width-10}`}
-            stroke="green" strokeWidth="2" fill="none" />
+            stroke={strokeColor} strokeWidth="2" fill="none" />
           </svg>
-        </div>
-        <div className="flex flex-no-wrap">
-          <div className="flex-none">
-            <img
-              src={imageCache['tiers'][imageName]}
-              alt={`Tier ${cost}`}
-            />
-          </div>
-          <div className="flex-none">{cost} Gold</div>
-          <div className="flex-1">line</div>
         </div>
         {champions.map((champion, index) =>
           <Champion

@@ -3,8 +3,6 @@ import { cache as imageCache, importImages } from '../util/imageImporter'
 import leagues from '../util/leagues'
 import { cache as dataCache } from '../util/setDataImporter'
 
-import DATA from '../static/championPopularityDiamond.json'
-
 const Dropdown = React.lazy(() => import('../components/Dropdown'))
 const ChampionCategory = React.lazy(() => import('../components/ChampionCategory'))
 
@@ -17,7 +15,6 @@ class Champions extends React.Component {
         result[result.length - curr.cost].push(curr)
         return result
       }, [[], [], [], [], []]),
-      data: {},
       dropdownOptions: leagues.map(league => {
         return {
           selected: false,
@@ -32,21 +29,7 @@ class Champions extends React.Component {
   }
 
   componentDidMount () {
-    // console.log('champions: ', this.state.championsByCost)
-    this.setData()
-  }
-
-  async setData () {
-    new Promise(resolve => {
-      // load data here!
-      const rawData = DATA
-      const selectedLeague = this.state.selectedLeague
-      this.setState(state => {
-        const data = Object.assign({}, state.data)
-        data[selectedLeague] = rawData
-        return { data }
-      }, () => { resolve() })
-    })
+    console.log('did mount')
   }
 
   setSelected = (value) => {
@@ -54,17 +37,18 @@ class Champions extends React.Component {
   }
 
   render () {
-    const {selectedLeague, dropdownOptions, championsByCost, data } = this.state
+    const {selectedLeague, dropdownOptions, championsByCost } = this.state
     const imageName = leagues.find(league =>
       selectedLeague === league.key).image
 
     // console.log('selected league: ', selectedLeague)
     // console.log('dropdown options: ', dropdownOptions)
+
     return (
       <div className="flex flex-col">
         <div className="flex justify-between p-5">
           <div className="flex flex-no-wrap items-center">
-            <p className="mr-3 text-lg">Frequently played Combs in</p>
+            <p className="mr-3 text-lg">Frequently played Champions in</p>
             <Dropdown
               options={dropdownOptions}
               preselect={selectedLeague}
@@ -82,7 +66,7 @@ class Champions extends React.Component {
           <ChampionCategory
             key={'champion-' + index}
             champions={champions}
-            data={data[selectedLeague]}
+            league={selectedLeague}
           />
         )}
       </div>
