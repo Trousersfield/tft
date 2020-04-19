@@ -28,7 +28,6 @@ class CombChart extends React.Component {
   }
 
   async componentDidMount () {
-    console.log('chart component did mount')
     await this.setData()
     this.makeGraph()
   }
@@ -61,8 +60,8 @@ class CombChart extends React.Component {
 
     // construct gained and lost LP datasets and sum
     const [ win, loss, sum ] = slicedData.reduce((result, curr) => {
-      result[0].push(curr.placement1Amount + curr.placement1Amount +
-        curr.placement1Amount + curr.placement1Amount)
+      result[0].push(curr.placement1Amount + curr.placement2Amount +
+        curr.placement3Amount + curr.placement4Amount)
       result[1].push(curr.totalAmount - result[0][result[0].length - 1])
       result[2] += curr.totalAmount
       return result

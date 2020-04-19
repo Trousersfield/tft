@@ -1,10 +1,7 @@
 import React from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import {
-  scaleToPercent,
-  makeRanking,
-  printTraitName } from '../../util/formatter'
+import { scaleToPercent, makeRanking } from '../../util/formatter'
 import { placementColors } from '../../util/styles'
 import InfoTag from '../InfoTag'
 import Comb from '../../components/Comb'
@@ -39,6 +36,7 @@ class DetailCombChart extends React.Component {
         placement += 1
         return result
       }, [[], []])
+    console.log('datasets: ', datasets)
 
     const percentLabels = scaleToPercent(rawData)
 
@@ -101,7 +99,7 @@ class DetailCombChart extends React.Component {
           <Comb name={comb.name} />
           <div className="flex flex-no-wrap items-center">
             <p className="text-lg">
-              Placement Distribution {printTraitName(comb.name)}
+              End Game Placement Distribution
             </p>
           </div>
           <InfoTag
