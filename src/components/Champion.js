@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
 import { costColor } from '../util/styles'
 import { GoStar } from 'react-icons/go'
-import { useRouteMatch, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Traits = React.lazy(() => import('./Traits'))
+const TraitInfo = React.lazy(() => import('../components/TraitInfo'))
 
 class Champion extends React.Component {
   constructor (props) {
@@ -51,9 +52,9 @@ class Champion extends React.Component {
             </div>
           </div>
           <div className="flex-1">
-            <Traits
-              data={traits}
-            />
+            <Suspense fallback={<div>Loading Traits ...</div>}>
+              <Traits data={traits} />
+            </Suspense>
           </div>
           <div className={`w-1/3 flex flex-no-wrap items-center border-2
             border-${color}-500 rounded-full`}>
@@ -75,18 +76,33 @@ class Champion extends React.Component {
             </div>
           </div>
         </div>
+        <div className="flex justify-between content-center">
         {showDetails &&
-          <div>
-            Hi! I will contain details!
-            <NavLink
-              to={`/champions/profile/${name}`}
-              exact
-              activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
-              className="p-2 mx-1"
-            >
-              Link to aurelion
-            </NavLink>
-          </div>}
+          <>
+            <div className="flex-1 flex flex-col">
+              {traits.map((trait) =>
+                <Suspense
+                  key={trait}
+                  fallback={<div>Loading Trait Info ...</div>}
+                >
+                  <TraitInfo
+                    trait={trait}
+                  />
+                </Suspense>
+              )}
+            </div>
+            <div className="flex-grow-0">
+              <NavLink
+                to={`/champions/profile/${name}`}
+                exact
+                activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
+                className="p-2 mx-1"
+              >
+                Link to {name}
+              </NavLink>
+            </div>
+          </>}
+        </div>
       </div>
     )
   }

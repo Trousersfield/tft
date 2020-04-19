@@ -23,8 +23,7 @@ class Combs extends React.Component {
 
   render () {
     return (
-      <div className="w-full border border-black">
-        <div>asdf</div>
+      <div className="w-full">
         <Suspense fallback={<div>Loading Comb...</div>}>
           <CombChart />
         </Suspense>

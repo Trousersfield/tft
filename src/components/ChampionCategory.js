@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
 import { costColor } from '../util/styles'
 
@@ -30,7 +30,7 @@ class ChampionCategory extends React.Component {
     this.setState({ width: vw - 18 })
 
     // size accordingly
-    setTimeout(this.sizeHeader, 1000)
+    setTimeout(this.sizeHeader, 1500)
   }
 
   componentWillUnmount () {
@@ -109,11 +109,15 @@ class ChampionCategory extends React.Component {
           </svg>
         </div>
         {champions.map((champion, index) =>
-          <Champion
+          <Suspense
             key={'champion-entry-' + champion.championId}
-            champion={champion}
-            data={this.championData(champion.championId)}
-          />
+            fallback={<div>Loading Champion ...</div>}
+          >
+            <Champion
+              champion={champion}
+              data={this.championData(champion.championId)}
+            />
+          </Suspense>
         )}
       </div>
     )

@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { makePercent } from '../../util/formatter'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
-import leagues from '../../util/leagues'
 
 import DATA from '../../static/ComboStatsDiamond.json'
 
 // components
-const Dropdown = React.lazy(() => import('../../components/Dropdown'))
+const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
 const DetailCombChart = React.lazy(() => import('./DetailCombChart'))
 
 Chart.plugins.unregister(ChartDataLabels)
@@ -21,13 +20,6 @@ class CombChart extends React.Component {
       selectedLeague: 'diamond', // find good default
       data: {},
       combChart: null,
-      dropdownOptions: leagues.map(league => {
-        return {
-          selected: false,
-          name: league.name,
-          value: league.key
-        }
-      }),
       bestX: 10,
       selectedComb: null
     }
@@ -180,36 +172,26 @@ class CombChart extends React.Component {
   }
 
   render () {
-    const { selectedLeague, dropdownOptions, selectedComb } = this.state
-    const imageName = leagues.find(league =>
-        selectedLeague === league.key).image
+    const { selectedLeague, selectedComb } = this.state
 
     return (
       <div className="flex flex-col">
-        <div className="flex justify-between p-5">
-          <div className="flex flex-no-wrap items-center">
-            <p className="mr-3 text-lg">Frequently played Combs in</p>
-            <Dropdown
-              options={dropdownOptions}
-              preselect={selectedLeague}
-              onSelected={this.setSelected}
-            />
-          </div>
-          <div className="w-12 h-12">
-            <img
-              src={imageCache['ranked-emblems'][imageName]}
-              alt={imageName}
-            />
-          </div>
-        </div>
+        <Suspense fallback={<div>Loading League Selector ...</div>}>
+          <LeagueSelector
+            preselect={selectedLeague}
+            onSelected={this.setSelected}
+          />
+        </Suspense>
         <div className="relative w-full">
           <canvas ref={this.chartRef} />
         </div>
         {selectedComb &&
-          <DetailCombChart
-            key={'detail-comb-' + selectedComb.id}
-            data={selectedComb}
-          />}
+          <Suspense fallback={<div>Loading Comb Details ...</div>}>
+            <DetailCombChart
+              key={'detail-comb-' + selectedComb.id}
+              data={selectedComb}
+            />
+          </Suspense>}
       </div>
     )
   }

@@ -15,12 +15,12 @@ class Traits extends React.Component {
     return (
       <div className="flex flex-no-wrap">
         {traits.map(trait =>
-          <div
-            key={'trait-' + trait}
-            className="w-16 h-16">
+          <div  key={'trait-' + trait} >
             <img
               src={imageCache['traits'][getImageName(trait)]}
               alt={trait}
+              className="w-16 h-16"
+              title={trait}
             />
           </div>
         )}

@@ -173,15 +173,6 @@ class ItemChart extends React.Component {
             />
           </div>
         </div>
-        {/*<div
-          id="item-chart-container"
-          className="relative w-full mx-4"
-        >
-          <canvas
-            ref={this.chartRef}
-            height={2000}
-          />
-        </div>*/}
       </div>
     )
   }
