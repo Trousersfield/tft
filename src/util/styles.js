@@ -47,9 +47,17 @@ const costColor = (cost) => {
   return costColors[cost]
 }
 
+const getColorCode = async (color, intensity = 500) => {
+  const cache = await getTailwindConfig()
+  const colors = cache.theme.colors
+  if (!color || !colors[color]) return color
+  return colors[color][intensity]
+}
+
 export {
   buttonBase,
   dropdownStyle,
   placementColors,
-  costColor
+  costColor,
+  getColorCode
 }

@@ -19,11 +19,10 @@ class ItemChart extends React.Component {
       data: [],
       currentAverage: null,
       includeBasicItems: false,
-      width: 0,
-      height: 0,
       itemChart: null,
       chartHeight: 2000,
-      itemImageSize: 8
+      itemImageSize: 8,
+      itemGap: 1
     }
 
     if (!imageCache['items']) importImages('items')
@@ -47,7 +46,8 @@ class ItemChart extends React.Component {
         let data
         if (state.includeBasicItems) data = rawData
         else data = rawData.filter(dataRow => dataRow.itemId > 9)
-        const itemImageSize = state.chartHeight / data.length
+        const itemImageSize = (state.chartHeight - 16 - state.itemGap * data.length) /
+          data.length
         return { data, itemImageSize }
       }, () => { resolve() })
     })
@@ -76,7 +76,7 @@ class ItemChart extends React.Component {
 
     const [ counts, labels ] = data.reduce((result, curr) => {
       result[0].push(curr.count - average)
-      result[1].push(curr.itemName)
+      result[1].push(' ')
       return result
     }, [[], []])
 
@@ -96,6 +96,7 @@ class ItemChart extends React.Component {
       },
       options: {
         responsive: false,
+        maintainAspectRatio: false,
         tooltips: {
           enabled: false
         },
@@ -103,7 +104,15 @@ class ItemChart extends React.Component {
           display: false
         },
         scales: {
-          yAxes: [{ gridLines: { drawOnChartArea: false } }],
+          // yAxes: [{ gridLines: { drawOnChartArea: false } }],
+          yAxes: [{
+            scaleLabel: { display: false },
+            gridLines: {
+              drawBorder: false,
+              tickMarkLength: 0,
+              zeroLineWidth: 0
+            }
+          }],
           xAxes: [{ display: false }]
         },
         plugins: {
@@ -130,42 +139,40 @@ class ItemChart extends React.Component {
       currentAverage,
       includeBasicItems,
       chartHeight,
-      itemImageSize
+      itemImageSize,
+      itemGap
     } = this.state
 
     return (
       <div className="flex flex-col">
-        <div className="flex justify-between p-5">
-          <div className="flex flex-no-wrap items-center">
-            <p className="mr-3 text-lg">Items in all compositions aggregated by average</p>
-            <button
-              className={buttonBase}
-              onClick={this.toggleItemInclusion}
-            >
-              {(includeBasicItems ? 'Exclude' : 'Include') + ' Basic Items'}
-            </button>
-          </div>
+        <div className="flex justify-between items-center p-5">
+          <button
+            className={buttonBase}
+            onClick={this.toggleItemInclusion}
+          >
+            {(includeBasicItems ? 'Exclude' : 'Include') + ' Basic Items'}
+          </button>
+          <p className="text-lg">Items in all compositions aggregated by average</p>
           <InfoTag
             title={'Average'}
             value={Math.floor(currentAverage)}
           />
         </div>
-        <div className="flex flex-no-wrap">
-          <div className="flex-none flex flex-col bg-yellow-500">
-            {data.map(item => (
-              <img
-                key={'image-item-' + item.itemId}
-                src={imageCache['items'][`./${item.itemId < 10 ?
-                  '0' : ''}${item.itemId}.png`]}
-                style={{width: `${itemImageSize}px`,
-                  height: `${itemImageSize}px`}}
-                alt={item.name}
+        <div className="flex flex-no-wrap ml-5">
+          <div className="flex-none flex flex-col"
+            style={{paddingTop: '8px', paddingBottom: '8px'}}>
+            {data.map(item =>
+              <ItemImageLabel
+                key={'image-item-' + item.itemId + '-' + itemImageSize}
+                item={item}
+                imageSize={itemImageSize}
+                gap={itemGap}
               />
-            ))}
+            )}
           </div>
           <div
             id="item-chart-container"
-            className="relative flex-1 mr-4"
+            className="relative flex-1 mr-4 overflow-hidden"
           >
             <canvas
               ref={this.chartRef}
@@ -192,6 +199,66 @@ class ItemChart extends React.Component {
 
     this.chartRef.current.width = chartContainer.width
   }
+}
+
+class ItemImageLabel extends React.Component {
+  constructor (props) {
+    super (props)
+    this.state = {
+      item: this.props.item,
+      imageSize: this.props.imageSize,
+      gap: this.props.gap,
+      tooltipVisible: false
+    }
+  }
+
+  toggleTooltip () {
+    this.setState(state => ({ tooltipVisible: !state.tooltipVisible }))
+  }
+
+  render () {
+    const { item, imageSize, gap, tooltipVisible } = this.state
+
+    return (
+      <div
+        className="relative"
+        onClick={() => this.toggleTooltip()}
+      >
+        <img
+          src={imageCache['items'][`./${item.itemId < 10 ?
+            '0' : ''}${item.itemId}.png`]}
+          style={{width: `${imageSize}px`,
+            height: `${imageSize}px`,
+            marginBottom: `${gap}px`}}
+          alt={item.itemName}
+        />
+        {tooltipVisible &&
+          <ItemTooltip
+            translate={imageSize}
+            itemName={item.itemName}
+          />}
+      </div>
+    )
+  }
+}
+
+const ItemTooltip = (props) => {
+  const height = 32
+  const yTranslate = (props.translate - height) / 2
+
+  return (
+    <div className='absolute z-10 top-0 whitespace-no-wrap px-2 py-1
+      bg-indigo-500 text-white rounded-sm shadow cursor-pointer
+      tracking-wide font-semibold'
+      style={{transform: `translate(${props.translate + 8}px, ${yTranslate}px)`,
+        height: `${height}px`}}>
+      {props.itemName}
+      <div className="absolute left-0 border z-10"
+        style={{marginLeft: '-5px', borderWidth: '5px',
+          borderColor: `transparent #667eea transparent transparent`,
+          transform: `translate(-5px, -${height/2}px)`}} />
+    </div>
+  )
 }
 
 export default ItemChart
