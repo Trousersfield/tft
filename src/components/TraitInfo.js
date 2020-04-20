@@ -25,15 +25,35 @@ class TraitInfo extends React.Component {
     }
 
     const imageName = getImageName(trait)
+    const traitData = dataCache['traits'].find(t => t.name === trait)
     console.log('trait: ', trait)
     console.log('image name: ', imageName)
 
     return (
-      <div className="flex flex-no-wrap">
-        <img
-          src={imageCache['traits'][imageName]}
-          alt={trait}
-        />
+      <div className="md:w-1/2 lg:w-1/3 m-2 border-2 border-gray-500
+        shadow-lg rounded flex flex-col">
+        <div className="flex flex-no-wrap items-center h-28
+          border-b border-gray-500 overflow-ellipsis">
+          <img
+            src={imageCache['traits'][imageName]}
+            alt={trait}
+            style={{width: '60px', height: '60px'}}
+          />
+          <p>
+            <span className="uppercase tracking-wide text-lg font-medium
+              pr-1 mr-1 border-r-2 border-gray-900">
+              {traitData.name}
+            </span>
+            {traitData.description ?
+              traitData.description :
+              traitData.innate}
+          </p>
+        </div>
+        <div className="flex flex-col p-2">
+          {traitData.sets.map((level) => (
+            <p key={`level-${level.style}`}>{level.style}</p>
+          ))}
+        </div>
       </div>
     )
   }

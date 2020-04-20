@@ -76,33 +76,31 @@ class Champion extends React.Component {
             </div>
           </div>
         </div>
-        <div className="flex justify-between content-center">
         {showDetails &&
-          <>
-            <div className="flex-1 flex flex-col">
-              {traits.map((trait) =>
-                <Suspense
-                  key={trait}
-                  fallback={<div>Loading Trait Info ...</div>}
-                >
-                  <TraitInfo
-                    trait={trait}
-                  />
-                </Suspense>
-              )}
-            </div>
-            <div className="flex-grow-0">
-              <NavLink
-                to={`/champions/profile/${name}`}
-                exact
-                activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
-                className="p-2 mx-1"
+        <>
+          <div className="flex-1 flex">
+            {traits.map((trait) =>
+              <Suspense
+                key={trait}
+                fallback={<div>Loading Trait Info ...</div>}
               >
-                Link to {name}
-              </NavLink>
-            </div>
-          </>}
-        </div>
+                <TraitInfo
+                  trait={trait}
+                />
+              </Suspense>
+            )}
+          </div>
+          {/*<div className="flex-grow-0">
+            <NavLink
+              to={`/champions/profile/${name}`}
+              exact
+              activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
+              className="p-2 mx-1"
+            >
+              Link to {name}
+            </NavLink>
+            </div>*/}
+        </>}
       </div>
     )
   }
