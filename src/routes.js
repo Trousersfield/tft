@@ -4,7 +4,7 @@ const Combs = React.lazy(() => import('./views/Combs'))
 const Items = React.lazy(() => import('./views/Items'))
 const ChampionsByTier = React.lazy(() => import('./views/ChampionsByTier'))
 const ChampionProfile = React.lazy(() => import('./views/ChampionProfile'))
-const PatchNotes = React.lazy(() => import('./views/Patchnotes'))
+const PatchNotes = React.lazy(() => import('./views/PatchNotes'))
 
 export default {
   mode: 'history',

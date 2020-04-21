@@ -36,7 +36,6 @@ class DetailCombChart extends React.Component {
         placement += 1
         return result
       }, [[], []])
-    console.log('datasets: ', datasets)
 
     const percentLabels = scaleToPercent(rawData)
 

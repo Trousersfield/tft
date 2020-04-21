@@ -49,9 +49,14 @@ class TraitInfo extends React.Component {
               traitData.innate}
           </p>
         </div>
-        <div className="flex flex-col p-2">
+        <div className="flex flex-no-wrap p-2">
           {traitData.sets.map((level) => (
-            <p key={`level-${level.style}`}>{level.style}</p>
+            <div
+              key={`level-${level.style}`}
+              className="flex-1 text-center"
+            >
+              {level.style}
+            </div>
           ))}
         </div>
       </div>

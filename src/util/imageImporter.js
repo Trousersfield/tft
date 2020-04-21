@@ -39,6 +39,30 @@ const getImageName = (value) => {
   return `./${value.replace(regex, '').toLowerCase()}.png`
 }
 
+const getBackgroundOffset = (style) => {
+  let baseOffset = 331 / 6 // 311px = sprite-image width
+  switch (style) {
+    case 'iron':
+      break
+    case 'bronze':
+      baseOffset *= 2
+      break
+    case 'silver':
+      baseOffset *= 3
+      break
+    case 'gold':
+      baseOffset *= 4
+      break
+    case 'chromatic':
+      baseOffset *= 5
+      break
+    case 'base':
+    default:
+      baseOffset = 0
+      break
+  }
+}
+
 /**
  * unfortunately require.context function parameters must be literals
  * the path must be statically analyzable --> put each path into a function
@@ -89,5 +113,6 @@ const importTraits = (directory) => {
 export {
   cache,
   importImages,
-  getImageName
+  getImageName,
+  getBackgroundOffset
 }
