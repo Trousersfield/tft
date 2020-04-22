@@ -35,10 +35,11 @@ class Champion extends React.Component {
 
     return (
       <div className="flex flex-col mx-4 my-2">
-        <div className="flex flex-no-wrap items-center">
+        <div className="flex xs:flex-wrap sm:flex-wrap md:flex-no-wrap items-center">
           <div
             className={`bg-${color}-200 border-2 border-${color}-900
-              w-1/6 flex flex-no-wrap items-center rounded-full cursor-pointer`}
+              xs:w-1/2 sm:w-1/3 md:w-1/5 lg:w-1/6
+              flex flex-no-wrap items-center rounded-full cursor-pointer`}
             onClick={() => this.toggleDetails()}
           >
             <div className="overflow-hidden rounded-full">
@@ -56,7 +57,8 @@ class Champion extends React.Component {
               <Traits data={traits} />
             </Suspense>
           </div>
-          <div className={`w-1/3 flex flex-no-wrap items-center border-2
+          <div className={`xs:w-full xs:mt-2 sm:w-full md:w-1/2 lg:w-1/3
+            flex flex-no-wrap items-center border-2
             border-${color}-500 rounded-full`}>
             <p className="pl-4 pr-2 text-center">Star Count</p>
             <div className={`flex-1 flex justify-between p-3 tracking-wider
@@ -78,7 +80,7 @@ class Champion extends React.Component {
         </div>
         {showDetails &&
         <>
-          <div className="flex-1 flex">
+          <div className="flex-1 flex flex-wrap">
             {traits.map((trait) =>
               <Suspense
                 key={trait}
