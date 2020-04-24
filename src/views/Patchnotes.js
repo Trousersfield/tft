@@ -70,7 +70,7 @@ class PatchNotes extends React.Component {
                         "
                     >
                       {sec.title ?
-                        <div className="text-lg tracking-wide mb-3">
+                        <div className="text-lg tracking-wide mb-2">
                           {sec.title}
                         </div> :
                         null
