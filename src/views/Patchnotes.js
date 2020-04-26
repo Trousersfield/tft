@@ -27,20 +27,23 @@ class PatchNotes extends React.Component {
     this.setState({ selectedPatch: patch })
   }
 
+  scrollToElement (id) {
+    const element = document.getElementById(id)
+    const container = document.getElementById('patch-notes-content')
+    if (!element || !container) return
+    const elementTop = element.getBoundingClientRect().top
+    const containerTop = container.getBoundingClientRect().top
+    const scrollPos = elementTop - containerTop
+    container.scrollBy({ top: scrollPos, left: 0, behavior: 'smooth' })
+  }
+
   render () {
     const { selectedPatch, patchNumbers } = this.state
 
-    if (selectedPatch) {
-      console.log('bool: ', selectedPatch.number === patchNumbers[0])
-    }
-
-    // use index for saying "latest patch"
-    // console.log('index: ', index)
-
     return (
-      <div className="flex">
-        <div className="flex flex-col px-2 bg-yellow-200">
-          <ul>
+      <div className="flex relative h-full">
+        <div className="h-full">
+          <ul className="mt-10 mx-3 pr-2 border-r-2 border-gray-500 text-xl">
             {patchNumbers.map(number =>
               <li key={`patch-list-item-${number}`}
                 className={'cursor-pointer ' +
@@ -52,13 +55,19 @@ class PatchNotes extends React.Component {
             )}
           </ul>
         </div>
-        <div className="flex-1 px-2 bg-green-200 leading-relaxed">
+        <div
+          id="patch-notes-content"
+          className="flex-1 overflow-auto px-2 leading-relaxed"
+        >
           {selectedPatch &&
             <div className="flex flex-col">
               {selectedPatch.categories.map((cat, catIndex) =>
-                <div key={`category-${catIndex}`}>
+                <div
+                  id={`category-${cat.title}`}
+                  key={`category-${catIndex}`}
+                >
                   {cat.title ?
-                    <div className="font-bold text-xl tracking-wide">
+                    <div className="text-2xl tracking-wide">
                       {cat.title}
                     </div> :
                     null
@@ -66,8 +75,8 @@ class PatchNotes extends React.Component {
                   {cat.sections.map((sec, secIndex) =>
                     <div
                       key={'cat-' + catIndex + '-sec-' + secIndex}
-                      className="m-2 p-2 bg-indigo-200 border border-gray-500
-                        "
+                      className="m-2 p-2 bg-indigo-200 border-t border-gray-800
+                        shadow-lg"
                     >
                       {sec.title ?
                         <div className="text-lg tracking-wide mb-2">
@@ -90,19 +99,19 @@ class PatchNotes extends React.Component {
             </div>
           }
         </div>
-        {/*<div className="mt-6 bg-green-200 h-48 p-4">
-            <div className="relative">
-              <img
-                src={imageCache['traits']['./bg.png']}
-                alt="bg"
-              />
-              <img
-                src={imageCache['traits']['./blademaster.png']}
-                alt="blademaster"
-                className="absolute top-0"
-              />
-            </div>
-          </div>*/}
+        <div className="h-full">
+          {selectedPatch &&
+          <ul className="mt-10 mx-3 pl-2 border-l-2 border-gray-500 text-xl">
+            {selectedPatch.categories.map(cat =>
+              <li key={`category-list-item-${cat.title}`}
+                className={'cursor-pointer'}
+                onClick={() => this.scrollToElement('category-' + cat.title)}
+              >
+                {cat.title}
+              </li>
+            )}
+          </ul>}
+        </div>
       </div>
     )
   }

@@ -1,6 +1,14 @@
 import React from 'react'
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
 
+const SIZE = {
+  'xs': 'w-20',
+  'sm': 'w-32',
+  'base': 'w-40',
+  'full': 'w-full',
+  'auto': 'w-auto'
+}
+
 class Dropdown extends React.Component {
   constructor (props) {
     super (props)
@@ -8,7 +16,9 @@ class Dropdown extends React.Component {
       displayMenu: false,
       placeholder: this.props.placeholder || 'Select value',
       selected: this.props.preselect,
-      options: this.props.options || []
+      options: this.props.options || [],
+      size: (this.props.size && SIZE[this.props.size]) ?
+        SIZE[this.props.size] : SIZE['base']
     }
     this.showDropdownMenu = this.showDropdownMenu.bind(this)
     this.hideDropdownMenu = this.hideDropdownMenu.bind(this)
@@ -33,16 +43,16 @@ class Dropdown extends React.Component {
   }
 
   render () {
-    const { displayMenu, placeholder, selected, options } = this.state
+    const { displayMenu, placeholder, selected, options, size } = this.state
     const header = selected && options.length ?
       options.find(option => option.value === selected).name :
       placeholder
 
     return (
-      <div className="relative inline-block w-40 cursor-pointer">
+      <div className={`relative inline-block cursor-pointer ${size}`}>
         <div className="w-full flex flex-no-wrap justify-between items-center py-1 px-3 border border-gray-900 rounded"
           onClick={this.showDropdownMenu}>
-          <p>{header}</p>
+          <p className="mr-2">{header}</p>
           {displayMenu ?
             <IoIosArrowDropupCircle /> :
             <IoIosArrowDropdownCircle />}

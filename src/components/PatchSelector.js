@@ -20,18 +20,17 @@ class PatchSelector extends React.Component {
 
   render () {
     const { dropdownOptions } = this.state
-    console.log('user: ', UserContext)
 
     return (
       <UserContext.Consumer>
-        {/*({patch, setPatch}) => (
-          {<Dropdown
+        {({user, setUser}) => (
+          <Dropdown
             options={dropdownOptions}
             preselect={user.patch}
-            onSelected={setPatch}
-          />}
-        )*/}
-        <div>{patch, setPatch}</div>
+            onSelected={(value) => setUser({ key: 'patch', value: value })}
+            size='sm'
+          />
+        )}
       </UserContext.Consumer>
     )
   }

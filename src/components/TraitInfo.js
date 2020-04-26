@@ -12,10 +12,6 @@ class TraitInfo extends React.Component {
     if (!imageCache['traits']) importImages('traits')
   }
 
-  componentDidMount () {
-    console.log('set data: ', dataCache)
-  }
-
   render () {
     const { trait } = this.state
     if (!trait) {
@@ -26,8 +22,6 @@ class TraitInfo extends React.Component {
 
     const imageName = getImageName(trait)
     const traitData = dataCache['traits'].find(t => t.name === trait)
-    console.log('trait: ', trait)
-    console.log('image name: ', imageName)
 
     return (
       <div className="sm:w-full md:w-1/2 lg:w-1/3">
