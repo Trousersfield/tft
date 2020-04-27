@@ -19,7 +19,7 @@ class PatchNotes extends React.Component {
       selectedPatch: patches[0],
       patchNumbers: patches.map(p => p.number)
     })
-    console.log('statE: ', this.state)
+    console.log('state: ', this.state)
   }
 
   selectPatch (patchNumber) {
@@ -42,12 +42,12 @@ class PatchNotes extends React.Component {
 
     return (
       <div className="flex relative h-full">
-        <div className="h-full">
-          <ul className="mt-10 mx-3 pr-2 border-r-2 border-gray-500 text-xl">
+        <div className="h-full bg-gray-200">
+          <ul className="w-20 mt-10 mx-3 border-r-2 border-gray-500 text-xl">
             {patchNumbers.map(number =>
               <li key={`patch-list-item-${number}`}
                 className={'cursor-pointer ' +
-                  (number === selectedPatch.number ? 'font-bold' : '')}
+                  (number === selectedPatch.number ? 'font-bold text-indigo-800' : '')}
                 onClick={() => this.selectPatch(number)}
               >
                 {number}
@@ -57,7 +57,7 @@ class PatchNotes extends React.Component {
         </div>
         <div
           id="patch-notes-content"
-          className="flex-1 overflow-auto px-2 leading-relaxed"
+          className="flex-1 overflow-auto px-2 leading-relaxed bg-white"
         >
           {selectedPatch &&
             <div className="flex flex-col">
@@ -67,21 +67,20 @@ class PatchNotes extends React.Component {
                   key={`category-${catIndex}`}
                 >
                   {cat.title ?
-                    <div className="text-2xl tracking-wide">
+                    <p className="text-2xl tracking-wide">
                       {cat.title}
-                    </div> :
+                    </p> :
                     null
                   }
                   {cat.sections.map((sec, secIndex) =>
                     <div
                       key={'cat-' + catIndex + '-sec-' + secIndex}
-                      className="m-2 p-2 bg-indigo-200 border-t border-gray-800
-                        shadow-lg"
+                      className="m-2 p-2 border border-indigo-600 shadow-lg"
                     >
                       {sec.title ?
-                        <div className="text-lg tracking-wide mb-2">
+                        <p className="text-lg tracking-wide mb-2">
                           {sec.title}
-                        </div> :
+                        </p> :
                         null
                       }
                       <ul className="list-disc ml-5">
@@ -99,9 +98,9 @@ class PatchNotes extends React.Component {
             </div>
           }
         </div>
-        <div className="h-full">
+        <div className="h-full bg-gray-200 xs:hidden sm:hidden md:block">
           {selectedPatch &&
-          <ul className="mt-10 mx-3 pl-2 border-l-2 border-gray-500 text-xl">
+          <ul className="mt-10 mx-3 pl-4 border-l-2 border-gray-500 text-xl">
             {selectedPatch.categories.map(cat =>
               <li key={`category-list-item-${cat.title}`}
                 className={'cursor-pointer'}

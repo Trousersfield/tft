@@ -65,7 +65,7 @@ class Dropdown extends React.Component {
                 className={'flex flex-no-wrap justify-between align-middle ' +
                   'bg-white py-1 px-3 whitespace-no-wrap hover:bg-gray-200 ' +
                   (selected === option.value ?
-                    'font-semibold text-indigo-900 bg-gray-200' : '')}
+                    'font-semibold text-indigo-800 bg-gray-200' : '')}
                 onClick={() => this.setSelected(option.value)}
               >
                 {option.name}

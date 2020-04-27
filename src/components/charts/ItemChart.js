@@ -34,7 +34,7 @@ class ItemChart extends React.Component {
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.resizeCanvas())
+    window.removeEventListener('resize', this.resizeCanvas)
 
     if (debounce) clearTimeout(debounce)
   }

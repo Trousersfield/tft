@@ -19,20 +19,17 @@ class App extends React.Component {
     super (props)
 
     this.setUser = (payload) => {
-      console.log('payloaD: ', payload)
       this.setState({ [payload.key]: payload.value })
     }
 
     this.state = {
       routes: Routes.routes,
-      // patch: user.patch,
       user,
       setUser: this.setUser
     }
 
     // import static set data
     importSetData()
-    // const routes = Routes.routes
   }
 
   render () {
@@ -49,10 +46,11 @@ class App extends React.Component {
     return (
       <Router>
         <div className="h-screen overflow-hidden">
-          <div className="flex bg-indigo-100 h-16">
+          <div className="flex bg-white h-16 border-b border-gray-500
+            text-indigo-800">
             <nav className="flex-1 flex text-xl">
-              <div className="mx-2 my-auto">
-                <p className="uppercase">Team Fight Stats</p>
+              <div className="mx-2 my-auto xs:hidden sm:hidden md:block">
+                <p className="uppercase tracking-wide">Team Fight Stats</p>
               </div>
               {menuItems.map((route) =>
                 <TopMenuItem key={'menu-item-' + route.path}
@@ -115,8 +113,8 @@ const TopMenuItem = (item) => {
     <NavLink
       to={item.path || ''}
       exact
-      activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
-      className="p-2 mx-1 my-auto"
+      activeClassName="font-semibold border-b-2 border-indigo-800"
+      className="p-2 mx-1 my-auto whitespace-no-wrap"
     >
       {item.name}
     </NavLink>

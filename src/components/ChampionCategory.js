@@ -7,6 +7,7 @@ import DATA from '../static/championPopularityDiamond.json'
 const Champion = React.lazy(() => import('./Champion.js'))
 
 let debounce = null
+let unmounting = false
 
 class ChampionCategory extends React.Component {
   constructor (props) {
@@ -36,6 +37,7 @@ class ChampionCategory extends React.Component {
   }
 
   componentWillUnmount () {
+    unmounting = true
     if (debounce) {
       clearTimeout(debounce)
       debounce = null
@@ -44,7 +46,7 @@ class ChampionCategory extends React.Component {
   }
 
   sizeHeader = async () => {
-    if (!debounce) return
+    if (unmounting) return
     const width = document.getElementById('champ-header-lines')
     .getBoundingClientRect().width
 
