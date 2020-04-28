@@ -221,7 +221,7 @@ class ItemImageLabel extends React.Component {
 
     return (
       <div
-        className="relative"
+        className="relative cursor-pointer"
         onClick={() => this.toggleTooltip()}
       >
         <img

@@ -66,19 +66,26 @@ class PatchNotes extends React.Component {
                   id={`category-${cat.title}`}
                   key={`category-${catIndex}`}
                 >
-                  {cat.title ?
-                    <p className="text-2xl tracking-wide">
-                      {cat.title}
-                    </p> :
-                    null
-                  }
+                  <div className="flex flex-no-wrap items-center">
+                    <div className="w-1/4 align-middle
+                      border-t-2 border-indigo-200" />
+                    {cat.title ?
+                      <p className="mx-3 text-indigo-800 text-2xl tracking-wide">
+                        {cat.title}
+                      </p> :
+                      null
+                    }
+                    <div className="flex-1 align-middle
+                      border-t-2 border-indigo-200" />
+                    </div>
                   {cat.sections.map((sec, secIndex) =>
                     <div
                       key={'cat-' + catIndex + '-sec-' + secIndex}
-                      className="m-2 p-2 border border-indigo-600 shadow-lg"
+                      className="mx-2 lg:mx-auto my-4 p-2 bg-indigo-100 shadow-xl
+                        max-w-6xl"
                     >
                       {sec.title ?
-                        <p className="text-lg tracking-wide mb-2">
+                        <p className="text-lg text-indigo-800 tracking-wide mb-2">
                           {sec.title}
                         </p> :
                         null

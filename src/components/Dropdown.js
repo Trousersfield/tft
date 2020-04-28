@@ -50,7 +50,8 @@ class Dropdown extends React.Component {
 
     return (
       <div className={`relative inline-block cursor-pointer ${size}`}>
-        <div className="w-full flex flex-no-wrap justify-between items-center py-1 px-3 border border-gray-900 rounded"
+        <div className="w-full flex flex-no-wrap justify-between items-center
+          py-1 px-3 bg-white border border-gray-900 rounded"
           onClick={this.showDropdownMenu}>
           <p className="mr-2">{header}</p>
           {displayMenu ?

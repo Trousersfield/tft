@@ -43,7 +43,7 @@ module.exports = {
         'Caitlyn now resumes attacking more quickly after firing her bullet',
         'Xayah Attack Speed: 0.75 ⇒ 0.8',
         'Ziggs Total Mana: 40 ⇒ 45',
-        'Zoe StartingMana/Total: 90/120 ⇒ 70/100',
+        'Zoe Starting Mana/Total: 90/120 ⇒ 70/100',
         'Zoe Spell Damage: 150/225/300 ⇒ 150/225/400'
       ]
     }, {

@@ -174,13 +174,15 @@ class CombChart extends React.Component {
     const { selectedLeague, selectedComb } = this.state
 
     return (
-      <div className="flex flex-col">
-        <Suspense fallback={<div>Loading League Selector ...</div>}>
-          <LeagueSelector
-            preselect={selectedLeague}
-            onSelected={this.setSelected}
-          />
-        </Suspense>
+      <div className="relative flex flex-col">
+        <div className="absolute top-0 right-0 z-10">
+          <Suspense fallback={<div>Loading League Selector ...</div>}>
+            <LeagueSelector
+              preselect={selectedLeague}
+              onSelected={this.setSelected}
+            />
+          </Suspense>
+        </div>
         <div className="relative w-full">
           <canvas ref={this.chartRef} />
         </div>
