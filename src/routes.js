@@ -5,6 +5,7 @@ const Items = React.lazy(() => import('./views/Items'))
 const ChampionsByTier = React.lazy(() => import('./views/ChampionsByTier'))
 const ChampionProfile = React.lazy(() => import('./views/ChampionProfile'))
 const PatchNotes = React.lazy(() => import('./views/PatchNotes'))
+const PatchEffect = React.lazy(() => import('./views/PatchEffect'))
 
 export default {
   mode: 'history',
@@ -34,6 +35,11 @@ export default {
       path: '/patch-notes',
       name: 'Patch Notes',
       component: PatchNotes,
+      exact: true
+    }, {
+      path: '/patch-notes/classify/:patch-number',
+      name: 'Classify',
+      component: PatchEffect,
       exact: true
     }
   ]

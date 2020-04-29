@@ -1,6 +1,7 @@
 import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 import patches from '../static/patchNotes/'
+import { NavLink } from 'react-router-dom'
 
 class PatchNotes extends React.Component {
   constructor(props) {
@@ -43,6 +44,15 @@ class PatchNotes extends React.Component {
     return (
       <div className="flex relative h-full">
         <div className="h-full bg-gray-200">
+          {selectedPatch &&
+            <NavLink
+              to={`/patch-notes/classify/${selectedPatch.number}`}
+              exact
+              className="p-2 mx-1"
+            >
+              Classify {selectedPatch.number}
+            </NavLink>
+          }
           <ul className="w-20 mt-10 mx-3 border-r-2 border-gray-500 text-xl">
             {patchNumbers.map(number =>
               <li key={`patch-list-item-${number}`}

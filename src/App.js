@@ -68,14 +68,14 @@ class App extends React.Component {
           </div>
 
           <div className="relative h-full overflow-auto pb-16">
-            {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 {routes.map((route) =>
-                  <RouteWithSubRoutes
+                  <Route
                     key={'route-to-' + route.path}
-                    {...route}
+                    path={route.path}
+                    exact={route.exact}
+                    render={() => <route.component />}
                   />
                 )}
               </Switch>
@@ -85,27 +85,6 @@ class App extends React.Component {
       </Router>
     )
   }
-}
-
-const RouteWithSubRoutes = (route) => {
-  return (
-    <Route
-      path={route.path}
-      render={(props) => (
-        <>
-          <route.component {...props} exact />
-          <Switch>
-            {route.routes && route.routes.map((subRoute) =>
-              <RouteWithSubRoutes
-                key={'route-to-' + subRoute.path}
-                {...subRoute}
-              />
-            )}
-          </Switch>
-        </>
-      )}
-    />
-  )
 }
 
 const TopMenuItem = (item) => {
