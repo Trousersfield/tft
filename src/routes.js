@@ -11,11 +11,6 @@ export default {
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'Combs',
-      component: Combs,
-      exact: true
-    }, {
       path: '/items',
       name: 'Items',
       component: Items,
@@ -37,9 +32,15 @@ export default {
       component: PatchNotes,
       exact: true
     }, {
-      path: '/patch-notes/classify/:patch-number',
+      path: '/patch-notes/classify/:patchNumber',
+      category: '/patch-notes',
       name: 'Classify',
       component: PatchEffect,
+      exact: true
+    }, {
+      path: '/',
+      name: 'Combs',
+      component: Combs,
       exact: true
     }
   ]
