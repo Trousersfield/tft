@@ -3,6 +3,8 @@ import patches from '../static/patchNotes/'
 import { cache as dataCache } from '../util/setDataImporter'
 import { GoArrowUp, GoArrowDown, GoArrowRight } from 'react-icons/go'
 
+import axios from 'axios'
+
 
 const stats = (value) => {
   const STATS = {
@@ -25,11 +27,17 @@ class PatchEffect extends React.Component {
       patch: null,
       notes: null,
       classes: null,
-      classification: null
+      classification: null,
+      loadedClasses: null
     }
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    const { data } = await axios
+      .get(`http://localhost:8080/patch/effects/${this.state.patchNumber}`)
+
+    if (data) this.setState({ loadedClasses: data })
+
     this.setState(state => {
       const patch = patches.find(p => p.number === state.patchNumber)
 
@@ -58,6 +66,7 @@ class PatchEffect extends React.Component {
         result[1] = result[1].concat(notes)
         return result
       }, [{}, []])
+      console.log('classes: ', classes)
       return { patch, notes, classes }
     }, () => this.makeDefaultClassification())
   }
@@ -166,13 +175,20 @@ class PatchEffect extends React.Component {
     })
   }
 
-  save () {
-
+  async save () {
+    const { data } = await axios.post(
+      `http://localhost:8080/patch/classify/${this.state.patchNumber}`,
+      { data: this.state.classification })
+    if (data) console.log('result: ', data)
   }
 
   render () {
-    const { patchNumber, notes, classification } = this.state
-    console.log('classification: ', classification)
+    const {
+      patchNumber,
+      notes,
+      classification,
+      loadedClasses,
+    } = this.state
 
     return (
       <div className="flex flex-col mx-5 pb-10">
@@ -191,7 +207,10 @@ class PatchEffect extends React.Component {
               Notes
             </div>
             <div className="w-1/4">Subject</div>
-            <div className="w-1/4">Class</div>
+            <div className="w-1/4 flex justify-between">
+              <div>Computed</div>
+              <div>Saved Class</div>
+            </div>
           </div>
           {notes && classification && notes.map((note, index) =>
             <div
@@ -206,7 +225,7 @@ class PatchEffect extends React.Component {
               <div className="w-1/4">
                 {classification[index].subject}
               </div>
-              <div className="w-1/4">
+              <div className="w-1/4 flex justify-between items-center">
                 <button
                   className={`w-24 inline-flex items-center px-3 py-1
                     rounded text-white font-bold
@@ -220,6 +239,12 @@ class PatchEffect extends React.Component {
                   <StatusIcon value={classification[index].value}/>
                   <span className="ml-2">{classification[index].value}</span>
                 </button>
+                {loadedClasses[classification[index].dataStructure.key2] &&
+                  <StatusIcon
+                    value={loadedClasses[classification[index].dataStructure.key2]}
+                    colored={true}
+                  />
+                }
               </div>
             </div>
           )}
@@ -240,20 +265,21 @@ class PatchEffect extends React.Component {
 }
 
 const StatusIcon = (props) => {
+  const colored = props.colored
 
   switch (props.value) {
     case 'buff':
       return (
-        <GoArrowUp />
+        <GoArrowUp className={colored ? 'text-green-500' : ''}/>
       )
     case 'nerf':
       return (
-        <GoArrowDown />
+        <GoArrowDown className={colored ? 'text-red-500' : ''}/>
       )
     case 'neutral':
     default:
       return (
-        <GoArrowRight />
+        <GoArrowRight className={colored ? 'text-gray-500' : ''}/>
       )
   }
 }
