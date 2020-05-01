@@ -1,5 +1,6 @@
 import React from 'react'
 
+const News = React.lazy(() => import('./views/News'))
 const Combs = React.lazy(() => import('./views/Combs'))
 const Items = React.lazy(() => import('./views/Items'))
 const ChampionsByTier = React.lazy(() => import('./views/ChampionsByTier'))
@@ -11,6 +12,11 @@ export default {
   mode: 'history',
   routes: [
     {
+      path: '/combs',
+      name: 'Combs',
+      component: Combs,
+      exact: true
+    }, {
       path: '/items',
       name: 'Items',
       component: Items,
@@ -39,8 +45,8 @@ export default {
       exact: true
     }, {
       path: '/',
-      name: 'Combs',
-      component: Combs,
+      noMenu: true,
+      component: News,
       exact: true
     }
   ]

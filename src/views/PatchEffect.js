@@ -33,10 +33,7 @@ class PatchEffect extends React.Component {
   }
 
   async componentDidMount () {
-    const { data } = await axios
-      .get(`http://localhost:8080/patch/effects/${this.state.patchNumber}`)
-
-    if (data) this.setState({ loadedClasses: data })
+    await this.loadSavedClasses()
 
     this.setState(state => {
       const patch = patches.find(p => p.number === state.patchNumber)
@@ -66,9 +63,17 @@ class PatchEffect extends React.Component {
         result[1] = result[1].concat(notes)
         return result
       }, [{}, []])
-      console.log('classes: ', classes)
       return { patch, notes, classes }
     }, () => this.makeDefaultClassification())
+  }
+
+  async loadSavedClasses () {
+    const result = await axios
+      .get(`http://localhost:8080/patch/effects/${this.state.patchNumber}`)
+
+    console.log('result: ', result)
+    const data = result.data
+    if (data && data !== '') this.setState({ loadedClasses: result.data })
   }
 
   isClassifiable (category) {
@@ -102,12 +107,15 @@ class PatchEffect extends React.Component {
   }
 
   computeClassStructure (category, section, note) {
+    const RESERVED_STRING = 'of the and'
+
     const cat = category.toLowerCase()
-    const lowerNote = note.toLowerCase()
+    const lowerNote = note.toLowerCase().replace(/[`´'"’]/, '')
     const structure = Object.keys(this.state.classes[cat])
       .reduce((result, curr) => {
         if (result[0]) return result
-        const name = this.state.classes[cat][curr].name.toLowerCase()
+        const name = this.state.classes[cat][curr].name
+          .toLowerCase().replace(/[`´'"’]/, '')
         // section might specify subject
         const sec = section ? section.toLowerCase() : ''
         if (lowerNote.includes(name) ||
@@ -120,10 +128,8 @@ class PatchEffect extends React.Component {
           const splitName = name.split(' ')
           if (splitName.length > 1) {
             splitName.forEach(partition => {
-              if (!result[0]) {
-                const cleanedPartition = partition.replace(/[`'"]/, '')
-                if (lowerNote.includes(partition) ||
-                  lowerNote.includes(cleanedPartition)) {
+              if (!result[0] && !RESERVED_STRING.includes(partition)) {
+                if (lowerNote.includes(partition)) {
                     result[0] = name
                     result[1] = { key1: cat, key2: curr }
                   }
@@ -176,10 +182,11 @@ class PatchEffect extends React.Component {
   }
 
   async save () {
-    const { data } = await axios.post(
+    await axios.post(
       `http://localhost:8080/patch/classify/${this.state.patchNumber}`,
       { data: this.state.classification })
-    if (data) console.log('result: ', data)
+
+    await this.loadSavedClasses()
   }
 
   render () {
@@ -209,7 +216,10 @@ class PatchEffect extends React.Component {
             <div className="w-1/4">Subject</div>
             <div className="w-1/4 flex justify-between">
               <div>Computed</div>
-              <div>Saved Class</div>
+              {loadedClasses ?
+                <div>Saved Class</div>
+              : <div>Nothing Saved</div>
+              }
             </div>
           </div>
           {notes && classification && notes.map((note, index) =>
@@ -239,7 +249,8 @@ class PatchEffect extends React.Component {
                   <StatusIcon value={classification[index].value}/>
                   <span className="ml-2">{classification[index].value}</span>
                 </button>
-                {loadedClasses[classification[index].dataStructure.key2] &&
+                {loadedClasses &&
+                loadedClasses[classification[index].dataStructure.key2] &&
                   <StatusIcon
                     value={loadedClasses[classification[index].dataStructure.key2]}
                     colored={true}

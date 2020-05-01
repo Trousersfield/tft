@@ -39,6 +39,7 @@ class App extends React.Component {
         const contained = result.find(r => r.path === curr.category)
         if (contained) return result
       }
+      if (curr.noMenu) return result
       result.push(curr)
       return result
     }, [])
@@ -50,7 +51,12 @@ class App extends React.Component {
             text-indigo-800">
             <nav className="flex-1 flex text-xl">
               <div className="mx-2 my-auto xs:hidden sm:hidden md:block">
-                <p className="uppercase tracking-wide">Team Fight Stats</p>
+                <NavLink
+                  to={'/'}
+                  className="uppercase tracking-wide"
+                >
+                  Team Fight Stats
+                </NavLink>
               </div>
               {menuItems.map((route) =>
                 <TopMenuItem key={'menu-item-' + route.path}
@@ -91,7 +97,6 @@ const TopMenuItem = (item) => {
   return (
     <NavLink
       to={item.path || ''}
-      exact
       activeClassName="font-semibold border-b-2 border-indigo-800"
       className="p-2 mx-1 my-auto whitespace-no-wrap"
     >
