@@ -1,26 +1,42 @@
 import React from 'react'
 import patches from '../static/patchNotes/'
 import { cache as dataCache } from '../util/setDataImporter'
+import { GoArrowUp, GoArrowDown, GoArrowRight } from 'react-icons/go'
+
+
+const stats = (value) => {
+  const STATS = {
+    mana: 'lt',
+    attack: 'gt',
+    health: 'gt',
+    armor: 'gt',
+    magicresist: 'gt',
+    spellpower: 'gt'
+  }
+  const stat = value.toLowerCase().trim()
+  return STATS[stat]
+}
 
 class PatchEffect extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       patchNumber: this.props.match.params.patchNumber,
-      patch: undefined,
+      patch: null,
+      notes: null,
+      classes: null,
       classification: null
     }
   }
 
   componentDidMount () {
-    console.log('patches: ', patches)
     this.setState(state => {
       const patch = patches.find(p => p.number === state.patchNumber)
-      const classification = patch.categories.reduce((result, curr) => {
+
+      // set possible classification classes from data cache
+      const [ classes, notes ] = patch.categories.reduce((result, curr) => {
         if (!this.isClassifiable(curr.title)) return result
         const categoryData = dataCache[curr.title.toLowerCase()]
-        // console.log('category data: ', categoryData)
-        console.log('curr title: ', curr.title)
 
         if (!categoryData) return result
         const subjects = categoryData.reduce((result, curr) => {
@@ -29,11 +45,21 @@ class PatchEffect extends React.Component {
           return result
         }, {})
 
-        result[curr.title.toLocaleLowerCase()] = subjects
+        const notes = curr.sections.reduce((secResult, section) => {
+          const noteResults = section.notes.reduce((noteResult, note) => {
+            noteResult.push(note)
+            return noteResult
+          }, [])
+          secResult = secResult.concat(noteResults)
+          return secResult
+        }, [])
+
+        result[0][curr.title.toLocaleLowerCase()] = subjects
+        result[1] = result[1].concat(notes)
         return result
-      }, {})
-      return { patch, classification }
-    })
+      }, [{}, []])
+      return { patch, notes, classes }
+    }, () => this.makeDefaultClassification())
   }
 
   isClassifiable (category) {
@@ -41,83 +67,194 @@ class PatchEffect extends React.Component {
       c === category.toLowerCase()) > -1
   }
 
-  setSubject (category, subject, value) {
-    const cat = category.toLowerCase()
-    switch (cat) {
-      case 'traits':
-        return 'Set3_'
-      case 'items':
-        return ''
-    }
+  makeDefaultClassification () {
+    this.setState(state => {
+      if (!state.patch) return
+      const classification = state.patch.categories
+        .reduce((catResult, category) => {
+          if (!this.isClassifiable(category.title)) return catResult
+          const secResults = category.sections.reduce((secResult, section) => {
+            const noteResults = section.notes.reduce((noteResult, note) => {
+              const { subject, dataStructure } =
+                this.computeClassStructure(category.title, section.title, note)
+              const digitTrend = this.computeDigitTrend(note, subject)
+              const value = this.getClass(digitTrend)
+              noteResult.push({ subject, value, dataStructure })
+              return noteResult
+            }, [])
+            secResult = secResult.concat(noteResults)
+            return secResult
+          }, [])
+          catResult = catResult.concat(secResults)
+          return catResult
+        }, [])
+      return { classification }
+    })
   }
 
-  getSubject (category, note) {
+  computeClassStructure (category, section, note) {
     const cat = category.toLowerCase()
     const lowerNote = note.toLowerCase()
-    const subject = Object.keys(this.state.classification[cat])
+    const structure = Object.keys(this.state.classes[cat])
       .reduce((result, curr) => {
-        if (result) return result
-        const name = this.state.classification[cat][curr].name.toLowerCase()
-        if (lowerNote.includes(name)) result = name
+        if (result[0]) return result
+        const name = this.state.classes[cat][curr].name.toLowerCase()
+        // section might specify subject
+        const sec = section ? section.toLowerCase() : ''
+        if (lowerNote.includes(name) ||
+          sec.includes(name)) {
+            result[0] = name
+            result[1] = { key1: cat, key2: curr }
+          }
+        else {
+          // try splitting name on whitespace if shorthands are used
+          const splitName = name.split(' ')
+          if (splitName.length > 1) {
+            splitName.forEach(partition => {
+              if (!result[0]) {
+                const cleanedPartition = partition.replace(/[`'"]/, '')
+                if (lowerNote.includes(partition) ||
+                  lowerNote.includes(cleanedPartition)) {
+                    result[0] = name
+                    result[1] = { key1: cat, key2: curr }
+                  }
+              }
+            })
+          }
+        }
         return result
-      }, undefined)
-    // console.log('category: ', cat, 'note: ', note, 'subject: ', subject)
-    return subject
+      }, [undefined, undefined])
+    return { subject: structure[0], dataStructure: structure[1] }
   }
 
-  computeDigitTrend (note) {
+  computeDigitTrend (note, subject) {
     const digits = note.match(/\d+/g)
     if (!digits) return
     const prefix = digits.slice(0, digits.length / 2)
     const suffix = digits.slice(digits.length / 2)
-    console.log('prefix: ', prefix, ' suffix: ', suffix)
-    return prefix < suffix ? 1 : prefix === suffix ? 0 : -1
+
+    switch (stats[subject]) {
+      case 'lt':
+        return prefix > suffix ? 1 : prefix === suffix ? 0 : -1
+      case 'gt':
+      default:
+        return prefix < suffix ? 1 : prefix === suffix ? 0 : -1
+    }
+  }
+
+  getClass (value) {
+    switch (value) {
+      case -2:
+        return 'rework'
+      case -1:
+        return 'nerf'
+      case 1:
+        return 'buff'
+      case 0:
+      default:
+        return 'neutral'
+    }
+  }
+
+  toggleClass (index) {
+    const classMapping = { nerf: 1, buff: 0, neutral: -1 }
+    this.setState(state => {
+      let classification = state.classification
+      const currentValue =  classification[index].value
+      classification[index].value = this.getClass(classMapping[currentValue])
+      return { classification }
+    })
+  }
+
+  save () {
+
   }
 
   render () {
-    const { patch, classification } = this.state
+    const { patchNumber, notes, classification } = this.state
     console.log('classification: ', classification)
 
     return (
-      <div className="flex flex-col relative h-full">
-        {patch ?
+      <div className="flex flex-col mx-5 pb-10">
+        {patchNumber ?
         <>
-          <div key={patch.number}>Classify {patch.number}</div>
-          {patch.categories.map(category =>
-            <div key={category.title}>
-              {this.isClassifiable(category.title) &&
-              <>
-                <div>Classify category {category.title}</div>
-                {category.sections.map((section, sectionIndex) =>
-                  <div key={category.title + '-' + sectionIndex}>
-                    Classify section {section.title}
-                    {section.notes.map((note, noteIndex) =>
-                      <div
-                        key={section.title + '-note-' + noteIndex}
-                        className="flex"
-                      >
-                        <div className="w-1/2">
-                          {note}
-                        </div>
-                        <div className="w-1/2 flex flex-no-wrap">
-                          subject: {this.getSubject(category.title, note)}
-                          digits: {this.computeDigitTrend(note)}
-                          <button></button>
-                          <button></button>
-                          <button></button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </>
+          <div
+            key={patchNumber}
+            className="my-5"
+          >
+            <p className="text-xl mx-auto">
+              Classify {patchNumber}
+            </p>
+          </div>
+          <div className="flex mb-2 text-lg">
+            <div className="w-1/2">
+              Notes
+            </div>
+            <div className="w-1/4">Subject</div>
+            <div className="w-1/4">Class</div>
+          </div>
+          {notes && classification && notes.map((note, index) =>
+            <div
+              key={'note-' + index}
+              className={`flex items-center p-2
+                ${index % 2 === 0 ? 'bg-gray-200' : ''}`
               }
+            >
+              <div className="w-1/2 align-middle">
+                {note}
+              </div>
+              <div className="w-1/4">
+                {classification[index].subject}
+              </div>
+              <div className="w-1/4">
+                <button
+                  className={`w-24 inline-flex items-center px-3 py-1
+                    rounded text-white font-bold
+                    ${classification[index].value === 'buff' ?
+                      'bg-green-500 hover:bg-green-600' :
+                      classification[index].value === 'nerf' ?
+                        'bg-red-500 hover:bg-red-600' :
+                        'bg-gray-500 hover:bg-gray-600'}`}
+                  onClick={() => this.toggleClass(index)}
+                >
+                  <StatusIcon value={classification[index].value}/>
+                  <span className="ml-2">{classification[index].value}</span>
+                </button>
+              </div>
             </div>
           )}
+          <div className="mt-2 pt-2 px-3 flex justify-end border-t-2 border-gray-400">
+            <button
+              className="py-3 px-6 rounded text-white font-bold text-white
+                bg-blue-500 hover:bg-blue-600"
+              onClick={() => this.save()}
+            >
+              Save
+            </button>
+          </div>
         </>
         : <div>Patch Selection went wrong :(</div>}
       </div>
     )
+  }
+}
+
+const StatusIcon = (props) => {
+
+  switch (props.value) {
+    case 'buff':
+      return (
+        <GoArrowUp />
+      )
+    case 'nerf':
+      return (
+        <GoArrowDown />
+      )
+    case 'neutral':
+    default:
+      return (
+        <GoArrowRight />
+      )
   }
 }
 
