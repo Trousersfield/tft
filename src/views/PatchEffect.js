@@ -1,7 +1,12 @@
 import React from 'react'
 import patches from '../static/patchNotes/'
 import { cache as dataCache } from '../util/setDataImporter'
-import { GoArrowUp, GoArrowDown, GoArrowRight } from 'react-icons/go'
+import {
+  GoArrowUp,
+  GoArrowDown,
+  GoArrowRight,
+  GoSync
+} from 'react-icons/go'
 
 import axios from 'axios'
 
@@ -113,7 +118,7 @@ class PatchEffect extends React.Component {
   }
 
   computeClassStructure (category, section, note) {
-    const RESERVED_STRING = 'of the and'
+    const RESERVED_STRING = 'of the and iv'
 
     const cat = category.toLowerCase()
     const lowerNote = note.toLowerCase().replace(/[`´'"’]/, '')
@@ -187,6 +192,22 @@ class PatchEffect extends React.Component {
     })
   }
 
+  applySavedClasses () {
+    this.setState(state => {
+      const setClasses = state.classification.reduce((result, entry) => {
+        const key = entry.dataStructure.key2
+        const loadedClass = state.loadedClasses[key]
+        if (loadedClass && entry.value !== loadedClass) {
+          const newEntry = entry
+          newEntry.value = loadedClass
+          result.push(newEntry)
+        } else result.push(entry)
+        return result
+      }, [])
+      return { classification: setClasses }
+    })
+  }
+
   async save () {
     if (this.state.saving) return
     this.setState({ saving: true })
@@ -234,7 +255,16 @@ class PatchEffect extends React.Component {
               {loadingClasses ?
                 <div>Loading ...</div>
                 : loadedClasses ?
-                    <div>Saved Class</div>
+                    <div className="flex flex-col">
+                      <p className="mx-auto">Saved</p>
+                      <button className="inline-flex items-center bg-blue-500
+                        text-white font-semibold rounded px-2 py-1"
+                        onClick={() => this.applySavedClasses()}
+                      >
+                        <GoSync className="mr-2"/>
+                        Apply
+                      </button>
+                    </div>
                   : <div>No Save found</div>
               }
             </div>
