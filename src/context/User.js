@@ -1,12 +1,12 @@
 import { createContext } from 'react'
+import patches from '../static/patchNotes/'
 
 export const user = {
-  name: 'Max Mustermann',
-  patch: '10.7'
+  name: '',
+  patch: patches.length > 0 ? patches[0].number : ''
 }
 
 export const UserContext = createContext({
-  // patch: user.patch,
   user,
   setUser: () => {}
 })

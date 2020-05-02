@@ -4,6 +4,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { makePercent } from '../../util/formatter'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
 
+import { UserContext } from '../../context/User'
+
 import DATA from '../../static/ComboStatsDiamond.json'
 
 // components
@@ -58,7 +60,7 @@ class CombChart extends React.Component {
     const bestX = this.state.bestX
     const slicedData = bestX < data.length ? data.slice(0, bestX) : data
 
-    // construct gained and lost LP datasets and sum
+    // construct gained-LP, lost-LP and sum datasets
     const [ win, loss, sum ] = slicedData.reduce((result, curr) => {
       result[0].push(curr.placement1Amount + curr.placement2Amount +
         curr.placement3Amount + curr.placement4Amount)
@@ -127,9 +129,7 @@ class CombChart extends React.Component {
             stacked: true,
             ticks: {
               beginAtZero: true,
-              // stepSize: 5,
               stepSize: 100
-              // suggestedMax: 15
             }
           }],
           xAxes: [{
@@ -197,5 +197,6 @@ class CombChart extends React.Component {
     )
   }
 }
+CombChart.contextType = UserContext
 
 export default CombChart

@@ -19,7 +19,11 @@ class App extends React.Component {
     super (props)
 
     this.setUser = (payload) => {
-      this.setState({ [payload.key]: payload.value })
+      this.setState(state => {
+        const user = state.user
+        Object.assign(user, payload)
+        return { user }
+      })
     }
 
     this.state = {

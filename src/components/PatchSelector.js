@@ -27,7 +27,7 @@ class PatchSelector extends React.Component {
           <Dropdown
             options={dropdownOptions}
             preselect={user.patch}
-            onSelected={(value) => setUser({ key: 'patch', value: value })}
+            onSelected={(value) => setUser({ patch: value })}
             size='sm'
           />
         )}
