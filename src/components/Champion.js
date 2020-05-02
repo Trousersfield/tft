@@ -1,8 +1,14 @@
 import React, { Suspense } from 'react'
 import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
 import { costColor } from '../util/styles'
-import { GoStar } from 'react-icons/go'
 import { NavLink } from 'react-router-dom'
+import {
+  GoStar,
+  GoArrowUp,
+  GoArrowDown
+} from 'react-icons/go'
+import axios from 'axios'
+
 
 const Traits = React.lazy(() => import('./Traits'))
 const TraitInfo = React.lazy(() => import('../components/TraitInfo'))
@@ -12,7 +18,9 @@ class Champion extends React.Component {
     super (props)
     this.state = {
       showDetails: false,
-      data: this.props.data
+      data: this.props.data,
+      patchEffects: null,
+      loadingPatchEffects: false
     }
 
     if (!imageCache['champions']) importImages('champions')
@@ -20,6 +28,20 @@ class Champion extends React.Component {
 
   componentDidMount () {
     this.setState({ showDetails: this.props.showDetails })
+    this.loadPatchEffects()
+  }
+
+  async loadPatchEffects () {
+    this.setState({ loadingEffects: true })
+    try {
+      const { data } = await axios
+        .get(`http://localhost:8080/patch/effects/${'10.8'}`)
+
+      if (data && data !== '') this.setState({ patchEffects: data })
+    } catch (error) {
+      console.error(error)
+    }
+    this.setState({ loadingEffects: false })
   }
 
   toggleDetails () {
@@ -27,41 +49,42 @@ class Champion extends React.Component {
   }
 
   render () {
-    const { name, cost, traits } = this.props.champion
+    const { championId, name, cost, traits } = this.props.champion
     const { tier1Count, tier2Count, tier3Count } = this.props.data
-    const { showDetails } = this.state
+    const { showDetails, patchEffects } = this.state
     const imageName = getImageName(name)
     const color = costColor(cost)
 
     return (
-      <div className="flex flex-col mx-4 my-2">
-        <div className="flex xs:flex-wrap sm:flex-wrap md:flex-no-wrap items-center">
-          <div
-            className={`bg-${color}-200 border-2 border-${color}-900
-              xs:w-1/2 sm:w-1/3 md:w-1/5 lg:w-1/6
-              flex flex-no-wrap items-center rounded-full cursor-pointer`}
-            onClick={() => this.toggleDetails()}
-          >
-            <div className="overflow-hidden rounded-full">
-              <img
-                src={imageCache['champions'][imageName]}
-                alt={name}
-              />
+      <div className="flex flex-col my-2">
+        <div className="flex flex-wrap items-center justify-between">
+          <div className="flex flex-wrap items-center">
+            <div
+              className={`relative bg-${color}-200 border-2 border-${color}-900
+                w-56 flex flex-no-wrap items-center rounded-full cursor-pointer`}
+              onClick={() => this.toggleDetails()}
+            >
+              <div className="overflow-hidden rounded-full">
+                <img
+                  src={imageCache['champions'][imageName]}
+                  alt={name}
+                />
+              </div>
+              <div className="mx-auto">
+                <p>{name}</p>
+              </div>
+              {patchEffects && <BuffOrNerf value={patchEffects[championId]}/>}
             </div>
-            <div className="mx-auto">
-              <p>{name}</p>
+            <div className="flex-shrink-0">
+              <Suspense fallback={<div>Loading Traits ...</div>}>
+                <Traits data={traits} />
+              </Suspense>
             </div>
           </div>
-          <div className="flex-1">
-            <Suspense fallback={<div>Loading Traits ...</div>}>
-              <Traits data={traits} />
-            </Suspense>
-          </div>
-          <div className={`xs:w-full xs:mt-2 sm:w-full md:w-1/2 lg:w-1/3
-            flex flex-no-wrap items-center border-2
+          <div className={`flex flex-no-wrap items-center border-2
             border-${color}-500 rounded-full`}>
-            <p className="pl-4 pr-2 text-center">Star Count</p>
-            <div className={`flex-1 flex justify-between p-3 tracking-wider
+            <p className="pl-4 pr-2 text-center">Played</p>
+            <div className={`w-64 flex justify-between p-3
               bg-${color}-500 font-bold text-white rounded-r-full`}>
               <StarsCount
                 tierCount={1}
@@ -112,15 +135,41 @@ const StarsCount = (props) => {
   const stars = Array(props.tierCount).fill(0)
   const quantity = props.quantity
   return (
-    <div className="flex flex-no-wrap">
-      <div className="inline-flex justify-center mr-1">
+    <div className="flex flex-col w-1/3">
+      <div className="inline-flex justify-center">
         {stars.map((x, index) =>
-          <GoStar key={'star-' + index} className="m-auto"/>
+          <GoStar key={'star-' + index} className="my-auto"/>
         )}
       </div>
-      <p className="text-center">{quantity}</p>
+      <p className="text-center">{quantity || 0}</p>
     </div>
   )
+}
+
+const BuffOrNerf = (props) => {
+  const { value } = props
+  const classes = "w-6 h-6 absolute pr-1 right-0 my-auto z-10"
+
+  switch (value) {
+    case 'buff':
+      return (
+        <GoArrowUp
+          className={`${classes} text-green-500`}
+          title='Buffed last patch'
+        />
+      )
+    case 'nerf':
+      return (
+        <GoArrowDown
+          className={`${classes} text-red-500`}
+          title='Nerfed last patch'
+        />
+      )
+    default:
+      return (
+        null
+      )
+  }
 }
 
 export default Champion

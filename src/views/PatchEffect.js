@@ -28,12 +28,14 @@ class PatchEffect extends React.Component {
       notes: null,
       classes: null,
       classification: null,
-      loadedClasses: null
+      loadedClasses: null,
+      loadingClasses: false,
+      errors: { loadedClasses: null }
     }
   }
 
   async componentDidMount () {
-    await this.loadSavedClasses()
+    this.loadSavedClasses()
 
     this.setState(state => {
       const patch = patches.find(p => p.number === state.patchNumber)
@@ -68,12 +70,16 @@ class PatchEffect extends React.Component {
   }
 
   async loadSavedClasses () {
-    const result = await axios
-      .get(`http://localhost:8080/patch/effects/${this.state.patchNumber}`)
+    this.setState({ loadingClasses: true })
+    try {
+      const { data } = await axios
+        .get(`http://localhost:8080/patch/effects/${this.state.patchNumber}`)
 
-    console.log('result: ', result)
-    const data = result.data
-    if (data && data !== '') this.setState({ loadedClasses: result.data })
+      if (data && data !== '') this.setState({ loadedClasses: data })
+    } catch (error) {
+      console.error(error)
+    }
+    this.setState({ loadingClasses: false })
   }
 
   isClassifiable (category) {
@@ -182,11 +188,18 @@ class PatchEffect extends React.Component {
   }
 
   async save () {
-    await axios.post(
-      `http://localhost:8080/patch/classify/${this.state.patchNumber}`,
-      { data: this.state.classification })
+    if (this.state.saving) return
+    this.setState({ saving: true })
+    try {
+      await axios.post(
+        `http://localhost:8080/patch/classify/${this.state.patchNumber}`,
+        { data: this.state.classification })
 
-    await this.loadSavedClasses()
+        this.loadSavedClasses()
+    } catch (error) {
+      console.error(error)
+    }
+    this.setState({ saving: false })
   }
 
   render () {
@@ -195,6 +208,8 @@ class PatchEffect extends React.Component {
       notes,
       classification,
       loadedClasses,
+      loadingClasses,
+      saving
     } = this.state
 
     return (
@@ -216,9 +231,11 @@ class PatchEffect extends React.Component {
             <div className="w-1/4">Subject</div>
             <div className="w-1/4 flex justify-between">
               <div>Computed</div>
-              {loadedClasses ?
-                <div>Saved Class</div>
-              : <div>Nothing Saved</div>
+              {loadingClasses ?
+                <div>Loading ...</div>
+                : loadedClasses ?
+                    <div>Saved Class</div>
+                  : <div>No Save found</div>
               }
             </div>
           </div>
@@ -261,11 +278,13 @@ class PatchEffect extends React.Component {
           )}
           <div className="mt-2 pt-2 px-3 flex justify-end border-t-2 border-gray-400">
             <button
-              className="py-3 px-6 rounded text-white font-bold text-white
-                bg-blue-500 hover:bg-blue-600"
+              className={`py-3 w-28 rounded text-white font-bold text-white
+                bg-blue-500 hover:bg-blue-600
+                ${saving ? 'disabled' : ''}
+              `}
               onClick={() => this.save()}
             >
-              Save
+              {saving ? 'Saving ...' : 'Save' }
             </button>
           </div>
         </>

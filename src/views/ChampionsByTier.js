@@ -24,7 +24,12 @@ class Champions extends React.Component {
     const { selectedLeague, championsByCost } = this.state
 
     return (
-      <div className="flex flex-col">
+      <div className="relative mx-auto flex flex-col
+        xs:w-full
+        sm:w-full sm:px-2
+        md:w-full md:px-4
+        lg:w-full lg:px-4
+        xl:w-3/5">
         <div className="flex justify-between">
           <LeagueSelector
             preselect={selectedLeague}

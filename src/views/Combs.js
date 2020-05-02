@@ -23,12 +23,10 @@ class Combs extends React.Component {
 
   render () {
     return (
-      <div className="w-full">
-        <div className="lg:w-full xl:w-3/5 mx-auto pt-10">
-          <Suspense fallback={<div>Loading Comb...</div>}>
-            <CombChart />
-          </Suspense>
-        </div>
+      <div className="lg:w-full xl:w-3/5 mx-auto pt-10">
+        <Suspense fallback={<div>Loading Comb...</div>}>
+          <CombChart />
+        </Suspense>
       </div>
     )
   }

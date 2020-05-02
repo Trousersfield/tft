@@ -19,7 +19,7 @@ class Items extends React.Component {
     // console.log(ci)
 
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col mx-auto lg:w-full xl:w-3/5">
         <Suspense fallback={<div>Loading Item Chart...</div>}>
           <ItemChart/>
         </Suspense>

@@ -24,7 +24,7 @@ class TraitInfo extends React.Component {
     const traitData = dataCache['traits'].find(t => t.name === trait)
 
     return (
-      <div className="sm:w-full md:w-1/2 lg:w-1/3">
+      <div className="sm:w-full md:w-1/2 lg:w-1/2">
         <div className="m-2 border-2 border-gray-500
           shadow-lg rounded flex flex-col">
           <div className="flex flex-no-wrap items-center

@@ -47,7 +47,7 @@ class CombChart extends React.Component {
     })
   }
 
-  setSelected = (value) => {
+  setSelectedLeague = (value) => {
     this.setState({ selectedLeague: value })
   }
 
@@ -82,7 +82,7 @@ class CombChart extends React.Component {
       data: {
         labels: slicedData.map(comb => comb.name),
         datasets: [{
-          label: 'Mean',
+          label: 'Average',
           data: averageLineData,
           borderColor: 'red',
           borderCapStyle: 'round',
@@ -179,7 +179,7 @@ class CombChart extends React.Component {
           <Suspense fallback={<div>Loading League Selector ...</div>}>
             <LeagueSelector
               preselect={selectedLeague}
-              onSelected={this.setSelected}
+              onSelected={this.setSelectedLeague}
             />
           </Suspense>
         </div>

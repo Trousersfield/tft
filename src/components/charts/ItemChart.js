@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { buttonBase } from '../../util/styles'
@@ -9,6 +9,8 @@ import DATA from '../../static/itemPopularityDiamond.json'
 
 Chart.plugins.unregister(ChartDataLabels)
 
+const LeagueSelector = React.lazy(() => import('../../components/LeagueSelector'))
+
 let debounce = null
 
 class ItemChart extends React.Component {
@@ -16,6 +18,7 @@ class ItemChart extends React.Component {
     super (props)
     this.chartRef = React.createRef()
     this.state = {
+      selectedLeague: 'diamond',
       data: [],
       currentAverage: null,
       includeBasicItems: false,
@@ -53,6 +56,10 @@ class ItemChart extends React.Component {
     })
   }
 
+  setSelectedLeague = (value) => {
+    this.setState({ selectedLeague: value })
+  }
+
   toggleItemInclusion = async () => {
     this.setState(state => ({
       includeBasicItems: !state.includeBasicItems
@@ -75,7 +82,7 @@ class ItemChart extends React.Component {
     this.setState({ currentAverage: average })
 
     const [ counts, labels ] = data.reduce((result, curr) => {
-      result[0].push(curr.count - average)
+      result[0].push(curr.count)
       result[1].push(' ')
       return result
     }, [[], []])
@@ -119,11 +126,11 @@ class ItemChart extends React.Component {
           datalabels: {
             display: true,
             anchor: 'end',
-            align: 'left',
+            align: 'right',
             color: 'black',
             font: { size: '16' },
             formatter: (value, context) => {
-              return Math.floor(value + average)
+              return Math.floor(value)
             }
           }
         }
@@ -135,6 +142,7 @@ class ItemChart extends React.Component {
 
   render () {
     const {
+      selectedLeague,
       data,
       currentAverage,
       includeBasicItems,
@@ -145,14 +153,25 @@ class ItemChart extends React.Component {
 
     return (
       <div className="flex flex-col">
-        <div className="flex justify-between items-center p-5">
+        <div className="text-xl font-semibold leading-relaxed p-2 mt-2">
+          <p className="text-center">Absolute Numbers of Items</p>
+        </div>
+        <div className="flex justify-between items-center px-5 pb-5">
           <button
             className={buttonBase}
             onClick={this.toggleItemInclusion}
           >
             {(includeBasicItems ? 'Exclude' : 'Include') + ' Basic Items'}
           </button>
-          <p className="text-lg">Items in all compositions aggregated by average</p>
+          {/*<div className="absolute top-0 right-0 z-10">*/}
+          <div>
+            <Suspense fallback={<div>Loading League Selector ...</div>}>
+              <LeagueSelector
+                preselect={selectedLeague}
+                onSelected={this.setSelectedLeague}
+              />
+            </Suspense>
+          </div>
           <InfoTag
             title={'Average'}
             value={Math.floor(currentAverage)}
