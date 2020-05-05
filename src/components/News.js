@@ -82,9 +82,17 @@ class News extends React.Component {
 
     return (
       <div id="news-container" className="relative flex flex-no-wrap justify-center">
+        <SlideNavButton
+          direction="left"
+          onSlide={() => this.slideNews(false)}
+        />
         {displayedNews.map((content, index) =>
           <StatCard key={'news-' + index} content={content}/>
         )}
+        <SlideNavButton
+          direction="right"
+          onSlide={() => this.slideNews()}
+        />
       </div>
     )
   }
@@ -98,9 +106,24 @@ const StatCard = (props) => {
       <div className="w-full h-12 bg-indigo-400 flex flex-no-wrap items-center
         text-white text-lg font-semibold">
         <p className="mx-auto">Headline</p>
-        <p>{content}</p>
       </div>
+      <p>{content}</p>
     </div>
+  )
+}
+
+const SlideNavButton = (props) => {
+  const { direction } = props
+
+  return (
+    <button
+      onClick={props.onSlide}
+    >
+      {direction === 'left' ?
+        <GoChevronLeft /> :
+        <GoChevronRight />
+      }
+    </button>
   )
 }
 
