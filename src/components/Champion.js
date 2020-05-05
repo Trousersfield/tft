@@ -5,9 +5,10 @@ import { NavLink } from 'react-router-dom'
 import {
   GoStar,
   GoArrowUp,
-  GoArrowDown
+  GoArrowDown,
+  GoPrimitiveDot
 } from 'react-icons/go'
-import axios from 'axios'
+// import axios from 'axios'
 
 
 const Traits = React.lazy(() => import('./Traits'))
@@ -19,8 +20,7 @@ class Champion extends React.Component {
     this.state = {
       showDetails: false,
       data: this.props.data,
-      patchEffects: null,
-      loadingPatchEffects: false
+      patchEffect: this.props.patchEffect
     }
 
     if (!imageCache['champions']) importImages('champions')
@@ -28,20 +28,6 @@ class Champion extends React.Component {
 
   componentDidMount () {
     this.setState({ showDetails: this.props.showDetails })
-    this.loadPatchEffects()
-  }
-
-  async loadPatchEffects () {
-    this.setState({ loadingEffects: true })
-    try {
-      const { data } = await axios
-        .get(`http://localhost:8080/patch/effects/${'10.8'}`)
-
-      if (data && data !== '') this.setState({ patchEffects: data })
-    } catch (error) {
-      console.error(error)
-    }
-    this.setState({ loadingEffects: false })
   }
 
   toggleDetails () {
@@ -49,9 +35,9 @@ class Champion extends React.Component {
   }
 
   render () {
-    const { championId, name, cost, traits } = this.props.champion
+    const { name, cost, traits } = this.props.champion
     const { tier1Count, tier2Count, tier3Count } = this.props.data
-    const { showDetails, patchEffects } = this.state
+    const { showDetails, patchEffect } = this.state
     const imageName = getImageName(name)
     const color = costColor(cost)
 
@@ -73,7 +59,7 @@ class Champion extends React.Component {
               <div className="mx-auto">
                 <p>{name}</p>
               </div>
-              {patchEffects && <BuffOrNerf value={patchEffects[championId]}/>}
+              {patchEffect && <BuffOrNerf value={patchEffect}/>}
             </div>
             <div className="flex-shrink-0">
               <Suspense fallback={<div>Loading Traits ...</div>}>
@@ -148,7 +134,7 @@ const StarsCount = (props) => {
 
 const BuffOrNerf = (props) => {
   const { value } = props
-  const classes = "w-6 h-6 absolute pr-1 right-0 my-auto z-10"
+  const classes = "w-6 h-6 absolute pr-2 right-0 my-auto z-10"
 
   switch (value) {
     case 'buff':
@@ -163,6 +149,13 @@ const BuffOrNerf = (props) => {
         <GoArrowDown
           className={`${classes} text-red-500`}
           title='Nerfed last patch'
+        />
+      )
+    case 'neutral':
+      return (
+        <GoPrimitiveDot
+          className={`${classes} text-blue-600`}
+          title='Affected last patch'
         />
       )
     default:

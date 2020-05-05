@@ -4,9 +4,9 @@ import { cache as dataCache } from '../util/setDataImporter'
 import {
   GoArrowUp,
   GoArrowDown,
-  GoArrowRight,
-  GoSync
+  GoArrowRight
 } from 'react-icons/go'
+import { IoIosSync } from 'react-icons/io'
 
 import axios from 'axios'
 
@@ -261,7 +261,7 @@ class PatchEffect extends React.Component {
                         text-white font-semibold rounded px-2 py-1"
                         onClick={() => this.applySavedClasses()}
                       >
-                        <GoSync className="mr-2"/>
+                        <IoIosSync className="mr-2"/>
                         Apply
                       </button>
                     </div>

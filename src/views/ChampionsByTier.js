@@ -1,5 +1,6 @@
 import React from 'react'
 import { cache as dataCache } from '../util/setDataImporter'
+import axios from 'axios'
 
 const LeagueSelector = React.lazy(() => import('../components/LeagueSelector'))
 const ChampionCategory = React.lazy(() => import('../components/ChampionCategory'))
@@ -12,7 +13,23 @@ class Champions extends React.Component {
       championsByCost: dataCache['champions'].reduce((result, curr) => {
         result[result.length - curr.cost].push(curr)
         return result
-      }, [[], [], [], [], []])
+      }, [[], [], [], [], []]),
+      patchEffects: null
+    }
+  }
+
+  async componentDidMount () {
+    await this.loadPatchEffects()
+  }
+
+  async loadPatchEffects () {
+    try {
+      const { data } = await axios
+        .get(`http://localhost:8080/patch/effects/${'10.8'}`)
+
+      if (data && data !== '') this.setState({ patchEffects: data })
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -21,7 +38,7 @@ class Champions extends React.Component {
   }
 
   render () {
-    const { selectedLeague, championsByCost } = this.state
+    const { selectedLeague, championsByCost, patchEffects } = this.state
 
     return (
       <div className="relative mx-auto flex flex-col
@@ -41,6 +58,7 @@ class Champions extends React.Component {
             key={'champion-' + index}
             champions={champions}
             league={selectedLeague}
+            patchEffects={patchEffects}
           />
         )}
       </div>

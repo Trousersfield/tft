@@ -1,6 +1,6 @@
 import React from 'react'
 
-const News = React.lazy(() => import('./views/News'))
+const Home = React.lazy(() => import('./views/Home'))
 const Combs = React.lazy(() => import('./views/Combs'))
 const Items = React.lazy(() => import('./views/Items'))
 const ChampionsByTier = React.lazy(() => import('./views/ChampionsByTier'))
@@ -46,7 +46,7 @@ export default {
     }, {
       path: '/',
       noMenu: true,
-      component: News,
+      component: Home,
       exact: true
     }
   ]

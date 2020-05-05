@@ -15,6 +15,7 @@ class ChampionCategory extends React.Component {
     this.state = {
       champions: this.props.champions,
       league: this.props.league,
+      patchEffects: this.props.patchEffects,
       data: [],
       width: 0
     }
@@ -68,7 +69,7 @@ class ChampionCategory extends React.Component {
   }
 
   render () {
-    const { champions, width } = this.state
+    const { champions, width, patchEffects } = this.state
     const cost = champions[0].cost
     const imageName = getImageName(`tier${cost}`)
     const strokeColor = costColor(cost)
@@ -126,6 +127,7 @@ class ChampionCategory extends React.Component {
             <Champion
               champion={champion}
               data={this.championData(champion.championId)}
+              patchEffect={patchEffects ? patchEffects[champion.championId] : null}
             />
           </Suspense>
         )}
