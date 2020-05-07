@@ -39,7 +39,6 @@ class News extends React.Component {
   }
 
   async loadNews () {
-    console.log('loading news')
     this.setState({ news: [1, 2, 3, 4] }, () => this.slideNews())
   }
 
@@ -49,14 +48,12 @@ class News extends React.Component {
     const newsContainerWidth = box.width - 100
     // w-128: 32em and default pixel size = 16px --> 16x32 = 512px
     const numberOfNewsCards = Math.floor(newsContainerWidth / (16 * 32))
-    console.log('num of cards: ', numberOfNewsCards)
     new Promise(resolve => {
       this.setState({ numberOfNewsCards }, () => { resolve() })
     })
   }
 
   slideNews (right = true, keep = false) {
-    console.log('sliding news')
     const news = this.state.news
     const numberOfNewsCards = this.state.numberOfNewsCards < news.length ?
       this.state.numberOfNewsCards : news.length
@@ -67,11 +64,12 @@ class News extends React.Component {
     if (slidingWindow.start === -1) {
       Object.assign(slidingWindow, { start: 0, end: numberOfNewsCards })
     } else if (keep) {
+      let end = slidingWindow.start + numberOfNewsCards
+      if (end > news.length) end -= news.length
       Object.assign(slidingWindow, {
         start: slidingWindow.start,
-        end: slidingWindow.start + numberOfNewsCards
+        end: end
       })
-      // need to check if keep element is last element!!!
     } else {
       // move sliding window
       if (right) {
@@ -81,7 +79,6 @@ class News extends React.Component {
         if (slidingWindow.end >= news.length) {
           const overflow = slidingWindow.end - news.length + 1
           slidingWindow.end = overflow - 1
-          // slidingWindow.end -= news.length
           if (slidingWindow.start >= news.length) {
             slidingWindow.start = slidingWindow.end - numberOfNewsCards
           }
@@ -93,14 +90,12 @@ class News extends React.Component {
         if (slidingWindow.start < 0) {
           const overflow = slidingWindow.start * -1
           slidingWindow.start = news.length - overflow
-          //
           if (slidingWindow.end < 0) {
             slidingWindow.end = slidingWindow.start + numberOfNewsCards
           }
         }
       }
     }
-    console.log('sliding window: ', slidingWindow)
 
     const displayedNews = slidingWindow.start <= slidingWindow.end ?
       news.slice(slidingWindow.start, slidingWindow.end) :

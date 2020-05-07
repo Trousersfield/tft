@@ -1,6 +1,7 @@
 import React from 'react'
 
 const News = React.lazy(() => import('../components/News'))
+const DatabaseStats = React.lazy(() => import('../components/DatabaseStats'))
 
 class Home extends React.Component {
   constructor (props) {
@@ -10,8 +11,13 @@ class Home extends React.Component {
 
   render () {
     return (
-      <div className="w-full">
-        <News />
+      <div className="w-full flex flex-col">
+        <div className="py-4">
+          <News />
+        </div>
+        <div className="py-4">
+          <DatabaseStats />
+        </div>
       </div>
     )
   }
