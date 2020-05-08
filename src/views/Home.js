@@ -1,7 +1,7 @@
 import React from 'react'
 
 const News = React.lazy(() => import('../components/News'))
-const DatabaseStats = React.lazy(() => import('../components/DatabaseStats'))
+const DataStats = React.lazy(() => import('../components/DataStats'))
 
 class Home extends React.Component {
   constructor (props) {
@@ -16,7 +16,7 @@ class Home extends React.Component {
           <News />
         </div>
         <div className="py-4">
-          <DatabaseStats />
+          <DataStats />
         </div>
       </div>
     )

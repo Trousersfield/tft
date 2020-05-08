@@ -19,8 +19,7 @@ class Champion extends React.Component {
     super (props)
     this.state = {
       showDetails: false,
-      data: this.props.data,
-      patchEffect: this.props.patchEffect
+      data: this.props.data
     }
 
     if (!imageCache['champions']) importImages('champions')
@@ -37,7 +36,8 @@ class Champion extends React.Component {
   render () {
     const { name, cost, traits } = this.props.champion
     const { tier1Count, tier2Count, tier3Count } = this.props.data
-    const { showDetails, patchEffect } = this.state
+    const patchEffect = this.props.patchEffect
+    const { showDetails } = this.state
     const imageName = getImageName(name)
     const color = costColor(cost)
 

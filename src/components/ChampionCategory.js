@@ -15,7 +15,6 @@ class ChampionCategory extends React.Component {
     this.state = {
       champions: this.props.champions,
       league: this.props.league,
-      patchEffects: this.props.patchEffects,
       data: [],
       width: 0
     }
@@ -34,16 +33,17 @@ class ChampionCategory extends React.Component {
     this.setState({ width: vw - 18 })
 
     // size accordingly
-    debounce = setTimeout(this.sizeHeader, 1500)
+    debounce = setTimeout(() => {
+      this.sizeHeader()
+      debounce = null
+    }, 1500)
   }
 
   componentWillUnmount () {
     unmounting = true
-    if (debounce) {
-      clearTimeout(debounce)
-      debounce = null
-    }
+    if (debounce) clearTimeout(debounce)
     window.removeEventListener('resize', this.sizeHeader)
+    unmounting = false
   }
 
   sizeHeader = async () => {
@@ -52,7 +52,6 @@ class ChampionCategory extends React.Component {
     .getBoundingClientRect().width
 
     if (width !== this.state.width) this.setState({ width: width })
-    debounce = null
   }
 
   async loadData () {
@@ -69,7 +68,8 @@ class ChampionCategory extends React.Component {
   }
 
   render () {
-    const { champions, width, patchEffects } = this.state
+    const { champions, width } = this.state
+    const { patchEffects } = this.props
     const cost = champions[0].cost
     const imageName = getImageName(`tier${cost}`)
     const strokeColor = costColor(cost)

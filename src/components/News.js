@@ -27,9 +27,7 @@ class News extends React.Component {
   }
 
   handleResize = () => {
-    console.log('handling resize')
     if (debounce) clearTimeout(debounce)
-    console.log('actually doing sth')
 
     debounce = setTimeout(async () => {
       await this.setNewsCards()
@@ -96,6 +94,7 @@ class News extends React.Component {
         }
       }
     }
+    console.log('sliding window: ', slidingWindow)
 
     const displayedNews = slidingWindow.start <= slidingWindow.end ?
       news.slice(slidingWindow.start, slidingWindow.end) :
