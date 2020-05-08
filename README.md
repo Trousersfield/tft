@@ -6,7 +6,7 @@ View some interesting statistics for [Teamfight Tactics](https://teamfighttactic
 
 # Combo Stats
 
-![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/ComboStats.PNG "Combo Stats")
+![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/CombStats.PNG "Comb Stats")
 
 # Item Stats
 
