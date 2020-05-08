@@ -6,15 +6,15 @@ View some interesting statistics for [Teamfight Tactics](https://teamfighttactic
 
 # Combo Stats
 
-![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/ComboStats.png "Combo Stats")
+![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/ComboStats.PNG "Combo Stats")
 
 # Item Stats
 
-![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/ItemStats.png "Item Stats")
+![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/ItemStats.PNG "Item Stats")
 
 # Champion Stats
 
-![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/ChampStats.png "Champion Stats")
+![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/ChampStats.PNG "Champion Stats")
 
 # Buff or Nerf indicator
 
@@ -22,4 +22,4 @@ View some interesting statistics for [Teamfight Tactics](https://teamfighttactic
 
 # Patch Notes
 
-![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/PatchNotes.png "Patch Notes")
+![alt text](https://github.com/Trousersfield/tft/blob/master/public/preview/PatchNotes.PNG "Patch Notes")
