@@ -94,7 +94,7 @@ class News extends React.Component {
         }
       }
     }
-    console.log('sliding window: ', slidingWindow)
+    // console.log('sliding window: ', slidingWindow)
 
     const displayedNews = slidingWindow.start <= slidingWindow.end ?
       news.slice(slidingWindow.start, slidingWindow.end) :

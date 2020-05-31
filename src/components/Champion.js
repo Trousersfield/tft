@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
 import { costColor } from '../util/styles'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 import {
   GoStar,
   GoArrowUp,

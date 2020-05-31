@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react'
+import { PatchContext, patch } from './context/Patch'
 import { UserContext, user } from './context/User'
 import './App.css'
 /// import logo from './logo.svg'
@@ -10,7 +11,6 @@ import {
 } from "react-router-dom"
 import Routes from './routes'
 import { importSetData } from './util/setDataImporter'
-
 
 const PatchSelector = React.lazy(() => import('./components/PatchSelector'))
 
@@ -26,10 +26,21 @@ class App extends React.Component {
       })
     }
 
+    this.setPatch = (payload) => {
+      this.setState(state => {
+        const patch = state.patch
+        Object.assign(patch, payload)
+        console.log('setting new patch to ', patch)
+        return { patch }
+      })
+    }
+
     this.state = {
       routes: Routes.routes,
       user,
-      setUser: this.setUser
+      setUser: this.setUser,
+      patch,
+      setPatch: this.setPatch
     }
 
     // import static set data
@@ -69,11 +80,11 @@ class App extends React.Component {
               )}
             </nav>
             <div className="mx-2 my-auto">
-              <UserContext.Provider value={this.state}>
+              <PatchContext.Provider value={this.state}>
                 <Suspense fallback={<div>Loading Patch ...</div>}>
                   <PatchSelector />
                 </Suspense>
-              </UserContext.Provider>
+              </PatchContext.Provider>
             </div>
           </div>
 

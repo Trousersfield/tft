@@ -1,37 +1,29 @@
 import React from 'react'
-import patches from '../static/patchNotes/'
-import { UserContext } from '../context/User'
+import { PatchContext } from '../context/Patch'
 
 const Dropdown = React.lazy(() => import('./Dropdown'))
 
 class PatchSelector extends React.Component {
   constructor (props) {
     super (props)
-    this.state = {
-      dropdownOptions: patches.map(patch => {
-        return {
-          selected: false,
-          name: patch.number,
-          value: patch.number
-        }
-      })
-    }
+    this.state = {}
   }
 
   render () {
-    const { dropdownOptions } = this.state
-
     return (
-      <UserContext.Consumer>
-        {({user, setUser}) => (
+      <PatchContext.Consumer>
+        {({patch, setPatch}) => (
           <Dropdown
-            options={dropdownOptions}
-            preselect={user.patch}
-            onSelected={(value) => setUser({ patch: value })}
+            key={`patch-dropdown-${patch.available.length}`}
+            options={patch.available}
+            preselect={patch.selected}
+            onSelected={(value) => setPatch({
+              selected: value,
+              url: `patch-${value.replace('.', '-')}` })}
             size='sm'
           />
         )}
-      </UserContext.Consumer>
+      </PatchContext.Consumer>
     )
   }
 }

@@ -3,7 +3,7 @@ import React from 'react'
 const Home = React.lazy(() => import('./views/Home'))
 const Combs = React.lazy(() => import('./views/Combs'))
 const Items = React.lazy(() => import('./views/Items'))
-const ChampionsByTier = React.lazy(() => import('./views/ChampionsByTier'))
+const Champions = React.lazy(() => import('./views/Champions'))
 const ChampionProfile = React.lazy(() => import('./views/ChampionProfile'))
 const PatchNotes = React.lazy(() => import('./views/PatchNotes'))
 const PatchEffect = React.lazy(() => import('./views/PatchEffect'))
@@ -24,7 +24,7 @@ export default {
     }, {
       path: '/champions',
       name: 'Champions',
-      component: ChampionsByTier,
+      component: Champions,
       exact: true,
     }, {
       path: '/champions/profile/:championName',

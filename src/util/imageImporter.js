@@ -61,6 +61,7 @@ const getBackgroundOffset = (style) => {
       baseOffset = 0
       break
   }
+  return baseOffset
 }
 
 /**

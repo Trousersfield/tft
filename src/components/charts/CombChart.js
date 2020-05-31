@@ -3,10 +3,8 @@ import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { makePercent } from '../../util/formatter'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
-
-import { UserContext } from '../../context/User'
-
-import DATA from '../../static/ComboStatsDiamond.json'
+import request from '../../util/request'
+import { PatchContext } from '../../context/Patch'
 
 // components
 const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
@@ -29,31 +27,28 @@ class CombChart extends React.Component {
     if (!imageCache['ranked-emblems']) importImages('ranked-emblems')
   }
 
-  async componentDidMount () {
-    await this.setData()
-    this.makeGraph()
+  componentDidMount () {
+    this.loadData()
   }
 
-  async setData () {
-    // make setting state awaitable
-    new Promise(resolve => {
-      // load data here!
-      const rawData = DATA
-      const selectedLeague = this.state.selectedLeague
-      this.setState(state => {
-        // set data itself
-        const data = Object.assign({}, state.data)
-        data[selectedLeague] = rawData
-        return { data }
-      }, () => { resolve() })
-    })
+  async loadData () {
+    // use cache of already loaded league in data[selectedLeague]? Only if there is new data
+    const selectedLeague = this.state.selectedLeague
+    const { data } = await request.send(`comboStats/${selectedLeague}/${this.context.patch.url}`)
+    this.setState(state => {
+      // set data itself
+      const stateDataObj = Object.assign({}, state.data)
+      stateDataObj[selectedLeague] = data
+      return { data: stateDataObj }
+    }, () => { this.makeGraph() })
   }
 
   setSelectedLeague = (value) => {
-    this.setState({ selectedLeague: value })
+    this.setState({ selectedLeague: value }, () => this.loadData())
   }
 
   makeGraph () {
+    if (this.state.combChart) this.state.combChart.destroy()
     const data = this.state.data[this.state.selectedLeague].sort((a, b) => {
       return a.totalAmount >= b.totalAmount ? -1 : 1
     })
@@ -197,6 +192,6 @@ class CombChart extends React.Component {
     )
   }
 }
-CombChart.contextType = UserContext
+CombChart.contextType = PatchContext
 
 export default CombChart

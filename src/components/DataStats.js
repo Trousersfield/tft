@@ -21,9 +21,9 @@ class DataStats extends React.Component {
       return result
     }, 0)
     const lastUpdate = 2
-    console.log('patch: ', patch)
-    console.log('numOfGames: ', numberOfGames)
-    console.log('lastUpdate: ', lastUpdate)
+    // console.log('patch: ', patch)
+    // console.log('numOfGames: ', numberOfGames)
+    // console.log('lastUpdate: ', lastUpdate)
     this.setState({ patch, numberOfGames, lastUpdate })
   }
 

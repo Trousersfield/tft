@@ -4,8 +4,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { buttonBase } from '../../util/styles'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
 import InfoTag from '../InfoTag'
-
-import DATA from '../../static/itemPopularityDiamond.json'
+import request from '../../util/request'
+import { PatchContext } from '../../context/Patch'
 
 Chart.plugins.unregister(ChartDataLabels)
 
@@ -19,7 +19,8 @@ class ItemChart extends React.Component {
     this.chartRef = React.createRef()
     this.state = {
       selectedLeague: 'diamond',
-      data: [],
+      data: {},
+      currentGraphData: [],
       currentAverage: null,
       includeBasicItems: false,
       itemChart: null,
@@ -31,9 +32,8 @@ class ItemChart extends React.Component {
     if (!imageCache['items']) importImages('items')
   }
 
-  async componentDidMount () {
-    await this.setData()
-    this.makeGraph()
+  componentDidMount () {
+    this.loadData()
   }
 
   componentWillUnmount () {
@@ -42,35 +42,35 @@ class ItemChart extends React.Component {
     if (debounce) clearTimeout(debounce)
   }
 
-  async setData () {
-    new Promise(resolve => {
-      const rawData = DATA
-      this.setState(state => {
-        let data
-        if (state.includeBasicItems) data = rawData
-        else data = rawData.filter(dataRow => dataRow.itemId > 9)
-        const itemImageSize = (state.chartHeight - 16 - state.itemGap * data.length) /
-          data.length
-        return { data, itemImageSize }
-      }, () => { resolve() })
-    })
+  async loadData () {
+    const selectedLeague = this.state.selectedLeague
+    const { data } = await request.send(`itemPopularity/${selectedLeague}/${this.context.patch.url}`)
+    this.setState(state => {
+      const stateDataObj = Object.assign({}, state.data)
+      stateDataObj[selectedLeague] = data
+      let currentGraphData
+      if (state.includeBasicItems) currentGraphData = stateDataObj[selectedLeague]
+      else currentGraphData = stateDataObj[selectedLeague].filter(dataRow => dataRow.itemId > 9)
+      const itemImageSize = (state.chartHeight - 16 - state.itemGap *
+        currentGraphData.length) / currentGraphData.length
+      return { data: stateDataObj, currentGraphData, itemImageSize }
+    }, () => { this.makeGraph() })
   }
 
   setSelectedLeague = (value) => {
-    this.setState({ selectedLeague: value })
+    this.setState({ selectedLeague: value }, () => this.loadData())
   }
 
   toggleItemInclusion = async () => {
     this.setState(state => ({
       includeBasicItems: !state.includeBasicItems
     }))
-    await this.setData()
-    this.state.itemChart.destroy()
-    this.makeGraph()
+    this.loadData()
   }
 
   makeGraph () {
-    const { data } = this.state
+    if (this.state.itemChart) this.state.itemChart.destroy()
+    const data = this.state.currentGraphData
     // add resize listener
     window.addEventListener('resize', this.resizeCanvas)
     this.setChartWidth()
@@ -143,7 +143,7 @@ class ItemChart extends React.Component {
   render () {
     const {
       selectedLeague,
-      data,
+      currentGraphData,
       currentAverage,
       includeBasicItems,
       chartHeight,
@@ -180,7 +180,7 @@ class ItemChart extends React.Component {
         <div className="flex flex-no-wrap ml-5">
           <div className="flex-none flex flex-col"
             style={{paddingTop: '8px', paddingBottom: '8px'}}>
-            {data.map(item =>
+            {currentGraphData.map(item =>
               <ItemImageLabel
                 key={'image-item-' + item.itemId + '-' + itemImageSize}
                 item={item}
@@ -279,5 +279,6 @@ const ItemTooltip = (props) => {
     </div>
   )
 }
+ItemChart.contextType = PatchContext
 
 export default ItemChart
