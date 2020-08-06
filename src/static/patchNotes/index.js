@@ -6,9 +6,13 @@ import patch10_11 from './patch10_11'
 import patch10_12 from './patch10_12'
 import patch10_13 from './patch10_13'
 import patch10_14 from './patch10_14'
+import patch10_15 from './patch10_13'
+import patch10_16 from './patch10_14'
 
 // make sure latest patch is at the beginning
 export default [
+  patch10_16,
+  patch10_15,
   patch10_14,
   patch10_13,
   patch10_12,
