@@ -99,53 +99,53 @@ module.exports = {
         'Dark Star Attack Damage & Spell Power (8): 38 ⇒ 48',
         'Infiltrator Attack Speed (6): 120% ⇒ 150%'
       ]
+    }]
+  }, {
+    title: '3-Star Champion Balance',
+    sections: [{
+      title: 'Tier 1 Champions',
+      notes: [
+        'Leona Cyber Barrier Damage Reduction: 200 ⇒ 400',
+        'Malphite Energy Shield: 60% ⇒ 70%',
+        'Poppy Buckler Toss Damage: 200 ⇒ 225',
+        'Poppy Buckler Toss Shield: 400 ⇒ 450',
+        'Ziggs Bomb! Damage: 550 ⇒ 600'
+      ]
     }, {
-      title: '3-Star Champion Balance',
-      sections: [{
-        title: 'Tier 1 Champions',
-        notes: [
-          'Leona Cyber Barrier Damage Reduction: 200 ⇒ 400',
-          'Malphite Energy Shield: 60% ⇒ 70%',
-          'Poppy Buckler Toss Damage: 200 ⇒ 225',
-          'Poppy Buckler Toss Shield: 400 ⇒ 450',
-          'Ziggs Bomb! Damage: 550 ⇒ 600'
-        ]
-      }, {
-        title: 'Tier 2 Champions',
-        notes: [
-          'Ahri Orb of Deception Damage: 375 ⇒ 425',
-          'Annie Galaxy Shield-blast Damage: 600 ⇒ 700',
-          'Annie Galaxy Shield-blast Shield: 700 ⇒ 800',
-          'Blitzcrank Rocket Grab Damage: 850 ⇒ 1337',
-          'Darius Dreadnova Guillotine Damage: 800 ⇒ 888',
-          'Lucian Relentless Pursuit Damage: 550 ⇒ 600',
-          'Mordekaiser Indestructible Shield: 800 ⇒ 850',
-          'Nautilus Impact Crater Damage: 400 ⇒ 500',
-          'Nautilus Base Stun Duration: 5 ⇒ 6sec'
-        ]
-      }, {
-        title: 'Tier 3 Champions',
-        notes: [
-          'Ezreal E.M.P Damage: 400 ⇒ 800',
-          'Rumble Flamespitter Damage: 1500 ⇒ 1650',
-          'Vi Spell Damage: 1100 ⇒ 1350',
-          'Vi Spell Secondary Damage: 500 ⇒ 600',
-          'Vayne Final Hour Attack Damage: 225% ⇒ 275%'
-        ]
-      }, {
-        title: 'Tier 4 Champions',
-        notes: [
-          'Gnar! Transform Health: 4000 ⇒ 5000',
-          'Riven Base Energy Slash Damage: 450 ⇒ 600',
-          'Riven Energy Slash Shield: 1000 ⇒ 1200',
-          'Riven Final Energy Slash Damage: 1000 ⇒ 1500'
-        ]
-      }, {
-        title: 'Tier 5 Champions',
-        notes: [
-          'Janna Howling Gale Stun Duration: 1.5 ⇒ 8sec'
-        ]
-      }]
+      title: 'Tier 2 Champions',
+      notes: [
+        'Ahri Orb of Deception Damage: 375 ⇒ 425',
+        'Annie Galaxy Shield-blast Damage: 600 ⇒ 700',
+        'Annie Galaxy Shield-blast Shield: 700 ⇒ 800',
+        'Blitzcrank Rocket Grab Damage: 850 ⇒ 1337',
+        'Darius Dreadnova Guillotine Damage: 800 ⇒ 888',
+        'Lucian Relentless Pursuit Damage: 550 ⇒ 600',
+        'Mordekaiser Indestructible Shield: 800 ⇒ 850',
+        'Nautilus Impact Crater Damage: 400 ⇒ 500',
+        'Nautilus Base Stun Duration: 5 ⇒ 6sec'
+      ]
+    }, {
+      title: 'Tier 3 Champions',
+      notes: [
+        'Ezreal E.M.P Damage: 400 ⇒ 800',
+        'Rumble Flamespitter Damage: 1500 ⇒ 1650',
+        'Vi Spell Damage: 1100 ⇒ 1350',
+        'Vi Spell Secondary Damage: 500 ⇒ 600',
+        'Vayne Final Hour Attack Damage: 225% ⇒ 275%'
+      ]
+    }, {
+      title: 'Tier 4 Champions',
+      notes: [
+        'Gnar! Transform Health: 4000 ⇒ 5000',
+        'Riven Base Energy Slash Damage: 450 ⇒ 600',
+        'Riven Energy Slash Shield: 1000 ⇒ 1200',
+        'Riven Final Energy Slash Damage: 1000 ⇒ 1500'
+      ]
+    }, {
+      title: 'Tier 5 Champions',
+      notes: [
+        'Janna Howling Gale Stun Duration: 1.5 ⇒ 8sec'
+      ]
     }]
   }]
 }
