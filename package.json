@@ -5,7 +5,7 @@
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.3",
     "@testing-library/user-event": "^12.1.1",
-    "@testing-library/react": "^10.4.8",
+    "@testing-library/react": "^10.4.9",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "chartjs-plugin-datalabels": "^0.7.0",
