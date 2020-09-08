@@ -4,8 +4,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { buttonBase } from '../../util/styles'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
 import InfoTag from '../InfoTag'
-import request from '../../util/request'
-import { PatchContext } from '../../context/Patch'
+import http from '../../util/http'
 
 Chart.plugins.unregister(ChartDataLabels)
 
@@ -44,7 +43,7 @@ class ItemChart extends React.Component {
 
   async loadData () {
     const selectedLeague = this.state.selectedLeague
-    const { data } = await request.send(`itemPopularity/${selectedLeague}/${this.context.patch.url}`)
+    const { data } = await http.get(`itemPopularity/${selectedLeague}`)
     this.setState(state => {
       const stateDataObj = Object.assign({}, state.data)
       stateDataObj[selectedLeague] = data
@@ -279,6 +278,5 @@ const ItemTooltip = (props) => {
     </div>
   )
 }
-ItemChart.contextType = PatchContext
 
 export default ItemChart

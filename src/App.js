@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react'
-import { PatchContext, patch } from './context/Patch'
-import { UserContext, user } from './context/User'
+// import { PatchContext, patch } from './context/Patch'
 import './App.css'
 /// import logo from './logo.svg'
 import {
@@ -11,44 +10,61 @@ import {
 } from "react-router-dom"
 import Routes from './routes'
 import { importSetData } from './util/setDataImporter'
+import http from './util/http'
 
 const PatchSelector = React.lazy(() => import('./components/PatchSelector'))
 
 class App extends React.Component {
   constructor (props) {
     super (props)
-
-    this.setUser = (payload) => {
-      this.setState(state => {
-        const user = state.user
-        Object.assign(user, payload)
-        return { user }
-      })
-    }
-
-    this.setPatch = (payload) => {
-      this.setState(state => {
-        const patch = state.patch
-        Object.assign(patch, payload)
-        console.log('setting new patch to ', patch)
-        return { patch }
-      })
-    }
-
     this.state = {
       routes: Routes.routes,
-      user,
-      setUser: this.setUser,
-      patch,
-      setPatch: this.setPatch
+      // patch,
+      // setPatch: this.setPatch
+      patches: [],
+      selectedPatch: null,
+      setSelectedPatch: this.setSelectedPatch
     }
+
+    // this.setPatch = (payload) => {
+    //   this.setState((state) => {
+    //     const patch = state.patch
+    //     Object.assign(patch, payload)
+    //     console.log('setting new patch to ', patch)
+    //     return { patch }
+    //   })
+    // }
+
+    // this.setSelectedPatch = (patch) => {
+    //   this.setState({ selectedPatch: patch })
+    // }
 
     // import static set data
     importSetData()
   }
 
+  componentDidMount () {
+    this.fetchPatches()
+  }
+
+  async fetchPatches () {
+    const { data } = await http.get('patches', false)
+    console.log('data from get patches: ', data)
+    this.setState({ patches: data })
+
+    // preselect latest patch
+    if (data.length) {
+      this.handlePatchSelected(data[0])
+    }
+  }
+
+  handlePatchSelected (patchObj) {
+    this.setState({ selectedPatch: patchObj })
+    http.setPatch(patchObj.patch)
+  }
+
   render () {
-    const { routes } = this.state
+    const { routes, patches, selectedPatch } = this.state
     const menuItems = routes.reduce((result, curr) => {
       if (curr.category) {
         const contained = result.find(r => r.path === curr.category)
@@ -80,11 +96,18 @@ class App extends React.Component {
               )}
             </nav>
             <div className="mx-2 my-auto">
-              <PatchContext.Provider value={this.state}>
+              {/* <PatchContext.Provider value={this.state}>
                 <Suspense fallback={<div>Loading Patch ...</div>}>
                   <PatchSelector />
                 </Suspense>
-              </PatchContext.Provider>
+              </PatchContext.Provider> */}
+              <Suspense fallback={<div>Loading Patch ...</div>}>
+                <PatchSelector
+                  patches={patches}
+                  selectedPatch={selectedPatch}
+                  onSelected={(patch) => this.handlePatchSelected(patch)}
+                />
+              </Suspense>
             </div>
           </div>
 

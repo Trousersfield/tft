@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react'
 import { cache as dataCache } from '../util/setDataImporter'
 import axios from 'axios'
-import request from '../util/request'
-import { PatchContext } from '../context/Patch'
+import http from '../util/http'
 
 const LeagueSelector = React.lazy(() => import('../components/LeagueSelector'))
 const ChampionCostHeader = React.lazy(() => import('../components/ChampionCostHeader'))
@@ -14,10 +13,10 @@ class Champions extends React.Component {
     this.state = {
       selectedLeague: 'diamond',
       data: {},
-      championByCostLevel: dataCache['champions'].reduce((result, curr) => {
+      championByCostLevel: dataCache.champions ? dataCache['champions'].reduce((result, curr) => {
         result[result.length - curr.cost].push(curr)
         return result
-      }, [[], [], [], [], []]),
+      }, [[], [], [], [], []]) : [],
       patchEffects: null
     }
   }
@@ -40,7 +39,7 @@ class Champions extends React.Component {
 
   async loadData () {
     const selectedLeague = this.state.selectedLeague
-    const { data } = await request.send(`championPopularity/${selectedLeague}/${this.context.patch.url}`)
+    const { data } = await http.get(`championPopularity/${selectedLeague}`)
     this.setState(state => {
       const stateDataObj = Object.assign({}, state.data)
       stateDataObj[selectedLeague] = data
@@ -114,19 +113,9 @@ class Champions extends React.Component {
             </div>
           )}
         </div>
-        {/*champions.map((champions, index) =>
-          <ChampionCategory
-            key={'champion-' + index}
-            champions={champions}
-            data={data}
-            league={selectedLeague}
-            patchEffects={patchEffects}
-          />
-        )*/}
       </div>
     )
   }
 }
-Champions.contextType = PatchContext
 
 export default Champions

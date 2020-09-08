@@ -3,8 +3,7 @@ import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { makePercent } from '../../util/formatter'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
-import request from '../../util/request'
-import { PatchContext } from '../../context/Patch'
+import http from '../../util/http'
 
 // components
 const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
@@ -34,7 +33,7 @@ class CombChart extends React.Component {
   async loadData () {
     // use cache of already loaded league in data[selectedLeague]? Only if there is new data
     const selectedLeague = this.state.selectedLeague
-    const { data } = await request.send(`comboStats/${selectedLeague}/${this.context.patch.url}`)
+    const { data } = await http.get(`comboStats/${selectedLeague}`)
     this.setState(state => {
       // set data itself
       const stateDataObj = Object.assign({}, state.data)
@@ -192,6 +191,5 @@ class CombChart extends React.Component {
     )
   }
 }
-CombChart.contextType = PatchContext
 
 export default CombChart
