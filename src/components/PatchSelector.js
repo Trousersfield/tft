@@ -1,5 +1,4 @@
 import React from 'react'
-// import { PatchContext } from '../context/Patch'
 
 const Dropdown = React.lazy(() => import('./Dropdown'))
 

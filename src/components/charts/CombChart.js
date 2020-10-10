@@ -49,7 +49,7 @@ class CombChart extends React.Component {
   makeGraph () {
     if (this.state.combChart) this.state.combChart.destroy()
     const data = this.state.data[this.state.selectedLeague].sort((a, b) => {
-      return a.totalAmount >= b.totalAmount ? -1 : 1
+      return a.totalAmount < b.totalAmount ? 1 : -1
     })
     const bestX = this.state.bestX
     const slicedData = bestX < data.length ? data.slice(0, bestX) : data

@@ -44,8 +44,6 @@ class Dropdown extends React.Component {
 
   render () {
     const { displayMenu, placeholder, selected, options, size } = this.state
-    console.log('selected: ', selected)
-    console.log('options: ', options)
     const header = selected && options.length ?
       options.find(option => option.value === selected).name :
       placeholder

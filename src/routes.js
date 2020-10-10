@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Home = React.lazy(() => import('./views/Home'))
+const TopCombs = React.lazy(() => import('./views/TopCombs'))
 const Combs = React.lazy(() => import('./views/Combs'))
 const Items = React.lazy(() => import('./views/Items'))
 const Champions = React.lazy(() => import('./views/Champions'))
@@ -12,6 +13,11 @@ export default {
   mode: 'history',
   routes: [
     {
+      path: '/topCombs',
+      name: 'TopCombs',
+      component: TopCombs,
+      exact: true
+    }, {
       path: '/combs',
       name: 'Combs',
       component: Combs,

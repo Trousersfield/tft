@@ -19,25 +19,10 @@ class App extends React.Component {
     super (props)
     this.state = {
       routes: Routes.routes,
-      // patch,
-      // setPatch: this.setPatch
       patches: [],
       selectedPatch: null,
       setSelectedPatch: this.setSelectedPatch
     }
-
-    // this.setPatch = (payload) => {
-    //   this.setState((state) => {
-    //     const patch = state.patch
-    //     Object.assign(patch, payload)
-    //     console.log('setting new patch to ', patch)
-    //     return { patch }
-    //   })
-    // }
-
-    // this.setSelectedPatch = (patch) => {
-    //   this.setState({ selectedPatch: patch })
-    // }
 
     // import static set data
     importSetData()
@@ -49,7 +34,6 @@ class App extends React.Component {
 
   async fetchPatches () {
     const { data } = await http.get('patches', false)
-    console.log('data from get patches: ', data)
     this.setState({ patches: data })
 
     // preselect latest patch
@@ -96,11 +80,6 @@ class App extends React.Component {
               )}
             </nav>
             <div className="mx-2 my-auto">
-              {/* <PatchContext.Provider value={this.state}>
-                <Suspense fallback={<div>Loading Patch ...</div>}>
-                  <PatchSelector />
-                </Suspense>
-              </PatchContext.Provider> */}
               <Suspense fallback={<div>Loading Patch ...</div>}>
                 <PatchSelector
                   patches={patches}

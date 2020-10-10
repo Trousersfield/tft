@@ -44,10 +44,8 @@ const setPatch = (patchNumber = '') => {
     cache = data[patchNumber]
   } else {
     const patches =  Object.keys(data).sort((a, b) => a > b ? -1 : 1)
-    console.log('patches: ', patches)
     const latestPatch = patches[patches.length - 1]
     cache = latestPatch ? data[latestPatch] : {}
-    console.log('cache: ', cache)
   }
 }
 
