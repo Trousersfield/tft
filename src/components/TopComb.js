@@ -22,39 +22,45 @@ class TopComb extends React.Component {
 
   render () {
     const { id, name, champions } = this.state
-    console.log('comb name: ', name)
-    console.log('champs: ', champions)
 
     return (
       <div className="lg:w-full xl:w-3/5 mx-auto pt-10">
         {name}
-        {champions.map(champion => (
-          <ChampionCard
-            key={id + champion.championId}
-            {...champion}
-          />
-        ))}
+        <div className="flex flex-no-wrap">
+          {champions.map(champion => (
+            <ChampionCard
+              key={id + champion.championId}
+              combId={id}
+              {...champion}
+            />
+          ))}
+        </div>
       </div>
     )
   }
 }
 
 const ChampionCard = (champion) => {
-  console.log('champion: ', champion)
-  const { championId, count, itemCounts } = champion
-  console.log('id: ', championId)
-  console.log('count: ', count)
-  console.log('items: ', itemCounts)
-  console.log('image cache champs: ', imageCache['champions'])
+  const { combId, championId, count, itemCounts } = champion
+  console.log('item counts: ', itemCounts)
 
   return (
-    <div>
-      {championId}
+    <div className="relative">
       <img
         src={imageCache['champions'][championId]}
         alt=""
+        title={championId}
         // style={{width: imageSize.width, height: imageSize.height}}
       />
+      {itemCounts.length > 0 ?(
+        <div class="absolute inset-x-0 bottom-0">
+          {itemCounts.map(item => (
+            <div key={combId + championId + item.itemId}>
+              {item.name}
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

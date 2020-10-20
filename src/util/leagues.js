@@ -1,37 +1,37 @@
 export default [{
   name: 'Iron',
   key: 'iron',
-  image: './Emblem_Iron.png'
+  image: 'Emblem_Iron'
 }, {
   name: 'Bronze',
   key: 'bronze',
-  image: './Emblem_Bronze.png'
+  image: 'Emblem_Bronze'
 }, {
   name: 'Silver',
   key: 'silver',
-  image: './Emblem_Silver.png'
+  image: 'Emblem_Silver'
 }, {
   name: 'Gold',
   key: 'gold',
-  image: './Emblem_Gold.png'
+  image: 'Emblem_Gold'
 }, {
   name: 'Platinum',
   key: 'platinum',
-  image: './Emblem_Platinum.png'
+  image: 'Emblem_Platinum'
 }, {
   name: 'Diamond',
   key: 'diamond',
-  image: './Emblem_Diamond.png'
+  image: 'Emblem_Diamond'
 }, {
   name: 'Master',
   key: 'master',
-  image: './Emblem_Master.png'
+  image: 'Emblem_Master'
 }, {
   name: 'Grandmaster',
   key: 'grandmaster',
-  image: './Emblem_Grandmaster.png'
+  image: 'Emblem_Grandmaster'
 }, {
   name: 'Challenger',
   key: 'challenger',
-  image: './Emblem_Challenger.png'
+  image: 'Emblem_Challenger'
 }]

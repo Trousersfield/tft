@@ -49,7 +49,6 @@ class ChampionCostHeader extends React.Component {
 
   render () {
     const { width, cost } = this.state
-    console.log('tier images: ', imageCache['tiers'])
     // const imageName = getImageName(`tier${cost}`)
     const strokeColor = costColor(cost)
 
@@ -63,7 +62,7 @@ class ChampionCostHeader extends React.Component {
         className="w-full flex justify-center relative"
       >
         <img
-          src={imageCache['tiers'][cost]}
+          src={imageCache['tiers']['tier' + cost]}
           alt={`Tier ${cost}`}
           className="absolute top-0"
         />

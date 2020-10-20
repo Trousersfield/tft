@@ -9,15 +9,6 @@ class Items extends React.Component {
   }
 
   render () {
-    // const { data, includeBasicItems } = this.state
-    // const items = setData['items']
-
-    // const bi = basicItems({id: 34})
-    // console.log(bi)
-
-    // const ci = combinedItems({id: 1 })
-    // console.log(ci)
-
     return (
       <div className="flex flex-col mx-auto lg:w-full xl:w-3/5">
         <Suspense fallback={<div>Loading Item Chart...</div>}>

@@ -23,7 +23,6 @@ class TopCombs extends React.Component {
   render () {
     const topCombs = this.state.allCombs.reduce((acc, curr) => {
       // TODO: think about removing .slice()
-      console.log('top comb champs: ', curr.TopCombChamps)
       const champsOfComb = JSON.parse(curr.TopCombChamps).sort((a, b) => a.count < b.count ? 1 : -1).slice(0, 8)
 
       acc.push({
@@ -33,8 +32,6 @@ class TopCombs extends React.Component {
       })
       return acc
     }, [])
-
-    console.log('top combs: ', topCombs)
 
     return (
       <div className="lg:w-full xl:w-3/5 mx-auto pt-10">

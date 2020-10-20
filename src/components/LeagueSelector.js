@@ -18,8 +18,12 @@ class LeagueSelector extends React.Component {
       })
     }
 
-    if (!imageCache['ranked-emblems']) importImages('ranked-emblems')
-    if (!imageCache['champions']) importImages('champions')
+    if (!imageCache['ranked-emblems']) {
+      importImages('ranked-emblems')
+    }
+    if (!imageCache['champions']) {
+      importImages('champions')
+    }
   }
 
   setSelected = (value) => {
