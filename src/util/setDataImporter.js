@@ -3,16 +3,6 @@ let cache = {}
 const data = {}
 
 let loading = false
-// const importSetData = () => {
-//   importAll(require.context('../../public/riot', true, /\.json$/))
-// }
-
-// const importAll = (r) => {
-//   r.keys().forEach(key => {
-//     const newKey = key.split('\\').pop().split('/').pop().split('.').shift()
-//     cache[newKey] = r(key)
-//   })
-// }
 
 const importSetData = async () => {
   if (loading) return
@@ -24,14 +14,16 @@ const importSetData = async () => {
 const importPatches = async (patchFiles) => {
   return new Promise(resolve => {
     loading = true
-    patchFiles.keys().forEach(patchFile => {
+
+    for (const patchFile of patchFiles.keys()) {
       const patchName = patchFile.split('/')[1]
 
       if (!data[patchName]) data[patchName] = {}
 
       const dataName = patchFile.split('/')[2].split('.').shift()
       data[patchName][dataName] = patchFiles(patchFile)
-    })
+    }
+
     loading = false
     resolve()
   })

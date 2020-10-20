@@ -138,14 +138,12 @@ class PatchEffect extends React.Component {
           // try splitting name on whitespace if shorthands are used
           const splitName = name.split(' ')
           if (splitName.length > 1) {
-            splitName.forEach(partition => {
-              if (!result[0] && !RESERVED_STRING.includes(partition)) {
-                if (lowerNote.includes(partition)) {
-                    result[0] = name
-                    result[1] = { key1: cat, key2: curr }
-                  }
+            for (const partition of splitName) {
+              if (!result[0] && !RESERVED_STRING.includes(partition) && lowerNote.includes(partition)) {
+                result[0] = name
+                result[1] = { key1: cat, key2: curr }
               }
-            })
+            }
           }
         }
         return result

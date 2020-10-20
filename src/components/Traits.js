@@ -1,5 +1,5 @@
 import React from 'react'
-import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
+import { cache as imageCache, importImages } from '../util/imageImporter'
 
 class Traits extends React.Component {
   constructor (props) {
@@ -17,7 +17,7 @@ class Traits extends React.Component {
         {traits.map(trait =>
           <div  key={'trait-' + trait} >
             <img
-              src={imageCache['traits'][getImageName(trait)]}
+              src={imageCache['traits'][trait.traitId]}
               alt={trait}
               className="w-16 h-16"
               title={trait}

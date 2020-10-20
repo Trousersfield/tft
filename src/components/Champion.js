@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
+import { cache as imageCache, importImages } from '../util/imageImporter'
 import { costColor } from '../util/styles'
 // import { NavLink } from 'react-router-dom'
 import {
@@ -34,11 +34,10 @@ class Champion extends React.Component {
   }
 
   render () {
-    const { name, cost, traits } = this.props.champion
+    const { championId, name, cost, traits } = this.props.champion
     const { tier1Count, tier2Count, tier3Count } = this.props.data
     const patchEffect = this.props.patchEffect
     const { showDetails } = this.state
-    const imageName = getImageName(name)
     const color = costColor(cost)
 
     return (
@@ -52,7 +51,7 @@ class Champion extends React.Component {
             >
               <div className="overflow-hidden rounded-full">
                 <img
-                  src={imageCache['champions'][imageName]}
+                  src={imageCache['champions'][championId]}
                   alt={name}
                 />
               </div>

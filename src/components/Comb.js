@@ -10,11 +10,12 @@ class Comb extends React.Component {
       imageSize: 'w-12 h-12'
     }
 
-    if (!imageCache['traits']) importImages('traits')
+    if (!imageCache['traits']) {
+      importImages('traits')
+    }
   }
 
   componentDidMount () {
-    printTraitName('MechPilot BladeMaster')
     this.computeDimension()
   }
 
@@ -60,7 +61,9 @@ class Comb extends React.Component {
               style={{width: imageSize.width, height: imageSize.height}}
             />
           </div>))}
-        <p className="px-3 py-3 text-indigo-500">{printTraitName(name)}</p>
+        <p className="px-3 py-3 text-indigo-500">
+          {printTraitName(name)}
+        </p>
       </div>
     )
   }

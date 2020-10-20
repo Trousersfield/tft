@@ -1,5 +1,5 @@
 import React from 'react'
-import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
+import { cache as imageCache, importImages } from '../util/imageImporter'
 import { costColor } from '../util/styles'
 import { cache as dataCache } from '../util/setDataImporter'
 
@@ -10,7 +10,9 @@ class ChampionProfile extends React.Component {
       champion: null
     }
 
-    if (!imageCache['champions']) importImages('champions')
+    if (!imageCache['champions']) {
+      importImages('champions')
+    }
   }
 
   componentDidMount () {
@@ -22,7 +24,6 @@ class ChampionProfile extends React.Component {
   render () {
     const champion = this.state.champion
     if (!champion) return (<div></div>)
-    const imageName = getImageName(champion.name)
     const color = costColor(champion.cost)
 
     return (
@@ -33,7 +34,7 @@ class ChampionProfile extends React.Component {
             <div className={`absolute bottom-0 left-0 overflow-hidden
               rounded-full w-16 h-16 bg-blue-500 border-4 border-${color}-900`}>
               <img
-                src={imageCache['champions'][imageName]}
+                src={imageCache['champions'][champion.championId]}
                 alt={champion.name}
               />
             </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
+import { cache as imageCache, importImages } from '../util/imageImporter'
 import { cache as dataCache } from '../util/setDataImporter'
 
 class TraitInfo extends React.Component {
@@ -9,7 +9,9 @@ class TraitInfo extends React.Component {
       trait: this.props.trait
     }
 
-    if (!imageCache['traits']) importImages('traits')
+    if (!imageCache['traits']) {
+      importImages('traits')
+    }
   }
 
   render () {
@@ -20,7 +22,6 @@ class TraitInfo extends React.Component {
       )
     }
 
-    const imageName = getImageName(trait)
     const traitData = dataCache['traits'].find(t => t.name === trait)
 
     return (
@@ -31,7 +32,7 @@ class TraitInfo extends React.Component {
             xs:h-40 sm:h-32 md:h-28
             border-b border-gray-500 overflow-hidden">
             <img
-              src={imageCache['traits'][imageName]}
+              src={imageCache['traits'][trait.traitId]}
               alt={trait}
               style={{width: '60px', height: '60px'}}
             />

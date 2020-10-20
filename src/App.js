@@ -1,6 +1,4 @@
 import React, { Suspense } from 'react'
-// import { PatchContext, patch } from './context/Patch'
-/// import logo from './logo.svg'
 import {
   BrowserRouter as Router,
   Switch,

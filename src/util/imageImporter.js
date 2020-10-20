@@ -1,3 +1,4 @@
+const path = require('path')
 const cache = {}
 
 const importImages = (directory) => {
@@ -30,14 +31,17 @@ const importImages = (directory) => {
 }
 
 const importAll = (directory, r) => {
-  r.keys().forEach(key => cache[directory][key] = r(key))
+  for (const file of r.keys()) {
+    const fileName = path.basename(file, '.png')
+    cache[directory][fileName] = r(file)
+  }
 }
 
-const getImageName = (value) => {
-  // eslint-disable-next-line
-  const regex = /[|&;$%@"'<>()+,\s\-]|(TFT_)/
-  return `./${value.replace(regex, '').toLowerCase()}.png`
-}
+// const getImageId = (value) => {
+//   // eslint-disable-next-line
+//   const prefixRegex = /[|&;$%@"'<>()+,\s\-]|(TFT[\d]*_)/
+//   return value.replace(prefixRegex, '')
+// }
 
 const getBackgroundOffset = (style) => {
   let baseOffset = 331 / 6 // 311px = sprite-image width
@@ -70,6 +74,7 @@ const getBackgroundOffset = (style) => {
  */
 
 const importChampions = (directory) => {
+  console.log('importing champs')
   importAll(
     directory,
     require.context('../../public/riot/champions', true, /\.png$/)
@@ -114,6 +119,6 @@ const importTraits = (directory) => {
 export {
   cache,
   importImages,
-  getImageName,
+  // getImageName,
   getBackgroundOffset
 }

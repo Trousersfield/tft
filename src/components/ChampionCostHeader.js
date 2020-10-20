@@ -1,5 +1,5 @@
 import React from 'react'
-import { cache as imageCache, importImages, getImageName } from '../util/imageImporter'
+import { cache as imageCache, importImages } from '../util/imageImporter'
 import { costColor } from '../util/styles'
 
 let unmounting = false
@@ -13,7 +13,9 @@ class ChampionCostHeader extends React.Component {
       cost: this.props.cost
     }
 
-    if (!imageCache['tiers']) importImages('tiers')
+    if (!imageCache['tiers']) {
+      importImages('tiers')
+    }
   }
 
   componentDidMount () {
@@ -47,8 +49,8 @@ class ChampionCostHeader extends React.Component {
 
   render () {
     const { width, cost } = this.state
-
-    const imageName = getImageName(`tier${cost}`)
+    console.log('tier images: ', imageCache['tiers'])
+    // const imageName = getImageName(`tier${cost}`)
     const strokeColor = costColor(cost)
 
     // svg sizing
@@ -61,7 +63,7 @@ class ChampionCostHeader extends React.Component {
         className="w-full flex justify-center relative"
       >
         <img
-          src={imageCache['tiers'][imageName]}
+          src={imageCache['tiers'][cost]}
           alt={`Tier ${cost}`}
           className="absolute top-0"
         />
