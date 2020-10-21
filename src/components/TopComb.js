@@ -10,8 +10,8 @@ class TopComb extends React.Component {
       id: this.props.id,
       name: this.props.name,
       champions: this.props.champions,
-      topItems: [],
-      numberOfTopItems: 6
+      numberOfTopItems: this.props.numberOfTopItems,
+      topItems: []
     }
 
     if (!imageCache['ranked-emblems']) {
@@ -48,8 +48,10 @@ class TopComb extends React.Component {
     const slicedTopItems = topItems.slice(0, numberOfTopItems)
 
     return (
-      <div className="pt-10">
-        {name}
+      <div className="flex justify-between items-center m-2 pb-5">
+        <div className="bg-red-400">
+          {name}
+        </div>
         <div className="flex flex-no-wrap">
           {champions.map(champion => (
             <div className="relative border border-black m-1" key={id + champion.championId}>
