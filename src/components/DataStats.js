@@ -1,7 +1,5 @@
 import React from 'react'
 
-import COMB_DATA from '../static/ComboStatsDiamond.json'
-
 class DataStats extends React.Component {
   constructor (props) {
     super (props)
@@ -16,10 +14,7 @@ class DataStats extends React.Component {
   componentDidMount () {
     // load data
     const patch = '10.8'
-    const numberOfGames = COMB_DATA.reduce((result, curr) => {
-      result += curr.totalAmount
-      return result
-    }, 0)
+    const numberOfGames = 0
     const lastUpdate = 2
     // console.log('patch: ', patch)
     // console.log('numOfGames: ', numberOfGames)

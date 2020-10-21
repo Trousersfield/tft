@@ -1,13 +1,13 @@
-import patch10_7 from './patch10_7'
-import patch10_8 from './patch10_8'
-import patch10_9 from './patch10_9'
-import patch10_10 from './patch10_10'
-import patch10_11 from './patch10_11'
-import patch10_12 from './patch10_12'
-import patch10_13 from './patch10_13'
-import patch10_14 from './patch10_14'
-import patch10_15 from './patch10_15'
-import patch10_16 from './patch10_16'
+import patch10_7 from './patch10.7'
+import patch10_8 from './patch10.8'
+import patch10_9 from './patch10.9'
+import patch10_10 from './patch10.10'
+import patch10_11 from './patch10.11'
+import patch10_12 from './patch10.12'
+import patch10_13 from './patch10.13'
+import patch10_14 from './patch10.14'
+import patch10_15 from './patch10.15'
+import patch10_16 from './patch10.16'
 
 // make sure latest patch is at the beginning
 export default [

@@ -1,6 +1,6 @@
 import React from 'react'
 import patches from '../static/patchNotes/'
-import { cache as dataCache } from '../util/setDataImporter'
+import { data as setData } from '../util/setDataImporter'
 import {
   GoArrowUp,
   GoArrowDown,
@@ -48,7 +48,7 @@ class PatchEffect extends React.Component {
       // set possible classification classes from data cache
       const [ classes, notes ] = patch.categories.reduce((result, curr) => {
         if (!this.isClassifiable(curr.title)) return result
-        const categoryData = dataCache[curr.title.toLowerCase()]
+        const categoryData = setData[curr.title.toLowerCase()]
 
         if (!categoryData) return result
         const subjects = categoryData.reduce((result, curr) => {

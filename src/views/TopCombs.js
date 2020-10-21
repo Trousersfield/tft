@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
+import { data as setData } from '../util/setDataImporter'
 import http from '../util/http'
 
 // components
@@ -12,7 +13,9 @@ class TopCombs extends React.Component {
       allCombs: []
     }
 
-    if (!imageCache['ranked-emblems']) importImages('ranked-emblems')
+    if (!imageCache['ranked-emblems']) {
+      importImages('ranked-emblems')
+    }
   }
 
   async componentDidMount () {
@@ -23,18 +26,22 @@ class TopCombs extends React.Component {
   render () {
     const topCombs = this.state.allCombs.reduce((acc, curr) => {
       // TODO: think about removing .slice()
-      const champsOfComb = JSON.parse(curr.TopCombChamps).sort((a, b) => a.count < b.count ? 1 : -1).slice(0, 8)
+      // find most played champions
+      let combChampions = JSON.parse(curr.TopCombChamps).sort((a, b) => a.count < b.count ? 1 : -1).slice(0, 8)
+
+      // sort champions by cost
+      combChampions = combChampions.sort((a, b) => setData.champions[a.championId].cost < setData.champions[b.championId].cost ? -1 : 1)
 
       acc.push({
         id: curr.id,
         name: curr.Name,
-        champions: champsOfComb
+        champions: combChampions
       })
       return acc
     }, [])
 
     return (
-      <div className="lg:w-full xl:w-3/5 mx-auto pt-10">
+      <div className="w-lg mx-auto">
         {topCombs.map(comb => (
           <Suspense key={comb.id}>
             <TopComb

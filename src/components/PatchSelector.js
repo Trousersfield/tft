@@ -26,7 +26,7 @@ class PatchSelector extends React.Component {
     return (
       <Dropdown
         options={options}
-        preselect={selectedPatch.patch}
+        preselect={selectedPatch ? selectedPatch.patch : null}
         onSelected={(patch) => this.handlePatchSelected(patch)}
         size='sm'
       />

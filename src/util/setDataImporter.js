@@ -1,27 +1,51 @@
-let cache = {}
-// cache for all patches
 const data = {}
 
 let loading = false
 
 const importSetData = async () => {
   if (loading) return
-  await importPatches(require.context('../../public/riot/data', true, /\.json$/))
-
-  setPatch()
+  await loadData(require.context('../../public/riot/data', true, /\.json$/))
 }
 
-const importPatches = async (patchFiles) => {
+const loadData = async (dataFiles, forceReload = false) => {
   return new Promise(resolve => {
     loading = true
 
-    for (const patchFile of patchFiles.keys()) {
-      const patchName = patchFile.split('/')[1]
+    for (const dataFile of dataFiles.keys()) {
+      const dataName = dataFile.split('/')[1].split('.').shift()
 
-      if (!data[patchName]) data[patchName] = {}
+      if (data[dataName] && !forceReload) {
+        return
+      }
 
-      const dataName = patchFile.split('/')[2].split('.').shift()
-      data[patchName][dataName] = patchFiles(patchFile)
+      const fileContent = dataFiles(dataFile)
+
+      // for some reason riot offers data as lists
+      // create objects for constant access
+      if (dataName === 'champions') {
+        data[dataName] = fileContent.reduce((acc, curr) => {
+          acc[curr.championId] = curr
+          return acc
+        }, {})
+      }
+
+      else if (dataName === 'items') {
+        data[dataName] = fileContent.reduce((acc, curr) => {
+          acc[curr.id] = curr
+          return acc
+        }, {})
+      }
+
+      else if (dataName === 'traits') {
+        data[dataName] = fileContent.reduce((acc, curr) => {
+          acc[curr.key] = curr
+          return acc
+        }, {})
+      }
+
+      else {
+        console.warn('Unknown name of data file: ', dataName)
+      }
     }
 
     loading = false
@@ -29,20 +53,7 @@ const importPatches = async (patchFiles) => {
   })
 }
 
-// set data for given patch from cache
-const setPatch = (patchNumber = '') => {
-  // data for given patch does not exist. Use latest patch data
-  if (data[patchNumber]) {
-    cache = data[patchNumber]
-  } else {
-    const patches =  Object.keys(data).sort((a, b) => a > b ? -1 : 1)
-    const latestPatch = patches[patches.length - 1]
-    cache = latestPatch ? data[latestPatch] : {}
-  }
-}
-
 export {
-  cache,
-  importSetData,
-  setPatch
+  data,
+  importSetData
 }

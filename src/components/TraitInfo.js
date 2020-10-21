@@ -1,6 +1,6 @@
 import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
-import { cache as dataCache } from '../util/setDataImporter'
+import { data as setData } from '../util/setDataImporter'
 
 class TraitInfo extends React.Component {
   constructor (props) {
@@ -22,7 +22,8 @@ class TraitInfo extends React.Component {
       )
     }
 
-    const traitData = dataCache['traits'].find(t => t.name === trait)
+    // das geht noch nicht
+    const traitData = setData.traits[trait]
 
     return (
       <div className="sm:w-full md:w-1/2 lg:w-1/2">

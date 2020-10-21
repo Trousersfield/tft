@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { cache as dataCache } from '../util/setDataImporter'
+import { data as setData } from '../util/setDataImporter'
 import axios from 'axios'
 import http from '../util/http'
 
@@ -13,7 +13,7 @@ class Champions extends React.Component {
     this.state = {
       selectedLeague: 'diamond',
       data: {},
-      championByCostLevel: dataCache.champions ? dataCache['champions'].reduce((result, curr) => {
+      championByCostLevel: setData.champions ? setData.champions.reduce((result, curr) => {
         result[result.length - curr.cost].push(curr)
         return result
       }, [[], [], [], [], []]) : [],

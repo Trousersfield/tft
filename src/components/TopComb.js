@@ -9,7 +9,9 @@ class TopComb extends React.Component {
     this.state = {
       id: this.props.id,
       name: this.props.name,
-      champions: this.props.champions
+      champions: this.props.champions,
+      topItems: [],
+      numberOfTopItems: 6
     }
 
     if (!imageCache['ranked-emblems']) {
@@ -18,51 +20,65 @@ class TopComb extends React.Component {
     if (!imageCache['champions']) {
       importImages('champions')
     }
+    if (!imageCache['items']) {
+      importImages('items')
+    }
+  }
+
+  componentDidMount () {
+    let topItems = []
+
+    for (const champion of this.state.champions) {
+      const topThreeItems = champion.itemCounts
+        .sort((a, b) => a.count > b.count ? -1 : 1)
+        .slice(0, 3)
+        .map(x => ({ championId: champion.championId, ...x }))
+
+      topItems = topItems.concat(topThreeItems)
+    }
+
+    topItems = topItems.sort((a, b) => a.count > b.count ? -1 : 1)
+
+    this.setState({ topItems })
   }
 
   render () {
-    const { id, name, champions } = this.state
+    const { id, name, champions, topItems, numberOfTopItems } = this.state
+
+    const slicedTopItems = topItems.slice(0, numberOfTopItems)
 
     return (
-      <div className="lg:w-full xl:w-3/5 mx-auto pt-10">
+      <div className="pt-10">
         {name}
         <div className="flex flex-no-wrap">
           {champions.map(champion => (
-            <ChampionCard
-              key={id + champion.championId}
-              combId={id}
-              {...champion}
-            />
+            <div className="relative border border-black m-1" key={id + champion.championId}>
+              <img
+                src={imageCache['champions'][champion.championId]}
+                alt=""
+                title={champion.championId}
+                // style={{width: imageSize.width, height: imageSize.height}}
+              />
+              <div className="absolute inset-x-0 bottom-0 flex flex-no-wrap justify-center transform translate-y-6 bg-yellow-300">
+                {slicedTopItems.filter(item => item.championId === champion.championId).map(item => (
+                  <div
+                    key={id + champion.championId + item.itemId}
+                    className="w-1/3"
+                  >
+                    <img
+                      src={imageCache.items[item.itemId]}
+                      alt=""
+                      title={item.itemId}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
     )
   }
-}
-
-const ChampionCard = (champion) => {
-  const { combId, championId, count, itemCounts } = champion
-  console.log('item counts: ', itemCounts)
-
-  return (
-    <div className="relative">
-      <img
-        src={imageCache['champions'][championId]}
-        alt=""
-        title={championId}
-        // style={{width: imageSize.width, height: imageSize.height}}
-      />
-      {itemCounts.length > 0 ?(
-        <div class="absolute inset-x-0 bottom-0">
-          {itemCounts.map(item => (
-            <div key={combId + championId + item.itemId}>
-              {item.name}
-            </div>
-          ))}
-        </div>
-      ) : null}
-    </div>
-  )
 }
 
 export default TopComb

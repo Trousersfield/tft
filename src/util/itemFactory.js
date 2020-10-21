@@ -1,6 +1,5 @@
-import { cache as setData } from './setDataImporter'
+import { data as setData } from './setDataImporter'
 
-const ITEMS = setData['items']
 const BASIC_ITEM_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 /**
@@ -13,7 +12,7 @@ const basicItems = (item) => {
   const ids = item.id.toString().split('')
   if (ids.length !== 2) return
   const items = ids.map(id => (
-    getItem(parseInt(id))
+    setData.items[id]
   ))
   return items
 }
@@ -28,16 +27,12 @@ const combinedItems = (item) => {
   if (item.id > 9) return
   const items = BASIC_ITEM_IDS.reduce((result, currentId) => {
     const combinedItem = item.id < currentId ?
-      getItem(parseInt(`${item.id}${currentId}`)) :
-      getItem(parseInt(`${currentId}${item.id}`))
+      setData.items[`${item.id}${currentId}`] :
+      setData.items[`${currentId}${item.id}`]
     if (combinedItem) result.push(combinedItem)
     return result
   }, [])
   return items
-}
-
-const getItem = (id) => {
-  return ITEMS.find(item => item.id === id)
 }
 
 export {

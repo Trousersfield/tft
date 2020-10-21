@@ -1,7 +1,7 @@
 import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 import { costColor } from '../util/styles'
-import { cache as dataCache } from '../util/setDataImporter'
+import { data as setData } from '../util/setDataImporter'
 
 class ChampionProfile extends React.Component {
   constructor (props) {
@@ -16,8 +16,8 @@ class ChampionProfile extends React.Component {
   }
 
   componentDidMount () {
-    const championName = this.props.match.params.championName
-    const champion = dataCache['champions'].find(c => c.name === championName)
+    // nicht sicher, ob das klappt
+    const champion = setData.champions[this.state.champion.championId]
     this.setState({ champion })
   }
 
