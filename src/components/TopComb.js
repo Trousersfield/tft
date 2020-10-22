@@ -1,5 +1,6 @@
 import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
+import Item from '../components/Item'
 
 // components
 const ChampionPopup = React.lazy(() => import('./ChampionPopup'))
@@ -76,10 +77,8 @@ class TopComb extends React.Component {
                     key={id + champion.championId + item.itemId}
                     className="w-1/3"
                   >
-                    <img
-                      src={imageCache.items[item.itemId]}
-                      alt=""
-                      title={item.itemId}
+                    <Item
+                      id={item.itemId}
                     />
                   </div>
                 ))}
@@ -87,7 +86,7 @@ class TopComb extends React.Component {
               {showChampionId === champion.championId &&
               <ChampionPopup
                 id={champion.championId}
-                items={champion.itemCounts}
+                items={topItems.filter(i => i.championId === champion.championId)}
               />}
             </div>
           ))}
