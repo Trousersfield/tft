@@ -4,17 +4,15 @@ class Button extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      text: this.props.text || '',
-      color: this.props.color || 'blue',
-      disabled: this.props.disabled || false,
-      font: this.props.font || 'font-semibold',
-      rounded: this.props.rounded ? 'rounded' : ''
-    }
+    this.state = {}
   }
 
   render () {
-    const { text, color, disabled, font, rounded } = this.state
+    const text = this.props.text || ''
+    const color = this.props.color || 'blue'
+    const disabled = this.props.disabled || false
+    const font = this.props.font || 'font-semibold'
+    const rounded = this.props.rounded ? 'rounded' : ''
 
     return (
       <button

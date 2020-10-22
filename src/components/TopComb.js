@@ -2,16 +2,14 @@ import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 
 // components
+const ChampionPopup = React.lazy(() => import('./ChampionPopup'))
 
 class TopComb extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: this.props.id,
-      name: this.props.name,
-      champions: this.props.champions,
-      numberOfTopItems: this.props.numberOfTopItems,
-      topItems: []
+      topItems: [],
+      showChampionId: null
     }
 
     if (!imageCache['ranked-emblems']) {
@@ -25,10 +23,18 @@ class TopComb extends React.Component {
     }
   }
 
+  setChampionId(id) {
+    this.setState({ showChampionId: id })
+  }
+
+  resetChampionId() {
+    this.setState({ showChampionId: null })
+  }
+
   componentDidMount () {
     let topItems = []
 
-    for (const champion of this.state.champions) {
+    for (const champion of this.props.champions) {
       const topThreeItems = champion.itemCounts
         .sort((a, b) => a.count > b.count ? -1 : 1)
         .slice(0, 3)
@@ -43,7 +49,8 @@ class TopComb extends React.Component {
   }
 
   render () {
-    const { id, name, champions, topItems, numberOfTopItems } = this.state
+    const { topItems, showChampionId } = this.state
+    const { id, name, champions, numberOfTopItems } = this.props
 
     const slicedTopItems = topItems.slice(0, numberOfTopItems)
 
@@ -54,11 +61,13 @@ class TopComb extends React.Component {
         </div>
         <div className="flex flex-no-wrap">
           {champions.map(champion => (
-            <div className="relative border border-black m-1" key={id + champion.championId}>
+            <div className="relative border border-black m-1 w-16 h-16" key={id + champion.championId}>
               <img
                 src={imageCache['champions'][champion.championId]}
                 alt=""
                 title={champion.championId}
+                onMouseEnter={() => this.setChampionId(champion.championId)}
+                onMouseLeave={() => this.resetChampionId()}
                 // style={{width: imageSize.width, height: imageSize.height}}
               />
               <div className="absolute inset-x-0 bottom-0 flex flex-no-wrap justify-center transform translate-y-6 bg-yellow-300">
@@ -75,6 +84,11 @@ class TopComb extends React.Component {
                   </div>
                 ))}
               </div>
+              {showChampionId === champion.championId &&
+              <ChampionPopup
+                id={champion.championId}
+                items={champion.itemCounts}
+              />}
             </div>
           ))}
         </div>

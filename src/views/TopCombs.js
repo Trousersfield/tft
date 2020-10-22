@@ -60,30 +60,40 @@ class TopCombs extends React.Component {
     }, [])
 
     return (
-      <div className="w-md mx-auto">
-        <div className="inline-flex">
-          <Button
-            text="+"
-            onClick={this.handleDecrease}
-          />
-          <div>
-            {numberOfTopItems}
+      <div className="w-md lg:w-lg flex flex-col lg:flex-row justify-between mx-auto">
+        <div className="flex flex-grow flex-row lg:flex-col order-1 lg:order-2">
+          <p className="text-gray-900 p-2 border-b-2 border-gray-900 text-lg font-semibold">Options</p>
+          <div className="flex items-center mt-2">
+            <p className="w-1/2">Number of items</p>
+            <span className="w-1/2 flex items-center border-2 border-gray-600">
+              <Button
+                text="-"
+                color="gray"
+                onClick={this.handleDecrease}
+              />
+              <p className="mx-3 font-bold text-gray-900">
+                {numberOfTopItems}
+              </p>
+              <Button
+                text="+"
+                color="gray"
+                onClick={this.handleIncrease}
+              />
+            </span>
           </div>
-          <Button
-            text="-"
-            onClick={this.handleIncrease}
-          />
         </div>
-        {topCombs.map(comb => (
-          <Suspense key={comb.id}>
-            <TopComb
-              id={comb.id}
-              name={comb.name}
-              champions={comb.champions}
-              numberOfTopItems={numberOfTopItems}
-            />
-          </Suspense>
-        ))}
+        <div className="order-2 lg:order-1">
+          {topCombs.map(comb => (
+            <Suspense key={comb.id}>
+              <TopComb
+                id={comb.id}
+                name={comb.name}
+                champions={comb.champions}
+                numberOfTopItems={numberOfTopItems}
+              />
+            </Suspense>
+          ))}
+        </div>
       </div>
     )
   }

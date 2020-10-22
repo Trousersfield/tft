@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dropdown = React.lazy(() => import('./Dropdown'))
+const Dropdown = React.lazy(() => import('../elements/Dropdown'))
 
 class PatchSelector extends React.Component {
   constructor (props) {

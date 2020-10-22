@@ -2,7 +2,7 @@ import React from 'react'
 import leagues from '../util/leagues'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 
-const Dropdown = React.lazy(() => import('./Dropdown'))
+const Dropdown = React.lazy(() => import('../elements/Dropdown'))
 
 class LeagueSelector extends React.Component {
   constructor (props) {

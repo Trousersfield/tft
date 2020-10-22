@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react'
 import { Chart } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import { buttonBase } from '../../util/styles'
 import { cache as imageCache, importImages } from '../../util/imageImporter'
 import InfoTag from '../InfoTag'
+import Button from '../../elements/Button'
 import http from '../../util/http'
 
 Chart.plugins.unregister(ChartDataLabels)
@@ -158,13 +158,10 @@ class ItemChart extends React.Component {
           <p className="text-center">Absolute Numbers of Items</p>
         </div>
         <div className="flex justify-between items-center px-5 pb-5">
-          <button
-            className={buttonBase}
+          <Button
             onClick={this.toggleItemInclusion}
-          >
-            {(includeBasicItems ? 'Exclude' : 'Include') + ' Basic Items'}
-          </button>
-          {/*<div className="absolute top-0 right-0 z-10">*/}
+            text={(includeBasicItems ? 'Exclude' : 'Include') + ' Basic Items'}
+          />
           <div>
             <Suspense fallback={<div>Loading League Selector ...</div>}>
               <LeagueSelector
