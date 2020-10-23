@@ -5,7 +5,7 @@
     "cost": 4,
     "traits": [
       "Cultist",
-      "Set4_Vanguard"
+      "Vanguard"
     ]
   },
   {
@@ -13,8 +13,8 @@
     "championId": "TFT4_Ahri",
     "cost": 4,
     "traits": [
-      "Set4_Spirit",
-      "Set4_Mage"
+      "Spirit",
+      "Mage"
     ]
   },
   {
@@ -22,8 +22,8 @@
     "championId": "TFT4_Akali",
     "cost": 3,
     "traits": [
-      "Set4_Ninja",
-      "Set4_Assassin"
+      "Ninja",
+      "Assassin"
     ]
   },
   {
@@ -32,7 +32,7 @@
     "cost": 2,
     "traits": [
       "Fortune",
-      "Set4_Mage"
+      "Mage"
     ]
   },
   {
@@ -49,7 +49,7 @@
     "championId": "TFT4_Ashe",
     "cost": 4,
     "traits": [
-      "Set4_Elderwood",
+      "Elderwood",
       "Hunter"
     ]
   },
@@ -69,7 +69,7 @@
     "cost": 4,
     "traits": [
       "Dusk",
-      "Set4_Mystic"
+      "Mystic"
     ]
   },
   {
@@ -78,7 +78,7 @@
     "cost": 1,
     "traits": [
       "Moonlight",
-      "Set4_Assassin"
+      "Assassin"
     ]
   },
   {
@@ -96,7 +96,7 @@
     "cost": 3,
     "traits": [
       "Cultist",
-      "Set4_Shade"
+      "Shade"
     ]
   },
   {
@@ -104,8 +104,8 @@
     "championId": "TFT4_Ezreal",
     "cost": 5,
     "traits": [
-      "Set4_Elderwood",
-      "Set4_Dazzler"
+      "Elderwood",
+      "Dazzler"
     ]
   },
   {
@@ -113,7 +113,7 @@
     "championId": "TFT4_Fiora",
     "cost": 1,
     "traits": [
-      "Set4_Enlightened",
+      "Enlightened",
       "Duelist"
     ]
   },
@@ -123,7 +123,7 @@
     "cost": 1,
     "traits": [
       "Warlord",
-      "Set4_Vanguard"
+      "Vanguard"
     ]
   },
   {
@@ -131,8 +131,8 @@
     "championId": "TFT4_Hecarim",
     "cost": 2,
     "traits": [
-      "Set4_Elderwood",
-      "Set4_Vanguard"
+      "Elderwood",
+      "Vanguard"
     ]
   },
   {
@@ -140,9 +140,9 @@
     "championId": "TFT4_Irelia",
     "cost": 3,
     "traits": [
-      "Set4_Enlightened",
+      "Enlightened",
       "Divine",
-      "Set4_Adept"
+      "Adept"
     ]
   },
   {
@@ -150,8 +150,8 @@
     "championId": "TFT4_Janna",
     "cost": 2,
     "traits": [
-      "Set4_Enlightened",
-      "Set4_Mystic"
+      "Enlightened",
+      "Mystic"
     ]
   },
   {
@@ -206,7 +206,7 @@
     "traits": [
       "Warlord",
       "Fortune",
-      "Set4_Assassin"
+      "Assassin"
     ]
   },
   {
@@ -214,8 +214,8 @@
     "championId": "TFT4_Kayn",
     "cost": 5,
     "traits": [
-      "Set4_Tormented",
-      "Set4_Shade"
+      "Tormented",
+      "Shade"
     ]
   },
   {
@@ -223,7 +223,7 @@
     "championId": "TFT4_Kennen",
     "cost": 3,
     "traits": [
-      "Set4_Ninja",
+      "Ninja",
       "Keeper"
     ]
   },
@@ -232,7 +232,7 @@
     "championId": "TFT4_Kindred",
     "cost": 3,
     "traits": [
-      "Set4_Spirit",
+      "Spirit",
       "Hunter"
     ]
   },
@@ -251,7 +251,7 @@
     "cost": 5,
     "traits": [
       "Dusk",
-      "Set4_Mage"
+      "Mage"
     ]
   },
   {
@@ -260,7 +260,7 @@
     "cost": 1,
     "traits": [
       "Moonlight",
-      "Set4_Dazzler"
+      "Dazzler"
     ]
   },
   {
@@ -268,8 +268,8 @@
     "championId": "TFT4_Lulu",
     "cost": 2,
     "traits": [
-      "Set4_Elderwood",
-      "Set4_Mage"
+      "Elderwood",
+      "Mage"
     ]
   },
   {
@@ -278,7 +278,7 @@
     "cost": 3,
     "traits": [
       "Divine",
-      "Set4_Dazzler"
+      "Dazzler"
     ]
   },
   {
@@ -286,8 +286,8 @@
     "championId": "TFT4_Maokai",
     "cost": 1,
     "traits": [
-      "Set4_Elderwood",
-      "Set4_Brawler"
+      "Elderwood",
+      "Brawler"
     ]
   },
   {
@@ -295,8 +295,8 @@
     "championId": "TFT4_Morgana",
     "cost": 4,
     "traits": [
-      "Set4_Enlightened",
-      "Set4_Dazzler"
+      "Enlightened",
+      "Dazzler"
     ]
   },
   {
@@ -304,8 +304,8 @@
     "championId": "TFT4_Nami",
     "cost": 1,
     "traits": [
-      "Set4_Enlightened",
-      "Set4_Mage"
+      "Enlightened",
+      "Mage"
     ]
   },
   {
@@ -322,8 +322,8 @@
     "championId": "TFT4_Nunu",
     "cost": 3,
     "traits": [
-      "Set4_Elderwood",
-      "Set4_Brawler"
+      "Elderwood",
+      "Brawler"
     ]
   },
   {
@@ -332,7 +332,7 @@
     "cost": 2,
     "traits": [
       "Cultist",
-      "Set4_Assassin"
+      "Assassin"
     ]
   },
   {
@@ -350,7 +350,7 @@
     "cost": 4,
     "traits": [
       "Fortune",
-      "Set4_Vanguard"
+      "Vanguard"
     ]
   },
   {
@@ -359,7 +359,7 @@
     "cost": 5,
     "traits": [
       "Boss",
-      "Set4_Brawler"
+      "Brawler"
     ]
   },
   {
@@ -367,9 +367,9 @@
     "championId": "TFT4_Shen",
     "cost": 4,
     "traits": [
-      "Set4_Ninja",
-      "Set4_Adept",
-      "Set4_Mystic"
+      "Ninja",
+      "Adept",
+      "Mystic"
     ]
   },
   {
@@ -378,7 +378,7 @@
     "cost": 1,
     "traits": [
       "Moonlight",
-      "Set4_Brawler"
+      "Brawler"
     ]
   },
   {
@@ -387,7 +387,7 @@
     "cost": 1,
     "traits": [
       "Fortune",
-      "Set4_Brawler"
+      "Brawler"
     ]
   },
   {
@@ -395,8 +395,8 @@
     "championId": "TFT4_Talon",
     "cost": 4,
     "traits": [
-      "Set4_Enlightened",
-      "Set4_Assassin"
+      "Enlightened",
+      "Assassin"
     ]
   },
   {
@@ -404,7 +404,7 @@
     "championId": "TFT4_Teemo",
     "cost": 2,
     "traits": [
-      "Set4_Spirit",
+      "Spirit",
       "Sharpshooter"
     ]
   },
@@ -414,7 +414,7 @@
     "cost": 2,
     "traits": [
       "Dusk",
-      "Set4_Vanguard"
+      "Vanguard"
     ]
   },
   {
@@ -423,7 +423,7 @@
     "cost": 1,
     "traits": [
       "Cultist",
-      "Set4_Mage"
+      "Mage"
     ]
   },
   {
@@ -440,8 +440,8 @@
     "championId": "TFT4_Veigar",
     "cost": 3,
     "traits": [
-      "Set4_Elderwood",
-      "Set4_Mage"
+      "Elderwood",
+      "Mage"
     ]
   },
   {
@@ -450,7 +450,7 @@
     "cost": 2,
     "traits": [
       "Warlord",
-      "Set4_Brawler"
+      "Brawler"
     ]
   },
   {
@@ -460,7 +460,7 @@
     "traits": [
       "Divine",
       "Hunter",
-      "Set4_Brawler"
+      "Brawler"
     ]
   },
   {
@@ -469,7 +469,7 @@
     "cost": 1,
     "traits": [
       "Divine",
-      "Set4_Vanguard"
+      "Vanguard"
     ]
   },
   {
@@ -486,7 +486,7 @@
     "championId": "TFT4_Yasuo",
     "cost": 1,
     "traits": [
-      "Set4_Exile",
+      "Exile",
       "Duelist"
     ]
   },
@@ -495,8 +495,8 @@
     "championId": "TFT4_Yone",
     "cost": 5,
     "traits": [
-      "Set4_Exile",
-      "Set4_Adept"
+      "Exile",
+      "Adept"
     ]
   },
   {
@@ -504,8 +504,8 @@
     "championId": "TFT4_Yuumi",
     "cost": 3,
     "traits": [
-      "Set4_Spirit",
-      "Set4_Mystic"
+      "Spirit",
+      "Mystic"
     ]
   },
   {
@@ -513,8 +513,8 @@
     "championId": "TFT4_Zed",
     "cost": 2,
     "traits": [
-      "Set4_Ninja",
-      "Set4_Shade"
+      "Ninja",
+      "Shade"
     ]
   },
   {
@@ -523,7 +523,7 @@
     "cost": 5,
     "traits": [
       "Cultist",
-      "Set4_Mystic"
+      "Mystic"
     ]
   }
 ]

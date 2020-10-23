@@ -62,7 +62,9 @@ class Champion extends React.Component {
             </div>
             <div className="flex-shrink-0">
               <Suspense fallback={<div>Loading Traits ...</div>}>
-                <Traits data={traits} />
+                <Traits
+                  traitIds={traits}
+                />
               </Suspense>
             </div>
           </div>

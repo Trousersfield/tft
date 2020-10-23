@@ -30,18 +30,12 @@ const importImages = (directory) => {
   }
 }
 
-const importAll = (directory, r) => {
+const importAll = (directory, type, r) => {
   for (const file of r.keys()) {
-    const fileName = path.basename(file, '.png')
+    const fileName = path.basename(file, `.${type}`)
     cache[directory][fileName] = r(file)
   }
 }
-
-// const getImageId = (value) => {
-//   // eslint-disable-next-line
-//   const prefixRegex = /[|&;$%@"'<>()+,\s\-]|(TFT[\d]*_)/
-//   return value.replace(prefixRegex, '')
-// }
 
 const getBackgroundOffset = (style) => {
   let baseOffset = 331 / 6 // 311px = sprite-image width
@@ -77,6 +71,7 @@ const importChampions = (directory) => {
   console.log('importing champs')
   importAll(
     directory,
+    'png',
     require.context('../../public/riot/champions', true, /\.png$/)
   )
 }
@@ -84,6 +79,7 @@ const importChampions = (directory) => {
 const importItems = (directory) => {
   importAll(
     directory,
+    'png',
     require.context('../../public/riot/items', true, /\.png$/)
   )
 }
@@ -91,6 +87,7 @@ const importItems = (directory) => {
 const importOther = (directory) => {
   importAll(
     directory,
+    'png',
     require.context('../../public/riot/other', true, /\.png$/)
   )
 }
@@ -98,6 +95,7 @@ const importOther = (directory) => {
 const importRankedEmblems = (directory) => {
   importAll(
     directory,
+    'png',
     require.context('../../public/riot/ranked-emblems', true, /\.png$/)
   )
 }
@@ -105,6 +103,7 @@ const importRankedEmblems = (directory) => {
 const importTiers = (directory) => {
   importAll(
     directory,
+    'png',
     require.context('../../public/riot/tiers', true, /\.png$/)
   )
 }
@@ -112,13 +111,13 @@ const importTiers = (directory) => {
 const importTraits = (directory) => {
   importAll(
     directory,
-    require.context('../../public/riot/traits', true, /\.png$/)
+    'svg',
+    require.context('../../public/riot/traits', true, /\.svg$/)
   )
 }
 
 export {
   cache,
   importImages,
-  // getImageName,
   getBackgroundOffset
 }

@@ -6,21 +6,22 @@ class Traits extends React.Component {
     super (props)
     this.state = {}
 
-    if (!imageCache['traits']) importImages('traits')
+    if (!imageCache.traits) {
+      importImages('traits')
+    }
   }
 
   render () {
-    const traits = this.props.data
+    const traitIds = this.props.traitIds
 
     return (
       <div className="flex flex-no-wrap">
-        {traits.map(trait =>
-          <div  key={'trait-' + trait} >
+        {traitIds.map((id, index) =>
+          <div  key={'trait-' + id} >
             <img
-              src={imageCache['traits'][trait.traitId]}
-              alt={trait}
-              className="w-16 h-16"
-              title={trait}
+              src={imageCache.traits[id]}
+              alt=""
+              className={`w-10 h-10 ${index > 0 ? 'ml-1' : ''}`}
             />
           </div>
         )}

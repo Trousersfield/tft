@@ -1,6 +1,6 @@
 [
   {
-    "key": "Set4_Adept",
+    "key": "Adept",
     "name": "Adept",
     "description": "Adepts calm the flow of battle, reducing the Attack Speed of all enemies for a few seconds at the start of combat.",
     "type": "class",
@@ -22,7 +22,7 @@
     ]
   },
   {
-    "key": "Set4_Assassin",
+    "key": "Assassin",
     "name": "Assassin",
     "innate": "At the start of combat, Assassins leap to the enemy backline.",
     "description": "Assassins gain bonus Critical Strike Damage and Chance, and their spells can critically strike.",
@@ -45,7 +45,7 @@
     ]
   },
   {
-    "key": "Set4_Brawler",
+    "key": "Brawler",
     "name": "Brawler",
     "description": "Brawlers gain bonus Health.",
     "type": "class",
@@ -94,7 +94,7 @@
     ]
   },
   {
-    "key": "Set4_Dazzler",
+    "key": "Dazzler",
     "name": "Dazzler",
     "description": "Dazzlers' spells reduce the Attack Damage of enemies hit for a few seconds.",
     "type": "class",
@@ -188,7 +188,7 @@
     ]
   },
   {
-    "key": "Set4_Elderwood",
+    "key": "Elderwood",
     "name": "Elderwood",
     "description": "Every two seconds all Elderwood champions grow, gaining bonus stats. This effect stacks up to five times.",
     "type": "origin",
@@ -223,7 +223,7 @@
     ]
   },
   {
-    "key": "Set4_Enlightened",
+    "key": "Enlightened",
     "name": "Enlightened",
     "description": "Enlightened champions generate more Mana.",
     "type": "origin",
@@ -245,7 +245,7 @@
     ]
   },
   {
-    "key": "Set4_Exile",
+    "key": "Exile",
     "name": "Exile",
     "description": "If an Exile has no adjacent allies at the start of combat, they gain a shield equal to a percentage of their maximum health and Lifesteal if there are two or more Exiles.",
     "type": "origin",
@@ -328,7 +328,7 @@
     ]
   },
   {
-    "key": "Set4_Mage",
+    "key": "Mage",
     "name": "Mage",
     "description": "Mages cast twice and have modified Spell Power.",
     "type": "class",
@@ -362,7 +362,7 @@
     ]
   },
   {
-    "key": "Set4_Mystic",
+    "key": "Mystic",
     "name": "Mystic",
     "description": "All allies gain Magic Resistance.",
     "type": "class",
@@ -384,7 +384,7 @@
     ]
   },
   {
-    "key": "Set4_Ninja",
+    "key": "Ninja",
     "name": "Ninja",
     "description": "Ninjas gain bonus Attack Damage and Spell Power. This trait is only active when you have exactly 1 or 4 unique Ninjas.",
     "type": "origin",
@@ -402,7 +402,7 @@
     ]
   },
   {
-    "key": "Set4_Shade",
+    "key": "Shade",
     "name": "Shade",
     "innate": "When combat starts, Shades teleport to the enemy backline.",
     "description": "Every third attack Shades dip into the shadows, stealthing and causing their next basic attack to deal bonus magic damage.",
@@ -447,7 +447,7 @@
     ]
   },
   {
-    "key": "Set4_Spirit",
+    "key": "Spirit",
     "name": "Spirit",
     "description": "The first time a Spirit casts their spell, all allies gain Attack Speed based on the spell's mana cost.",
     "type": "origin",
@@ -476,7 +476,7 @@
     ]
   },
   {
-    "key": "Set4_Tormented",
+    "key": "Tormented",
     "name": "Tormented",
     "description": "Tormented can be transformed after participating in several rounds of combat, enhancing their abilities.",
     "type": "origin",
@@ -488,7 +488,7 @@
     ]
   },
   {
-    "key": "Set4_Vanguard",
+    "key": "Vanguard",
     "name": "Vanguard",
     "description": "Vanguard champions gain bonus Armor.",
     "type": "class",

@@ -47,7 +47,7 @@
   {
     "id": 11,
     "name": "Deathblade",
-    "description": "Contributing to a kill grants the holder addtional Attack Damage for the rest of combat."
+    "description": "Contributing to a kill grants the holder additional Attack Damage for the rest of combat."
   },
   {
     "id": 12,
@@ -67,7 +67,7 @@
   {
     "id": 15,
     "name": "Guardian Angel",
-    "description": "Prevents the wearer's first death, reviving them after a short delay and sheding all negative effects."
+    "description": "Prevents the wearer's first death, reviving them after a short delay and shedding all negative effects."
   },
   {
     "id": 16,
@@ -207,7 +207,7 @@
   {
     "id": 57,
     "name": "Sunfire Cape",
-    "description": "At start of combat, and every couple seconds thereafter, a random nearby enemyis burned for a percentage of their maximum health. Any healing they receive is reduced."
+    "description": "At start of combat, and every couple seconds thereafter, a random nearby enemy is burned for a percentage of their maximum health. Any healing they receive is reduced."
   },
   {
     "id": 58,

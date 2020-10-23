@@ -62,32 +62,32 @@ class TopComb extends React.Component {
         </div>
         <div className="flex flex-no-wrap">
           {champions.map(champion => (
-            <div className="relative border border-black m-1 w-16 h-16" key={id + champion.championId}>
-              <img
-                src={imageCache['champions'][champion.championId]}
-                alt=""
-                title={champion.championId}
-                onMouseEnter={() => this.setChampionId(champion.championId)}
-                onMouseLeave={() => this.resetChampionId()}
-                // style={{width: imageSize.width, height: imageSize.height}}
-              />
-              <div className="absolute inset-x-0 bottom-0 flex flex-no-wrap justify-center transform translate-y-6 bg-yellow-300">
+            <div className="w-16 m-1" key={id + champion.championId}>
+              <div className="border border-black">
+                <img
+                  src={imageCache['champions'][champion.championId]}
+                  alt=""
+                  title={champion.championId}
+                  onMouseEnter={() => this.setChampionId(champion.championId)}
+                  onMouseLeave={() => this.resetChampionId()}
+                  // style={{width: imageSize.width, height: imageSize.height}}
+                />
+
+                {showChampionId === champion.championId &&
+                <ChampionPopup
+                  id={champion.championId}
+                  items={topItems.filter(i => i.championId === champion.championId)}
+                />}
+              </div>
+              <div className="flex flex-no-wrap justify-center mt-1 bg-yellow-300">
                 {slicedTopItems.filter(item => item.championId === champion.championId).map(item => (
-                  <div
+                  <Item
                     key={id + champion.championId + item.itemId}
-                    className="w-1/3"
-                  >
-                    <Item
-                      id={item.itemId}
-                    />
-                  </div>
+                    id={item.itemId}
+                    size="w-1/3"
+                  />
                 ))}
               </div>
-              {showChampionId === champion.championId &&
-              <ChampionPopup
-                id={champion.championId}
-                items={topItems.filter(i => i.championId === champion.championId)}
-              />}
             </div>
           ))}
         </div>
