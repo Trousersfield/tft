@@ -56,11 +56,14 @@ class TopComb extends React.Component {
     const slicedTopItems = topItems.slice(0, numberOfTopItems)
 
     return (
-      <div className="flex justify-between items-center m-2 pb-5">
-        <div className="bg-red-400">
-          {name}
+      <div className="flex justify-between items-center m-2 p-1 shadow-lg">
+        <div className="w-24 bg-orange-200">
+          <p>
+            {name}
+          </p>
+
         </div>
-        <div className="flex flex-no-wrap">
+        <div className="flex flex-no-wrap w-full">
           {champions.map(champion => (
             <div className="w-16 m-1" key={id + champion.championId}>
               <div className="border border-black">
