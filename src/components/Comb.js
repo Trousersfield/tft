@@ -10,7 +10,7 @@ class Comb extends React.Component {
       imageSize: 'w-12 h-12'
     }
 
-    if (!imageCache['traits']) {
+    if (!imageCache.traits) {
       importImages('traits')
     }
   }
@@ -56,7 +56,7 @@ class Comb extends React.Component {
             className={'bg-indigo-500 ' + imageSize}
           >
             <img
-              src={imageCache['traits'][imageName]}
+              src={imageCache.traits[imageName]}
               alt=""
               style={{width: imageSize.width, height: imageSize.height}}
             />

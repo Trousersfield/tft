@@ -11,7 +11,7 @@ class PatchNotes extends React.Component {
       patchNumbers: []
     }
 
-    if (!imageCache['traits']) importImages('traits')
+    if (!imageCache.traits) importImages('traits')
   }
 
   componentDidMount () {

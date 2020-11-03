@@ -63,19 +63,21 @@ class ChampionPopup extends React.Component {
             </div>
           ))}
         </div>
-        <div className="flex items-center mt-2">
-          <p className="mr-2">
-            Popular items:
-          </p>
-          {items.map((item, index) => (
-            <div key={'item-' + id + '-' + item.itemId} className={`w-10 h-10 rounded-sm overflow-hidden ${index > 0 ? 'ml-1' : ''}`}>
-              <img
-                src={imageCache.items[item.itemId]}
-                alt=""
-              />
-            </div>
-          ))}
-        </div>
+        {items &&
+          <div className="flex items-center mt-2">
+            <p className="mr-2">
+              Popular items:
+            </p>
+            {items.map((item, index) => (
+              <div key={'item-' + id + '-' + item.itemId} className={`w-10 h-10 rounded-sm overflow-hidden ${index > 0 ? 'ml-1' : ''}`}>
+                <img
+                  src={imageCache.items[item.itemId]}
+                  alt=""
+                />
+              </div>
+            ))}
+          </div>
+        }
       </div>
     )
   }

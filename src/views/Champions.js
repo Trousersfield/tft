@@ -10,12 +10,12 @@ const Champion = React.lazy(() => import('../components/Champion'))
 class Champions extends React.Component {
   constructor (props) {
     super (props)
-    console.log('set data: ', setData.champions)
     this.state = {
       selectedLeague: 'diamond',
       data: {},
-      championByCostLevel: setData.champions ? setData.champions.reduce((result, curr) => {
-        result[result.length - curr.cost].push(curr)
+      championByCostLevel: setData.champions ? Object.keys(setData.champions).reduce((result, curr) => {
+        const champion = setData.champions[curr]
+        result[result.length - champion.cost].push(champion)
         return result
       }, [[], [], [], [], []]) : [],
       patchEffects: null
@@ -32,7 +32,9 @@ class Champions extends React.Component {
       const { data } = await axios
         .get(`http://localhost:8080/patch/effects/${'10.8'}`)
 
-      if (data && data !== '') this.setState({ patchEffects: data })
+      if (data && data !== '') {
+        this.setState({ patchEffects: data })
+      }
     } catch (error) {
       console.error(error)
     }

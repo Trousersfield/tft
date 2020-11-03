@@ -10,7 +10,7 @@ class ChampionProfile extends React.Component {
       champion: null
     }
 
-    if (!imageCache['champions']) {
+    if (!imageCache.champions) {
       importImages('champions')
     }
   }
@@ -34,7 +34,7 @@ class ChampionProfile extends React.Component {
             <div className={`absolute bottom-0 left-0 overflow-hidden
               rounded-full w-16 h-16 bg-blue-500 border-4 border-${color}-900`}>
               <img
-                src={imageCache['champions'][champion.championId]}
+                src={imageCache.champions[champion.championId]}
                 alt={champion.name}
               />
             </div>

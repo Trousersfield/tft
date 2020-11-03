@@ -21,7 +21,7 @@ class LeagueSelector extends React.Component {
     if (!imageCache['ranked-emblems']) {
       importImages('ranked-emblems')
     }
-    if (!imageCache['champions']) {
+    if (!imageCache.champions) {
       importImages('champions')
     }
   }

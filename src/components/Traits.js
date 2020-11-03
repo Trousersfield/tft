@@ -17,13 +17,12 @@ class Traits extends React.Component {
     return (
       <div className="flex flex-no-wrap">
         {traitIds.map((id, index) =>
-          <div  key={'trait-' + id} >
-            <img
-              src={imageCache.traits[id]}
-              alt=""
-              className={`w-10 h-10 ${index > 0 ? 'ml-1' : ''}`}
-            />
-          </div>
+          <img
+            key={'trait-' + id}
+            src={imageCache.traits[id]}
+            alt=""
+            className={`w-10 h-10 ${index > 0 ? 'ml-1' : ''}`}
+          />
         )}
       </div>
     )

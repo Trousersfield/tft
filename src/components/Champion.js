@@ -10,34 +10,32 @@ import {
 } from 'react-icons/go'
 // import axios from 'axios'
 
-
+// components
+const ChampionPopup = React.lazy(() => import('./ChampionPopup'))
 const Traits = React.lazy(() => import('./Traits'))
-const TraitInfo = React.lazy(() => import('../components/TraitInfo'))
 
 class Champion extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      showDetails: false,
-      data: this.props.data
+      data: this.props.data,
+      showChampionPopup: false
     }
 
-    if (!imageCache['champions']) importImages('champions')
+    if (!imageCache.champions) {
+      importImages('champions')
+    }
   }
 
-  componentDidMount () {
-    this.setState({ showDetails: this.props.showDetails })
-  }
-
-  toggleDetails () {
-    this.setState(state => ({ showDetails: !state.showDetails }))
+  setChampionId (id) {
+    this.setState({ showChampionId: id })
   }
 
   render () {
     const { championId, name, cost, traits } = this.props.champion
     const { tier1Count, tier2Count, tier3Count } = this.props.data
     const patchEffect = this.props.patchEffect
-    const { showDetails } = this.state
+    const { showChampionId } = this.state
     const color = costColor(cost)
 
     return (
@@ -46,19 +44,25 @@ class Champion extends React.Component {
           <div className="flex flex-wrap items-center">
             <div
               className={`relative bg-${color}-200 border-2 border-${color}-900
-                w-56 flex flex-no-wrap items-center rounded-full cursor-pointer`}
-              onClick={() => this.toggleDetails()}
+                w-56 flex flex-no-wrap items-center rounded-full`}
             >
               <div className="overflow-hidden rounded-full">
                 <img
-                  src={imageCache['champions'][championId]}
+                  src={imageCache.champions[championId]}
                   alt={name}
+                  onMouseEnter={() => this.setChampionId(championId)}
+                  onMouseLeave={() => this.setChampionId(null)}
                 />
               </div>
               <div className="mx-auto">
                 <p>{name}</p>
               </div>
               {patchEffect && <BuffOrNerf value={patchEffect}/>}
+              {showChampionId === championId &&
+                <ChampionPopup
+                  id={championId}
+                />
+              }
             </div>
             <div className="flex-shrink-0">
               <Suspense fallback={<div>Loading Traits ...</div>}>
@@ -88,31 +92,6 @@ class Champion extends React.Component {
             </div>
           </div>
         </div>
-        {showDetails &&
-        <>
-          <div className="flex-1 flex flex-wrap">
-            {traits.map((trait) =>
-              <Suspense
-                key={trait}
-                fallback={<div>Loading Trait Info ...</div>}
-              >
-                <TraitInfo
-                  trait={trait}
-                />
-              </Suspense>
-            )}
-          </div>
-          {/*<div className="flex-grow-0">
-            <NavLink
-              to={`/champions/profile/${name}`}
-              exact
-              activeClassName="text-indigo-900 font-semibold border-b-2 border-indigo-900"
-              className="p-2 mx-1"
-            >
-              Link to {name}
-            </NavLink>
-            </div>*/}
-        </>}
       </div>
     )
   }

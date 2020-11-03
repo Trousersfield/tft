@@ -28,7 +28,7 @@ class ItemChart extends React.Component {
       itemGap: 1
     }
 
-    if (!imageCache['items']) {
+    if (!imageCache.items) {
       importImages('items')
     }
   }
@@ -242,7 +242,7 @@ class ItemImageLabel extends React.Component {
         onClick={() => this.toggleTooltip()}
       >
         <img
-          src={imageCache['items'][`${item.itemId < 10 ?
+          src={imageCache.items[`${item.itemId < 10 ?
             '0' : ''}${item.itemId}`]}
           style={{width: `${imageSize}px`,
             height: `${imageSize}px`,

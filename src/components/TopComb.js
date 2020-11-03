@@ -16,20 +16,16 @@ class TopComb extends React.Component {
     if (!imageCache['ranked-emblems']) {
       importImages('ranked-emblems')
     }
-    if (!imageCache['champions']) {
+    if (!imageCache.champions) {
       importImages('champions')
     }
-    if (!imageCache['items']) {
+    if (!imageCache.items) {
       importImages('items')
     }
   }
 
   setChampionId(id) {
     this.setState({ showChampionId: id })
-  }
-
-  resetChampionId() {
-    this.setState({ showChampionId: null })
   }
 
   componentDidMount () {
@@ -71,7 +67,7 @@ class TopComb extends React.Component {
                   src={imageCache.champions[champion.championId]}
                   alt=""
                   onMouseEnter={() => this.setChampionId(champion.championId)}
-                  onMouseLeave={() => this.resetChampionId()}
+                  onMouseLeave={() => this.setChampionId(null)}
                   // style={{width: imageSize.width, height: imageSize.height}}
                 />
 
