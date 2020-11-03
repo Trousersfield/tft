@@ -33,7 +33,8 @@ const importImages = (directory) => {
 const importAll = (directory, type, r) => {
   for (const file of r.keys()) {
     const fileName = path.basename(file, `.${type}`)
-    cache[directory][fileName] = r(file)
+    // set images' src: webpack module.default required
+    cache[directory][fileName] = r(file).default
   }
 }
 
@@ -62,13 +63,8 @@ const getBackgroundOffset = (style) => {
   return baseOffset
 }
 
-/**
- * unfortunately require.context function parameters must be literals
- * the path must be statically analyzable --> put each path into a function
- */
-
+// static imports
 const importChampions = (directory) => {
-  console.log('importing champs')
   importAll(
     directory,
     'png',

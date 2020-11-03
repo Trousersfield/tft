@@ -2,8 +2,6 @@ import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 import { data as setData } from '../util/setDataImporter'
 
-const Traits = React.lazy(() => import('./Traits'))
-
 class ChampionPopup extends React.Component {
   constructor(props) {
     super(props)

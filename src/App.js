@@ -67,7 +67,7 @@ class App extends React.Component {
                   to={'/'}
                   className="uppercase tracking-wide"
                 >
-                  Team Fight Stats
+                  Teamfight Tracker
                 </NavLink>
               </div>
               {menuItems.map((route) =>

@@ -1,4 +1,4 @@
-export default [{
+const leagues = [{
   name: 'Iron',
   key: 'iron',
   image: 'Emblem_Iron'
@@ -35,3 +35,5 @@ export default [{
   key: 'challenger',
   image: 'Emblem_Challenger'
 }]
+
+export default leagues

@@ -68,9 +68,8 @@ class TopComb extends React.Component {
             <div className="w-16 m-1" key={id + champion.championId}>
               <div className="border border-black">
                 <img
-                  src={imageCache['champions'][champion.championId]}
+                  src={imageCache.champions[champion.championId]}
                   alt=""
-                  title={champion.championId}
                   onMouseEnter={() => this.setChampionId(champion.championId)}
                   onMouseLeave={() => this.resetChampionId()}
                   // style={{width: imageSize.width, height: imageSize.height}}
@@ -82,7 +81,7 @@ class TopComb extends React.Component {
                   items={topItems.filter(i => i.championId === champion.championId)}
                 />}
               </div>
-              <div className="flex flex-no-wrap justify-center mt-1 bg-yellow-300">
+              <div className="flex flex-no-wrap justify-center mt-1">
                 {slicedTopItems.filter(item => item.championId === champion.championId).map(item => (
                   <Item
                     key={id + champion.championId + item.itemId}

@@ -3,7 +3,9 @@ const data = {}
 let loading = false
 
 const importSetData = async () => {
-  if (loading) return
+  if (loading) {
+    return
+  }
   await loadData(require.context('../../public/riot/data', true, /\.json$/))
 }
 

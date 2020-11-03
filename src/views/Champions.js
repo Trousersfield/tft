@@ -10,6 +10,7 @@ const Champion = React.lazy(() => import('../components/Champion'))
 class Champions extends React.Component {
   constructor (props) {
     super (props)
+    console.log('set data: ', setData.champions)
     this.state = {
       selectedLeague: 'diamond',
       data: {},

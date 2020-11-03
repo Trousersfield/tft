@@ -1,6 +1,6 @@
 {
-  "short_name": "Team Fight Stats",
-  "name": "Team Fight Stats",
+  "short_name": "TFTracker",
+  "name": "Teamfight Tracker",
   "icons": [
     {
       "src": "favicon.ico",

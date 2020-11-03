@@ -1,4 +1,4 @@
-## Team Fight Stats
+## Teamfight Tracker
 
 View some interesting statistics for [Teamfight Tactics](https://teamfighttactics.leagueoflegends.com/).
 
