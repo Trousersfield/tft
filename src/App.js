@@ -47,12 +47,20 @@ class App extends React.Component {
   render () {
     const { routes, patches, selectedPatch } = this.state
     const menuItems = routes.reduce((result, curr) => {
+
       if (curr.category) {
         const contained = result.find(r => r.path === curr.category)
-        if (contained) return result
+        if (contained) {
+          return result
+        }
       }
-      if (curr.noMenu) return result
+
+      if (curr.noMenu) {
+        return result
+      }
+
       result.push(curr)
+
       return result
     }, [])
 
@@ -70,9 +78,9 @@ class App extends React.Component {
                   Teamfight Tracker
                 </NavLink>
               </div>
-              {menuItems.map((route) =>
-                <TopMenuItem key={'menu-item-' + route.path}
-                  {...route}
+              {menuItems.map((item) =>
+                <TopNavigationItem key={'top-navigation-item-' + item.path}
+                  {...item}
                 />
               )}
             </nav>
@@ -107,11 +115,11 @@ class App extends React.Component {
   }
 }
 
-const TopMenuItem = (item) => {
+const TopNavigationItem = (item) => {
   return (
     <NavLink
       to={item.path || ''}
-      activeClassName="font-semibold border-b-2 border-indigo-800"
+      activeClassName="font-bold border-b-2 border-indigo-800"
       className="p-2 mx-1 my-auto whitespace-no-wrap"
     >
       {item.name}

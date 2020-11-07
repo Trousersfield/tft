@@ -4,17 +4,17 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { scaleToPercent, makeRanking } from '../../util/formatter'
 import { placementColors } from '../../util/styles'
 import InfoTag from '../InfoTag'
-import Comb from '../../components/Comb'
+import Comb from '../Composition'
 
 Chart.plugins.unregister(ChartDataLabels)
 
-class DetailCombChart extends React.Component {
+class CompositionDistribution extends React.Component {
   constructor (props) {
     super (props)
     this.chartRef = React.createRef()
     this.state = {
       data: this.props.data,
-      detailCombChart: null
+      chartInstance: null
     }
   }
 
@@ -39,7 +39,7 @@ class DetailCombChart extends React.Component {
 
     const percentLabels = scaleToPercent(rawData)
 
-    const detailCombChart = new Chart(this.chartRef.current, {
+    const chartInstance = new Chart(this.chartRef.current, {
       type: 'horizontalBar',
       plugins: [ChartDataLabels],
       data: {
@@ -86,7 +86,7 @@ class DetailCombChart extends React.Component {
       }
     })
 
-    this.setState({ detailCombChart })
+    this.setState({ chartInstance })
   }
 
   render () {
@@ -114,4 +114,4 @@ class DetailCombChart extends React.Component {
   }
 }
 
-export default DetailCombChart
+export default CompositionDistribution

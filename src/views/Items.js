@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 
-const ItemChart = React.lazy(() => import('../components/charts/ItemChart'))
+const ItemChart = React.lazy(() => import('../components/charts/Item'))
 
 class Items extends React.Component {
   constructor(props) {

@@ -5,14 +5,13 @@ import http from '../util/http'
 import Button from '../elements/Button'
 
 // components
-const TopComb = React.lazy(() => import('../components/TopComb'))
+const MetaComposition = React.lazy(() => import('../components/MetaComposition'))
 
-
-class TopCombs extends React.Component {
+class MetaCompositions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      allCombs: [],
+      allCompositions: [],
       numberOfTopItems: 6
     }
 
@@ -42,19 +41,20 @@ class TopCombs extends React.Component {
   }
 
   render () {
-    const { numberOfTopItems } = this.state
-    const topCombs = this.state.allCombs.reduce((acc, curr) => {
+    const { numberOfTopItems, allCompositions } = this.state
+
+    const metaCompositions = allCompositions.reduce((acc, curr) => {
       // TODO: think about removing .slice()
       // find most played champions
-      let combChampions = JSON.parse(curr.TopCombChamps).sort((a, b) => a.count < b.count ? 1 : -1).slice(0, 8)
+      let champions = JSON.parse(curr.TopCombChamps).sort((a, b) => a.count < b.count ? 1 : -1).slice(0, 8)
 
       // sort champions by cost
-      combChampions = combChampions.sort((a, b) => setData.champions[a.championId].cost < setData.champions[b.championId].cost ? -1 : 1)
+      champions = champions.sort((a, b) => setData.champions[a.championId].cost < setData.champions[b.championId].cost ? -1 : 1)
 
       acc.push({
         id: curr.id,
         name: curr.Name,
-        champions: combChampions
+        champions: champions
       })
       return acc
     }, [])
@@ -83,9 +83,9 @@ class TopCombs extends React.Component {
           </div>
         </div>
         <div className="order-2 lg:order-1">
-          {topCombs.map(comb => (
+          {metaCompositions.map(comb => (
             <Suspense key={comb.id}>
-              <TopComb
+              <MetaComposition
                 id={comb.id}
                 name={comb.name}
                 champions={comb.champions}
@@ -99,4 +99,4 @@ class TopCombs extends React.Component {
   }
 }
 
-export default TopCombs
+export default MetaCompositions

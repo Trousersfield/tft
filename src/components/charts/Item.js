@@ -8,11 +8,11 @@ import http from '../../util/http'
 
 Chart.plugins.unregister(ChartDataLabels)
 
-const LeagueSelector = React.lazy(() => import('../../components/LeagueSelector'))
+const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
 
 let debounce = null
 
-class ItemChart extends React.Component {
+class Item extends React.Component {
   constructor (props) {
     super (props)
     this.chartRef = React.createRef()
@@ -49,13 +49,22 @@ class ItemChart extends React.Component {
     this.setState(state => {
       const stateDataObj = Object.assign({}, state.data)
       stateDataObj[selectedLeague] = data
+
       let currentGraphData
-      if (state.includeBasicItems) currentGraphData = stateDataObj[selectedLeague]
-      else currentGraphData = stateDataObj[selectedLeague].filter(dataRow => dataRow.itemId > 9)
+
+      if (state.includeBasicItems) {
+        currentGraphData = stateDataObj[selectedLeague]
+      } else {
+        currentGraphData = stateDataObj[selectedLeague].filter(dataRow => dataRow.itemId > 9)
+      }
+
       const itemImageSize = (state.chartHeight - 16 - state.itemGap *
         currentGraphData.length) / currentGraphData.length
+
       return { data: stateDataObj, currentGraphData, itemImageSize }
-    }, () => { this.makeGraph() })
+    }, () => {
+      this.makeGraph()
+    })
   }
 
   setSelectedLeague = (value) => {
@@ -278,4 +287,4 @@ const ItemTooltip = (props) => {
   )
 }
 
-export default ItemChart
+export default Item

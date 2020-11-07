@@ -2,7 +2,7 @@ import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 import { printTraitName } from '../util/formatter'
 
-class Comb extends React.Component {
+class Composition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -70,4 +70,4 @@ class Comb extends React.Component {
 }
 
 
-export default Comb;
+export default Composition

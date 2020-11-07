@@ -8,7 +8,6 @@ import {
   GoArrowDown,
   GoPrimitiveDot
 } from 'react-icons/go'
-// import axios from 'axios'
 
 // components
 const ChampionPopup = React.lazy(() => import('./ChampionPopup'))

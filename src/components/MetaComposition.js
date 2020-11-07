@@ -1,11 +1,11 @@
 import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
-import Item from '../components/Item'
+import Item from './Item'
 
 // components
 const ChampionPopup = React.lazy(() => import('./ChampionPopup'))
 
-class TopComb extends React.Component {
+class MetaComposition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -94,4 +94,4 @@ class TopComb extends React.Component {
   }
 }
 
-export default TopComb
+export default MetaComposition

@@ -2,16 +2,18 @@ import React, { Suspense } from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 
 // components
-const CombChart = React.lazy(() => import('../components/charts/CombChart'))
+const CompositionChart = React.lazy(() => import('../components/charts/Composition'))
 
-class Combs extends React.Component {
+class Compositions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       loading: false
     }
 
-    if (!imageCache['ranked-emblems']) importImages('ranked-emblems')
+    if (!imageCache['ranked-emblems']) {
+      importImages('ranked-emblems')
+    }
   }
 
   componentDidMount () {
@@ -25,11 +27,11 @@ class Combs extends React.Component {
     return (
       <div className="lg:w-full xl:w-3/5 mx-auto pt-10">
         <Suspense fallback={<div>Loading Comb...</div>}>
-          <CombChart />
+          <CompositionChart />
         </Suspense>
       </div>
     )
   }
 }
 
-export default Combs
+export default Compositions

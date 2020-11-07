@@ -7,11 +7,11 @@ import http from '../../util/http'
 
 // components
 const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
-const DetailCombChart = React.lazy(() => import('./DetailCombChart'))
+const CompositionDistribution = React.lazy(() => import('./CompositionDistribution'))
 
 Chart.plugins.unregister(ChartDataLabels)
 
-class CombChart extends React.Component {
+class Composition extends React.Component {
   constructor (props) {
     super (props)
     this.chartRef = React.createRef()
@@ -23,7 +23,9 @@ class CombChart extends React.Component {
       selectedComb: null
     }
 
-    if (!imageCache['ranked-emblems']) importImages('ranked-emblems')
+    if (!imageCache['ranked-emblems']) {
+      importImages('ranked-emblems')
+    }
   }
 
   componentDidMount () {
@@ -34,12 +36,16 @@ class CombChart extends React.Component {
     // use cache of already loaded league in data[selectedLeague]? Only if there is new data
     const selectedLeague = this.state.selectedLeague
     const { data } = await http.get(`comboStats/${selectedLeague}`)
+
     this.setState(state => {
       // set data itself
       const stateDataObj = Object.assign({}, state.data)
       stateDataObj[selectedLeague] = data
+
       return { data: stateDataObj }
-    }, () => { this.makeGraph() })
+    }, () => {
+      this.makeGraph()
+    })
   }
 
   setSelectedLeague = (value) => {
@@ -47,7 +53,9 @@ class CombChart extends React.Component {
   }
 
   makeGraph () {
-    if (this.state.combChart) this.state.combChart.destroy()
+    if (this.state.combChart) {
+      this.state.combChart.destroy()
+    }
     const data = this.state.data[this.state.selectedLeague].sort((a, b) => {
       return a.totalAmount < b.totalAmount ? 1 : -1
     })
@@ -182,8 +190,8 @@ class CombChart extends React.Component {
         </div>
         {selectedComb &&
           <Suspense fallback={<div>Loading Comb Details ...</div>}>
-            <DetailCombChart
-              key={'detail-comb-' + selectedComb.id}
+            <CompositionDistribution
+              key={'composition-distribution-' + selectedComb.id}
               data={selectedComb}
             />
           </Suspense>}
@@ -192,4 +200,4 @@ class CombChart extends React.Component {
   }
 }
 
-export default CombChart
+export default Composition
