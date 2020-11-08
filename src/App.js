@@ -71,14 +71,15 @@ class App extends React.Component {
   }
 }
 
-const TopNavLink = (path, name) => {
+const TopNavLink = (props) => {
+  console.log('props: ', props)
   return (
     <NavLink
-      to={path || ''}
+      to={props.path || ''}
       activeClassName="font-bold border-b-2 border-indigo-800"
       className="p-2 mx-1 my-auto whitespace-no-wrap"
     >
-      {name.toString()}
+      {props.name}
     </NavLink>
   )
 }

@@ -3,7 +3,6 @@ import React from 'react'
 // const Champions = React.lazy(() => import('./views/Champions'))
 // const ChampionProfile = React.lazy(() => import('./views/ChampionProfile'))
 const Compositions = React.lazy(() => import('./views/Compositions'))
-const Home = React.lazy(() => import('./views/Home'))
 // const Items = React.lazy(() => import('./views/Items'))
 const PatchNotes = React.lazy(() => import('./views/PatchNotes'))
 // const PatchEffect = React.lazy(() => import('./views/PatchEffect'))
@@ -11,12 +10,8 @@ const Statistics = React.lazy(() => import('./views/Statistics'))
 const MetaCompositions = React.lazy(() => import('./views/MetaCompositions'))
 
 export default [{
-      path: '/',
-      component: Home,
-      exact: true
-    },  {
       path: '/meta-compositions',
-      name: 'Meta',
+      name: 'Meta Teams',
       component: MetaCompositions,
       exact: true
     }, {
