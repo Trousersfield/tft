@@ -4,71 +4,30 @@ import {
   Switch,
   Route,
   NavLink
-} from "react-router-dom"
-import Routes from './routes'
+} from 'react-router-dom'
+import routes from './routes'
 import { importSetData } from './util/setDataImporter'
-import http from './util/http'
 
+// components
 const PatchSelector = React.lazy(() => import('./components/PatchSelector'))
 
 class App extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      routes: Routes.routes,
-      patches: [],
-      selectedPatch: null,
-      setSelectedPatch: this.setSelectedPatch
     }
 
     // import static set data
     importSetData()
   }
 
-  componentDidMount () {
-    this.fetchPatches()
-  }
-
-  async fetchPatches () {
-    const { data } = await http.get('patches', false)
-    this.setState({ patches: data })
-
-    // preselect latest patch
-    if (data.length) {
-      this.handlePatchSelected(data[0])
-    }
-  }
-
-  handlePatchSelected (patchObj) {
-    this.setState({ selectedPatch: patchObj })
-    http.setPatch(patchObj.patch)
-  }
-
   render () {
-    const { routes, patches, selectedPatch } = this.state
-    const menuItems = routes.reduce((result, curr) => {
-
-      if (curr.category) {
-        const contained = result.find(r => r.path === curr.category)
-        if (contained) {
-          return result
-        }
-      }
-
-      if (curr.noMenu) {
-        return result
-      }
-
-      result.push(curr)
-
-      return result
-    }, [])
+    console.log('routes: ', routes)
 
     return (
       <Router>
         <div className="h-screen overflow-hidden">
-          <div className="flex bg-white h-16 border-b border-gray-500
-            text-indigo-800">
+          <div className="flex bg-white h-16 border-b border-gray-500 text-indigo-800">
             <nav className="flex-1 flex text-xl">
               <div className="mx-2 my-auto xs:hidden sm:hidden md:block">
                 <NavLink
@@ -78,21 +37,18 @@ class App extends React.Component {
                   Teamfight Tracker
                 </NavLink>
               </div>
-              {menuItems.map((item) =>
-                <TopNavigationItem key={'top-navigation-item-' + item.path}
-                  {...item}
+              {routes.map((route) =>
+                <TopNavLink key={'top-navigation-item-' + route.path}
+                  path={route.path}
+                  name={route.name}
                 />
               )}
+              <div className="mx-2 my-auto">
+                <Suspense fallback={<div>Loading Patch ...</div>}>
+                  <PatchSelector/>
+                </Suspense>
+              </div>
             </nav>
-            <div className="mx-2 my-auto">
-              <Suspense fallback={<div>Loading Patch ...</div>}>
-                <PatchSelector
-                  patches={patches}
-                  selectedPatch={selectedPatch}
-                  onSelected={(patch) => this.handlePatchSelected(patch)}
-                />
-              </Suspense>
-            </div>
           </div>
 
           <div className="relative h-full overflow-auto pb-16">
@@ -115,14 +71,14 @@ class App extends React.Component {
   }
 }
 
-const TopNavigationItem = (item) => {
+const TopNavLink = (path, name) => {
   return (
     <NavLink
-      to={item.path || ''}
+      to={path || ''}
       activeClassName="font-bold border-b-2 border-indigo-800"
       className="p-2 mx-1 my-auto whitespace-no-wrap"
     >
-      {item.name}
+      {name.toString()}
     </NavLink>
   )
 }
