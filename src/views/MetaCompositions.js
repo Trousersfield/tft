@@ -37,12 +37,11 @@ class MetaCompositions extends React.Component {
 
   async componentDidMount() {
     const { data } = await http.get('topCombs', false)
-    this.setState({ allCombs: data })
+    this.setState({ allCompositions: data })
   }
 
   render () {
     const { numberOfTopItems, allCompositions } = this.state
-
     const metaCompositions = allCompositions.reduce((acc, curr) => {
       // TODO: think about removing .slice()
       // find most played champions

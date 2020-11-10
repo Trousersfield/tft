@@ -4,7 +4,8 @@ import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io
 const SIZE = {
   'xs': 'w-20',
   'sm': 'w-32',
-  'base': 'w-40',
+  'md': 'w-40',
+  'lg': 'w-68',
   'full': 'w-full',
   'auto': 'w-auto'
 }
@@ -14,11 +15,11 @@ class Dropdown extends React.Component {
     super (props)
     this.state = {
       displayMenu: false,
-      placeholder: this.props.placeholder || 'Select value',
+      placeholder: this.props.placeholder || 'Select..',
       selected: this.props.preselect,
       options: this.props.options || [],
       size: (this.props.size && SIZE[this.props.size]) ?
-        SIZE[this.props.size] : SIZE['base']
+        SIZE[this.props.size] : SIZE['md']
     }
     this.showDropdownMenu = this.showDropdownMenu.bind(this)
     this.hideDropdownMenu = this.hideDropdownMenu.bind(this)

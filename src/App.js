@@ -27,29 +27,27 @@ class App extends React.Component {
     return (
       <Router>
         <div className="h-screen overflow-hidden">
-          <div className="flex bg-white h-16 border-b border-gray-500 text-indigo-800">
-            <nav className="flex-1 flex text-xl">
-              <div className="mx-2 my-auto xs:hidden sm:hidden md:block">
-                <NavLink
-                  to={'/'}
-                  className="uppercase tracking-wide"
-                >
-                  Teamfight Tracker
-                </NavLink>
-              </div>
+          <nav className="flex bg-white h-16 border-b border-gray-500 text-indigo-800 text-xl w-full">
+            <div className="flex-1 flex items-center pl-2">
+              <NavLink
+                to={'/'}
+                className="uppercase tracking-wide"
+              >
+                Teamfight Tracker
+              </NavLink>
               {routes.map((route) =>
                 <TopNavLink key={'top-navigation-item-' + route.path}
                   path={route.path}
                   name={route.name}
                 />
               )}
-              <div className="mx-2 my-auto">
-                <Suspense fallback={<div>Loading Patch ...</div>}>
-                  <PatchSelector/>
-                </Suspense>
-              </div>
-            </nav>
-          </div>
+            </div>
+            <div className="flex items-center pr-2">
+              <Suspense fallback={<div>Loading Patch Selector...</div>}>
+                <PatchSelector />
+              </Suspense>
+            </div>
+          </nav>
 
           <div className="relative h-full overflow-auto pb-16">
             <Suspense fallback={<div>Loading...</div>}>
@@ -72,7 +70,6 @@ class App extends React.Component {
 }
 
 const TopNavLink = (props) => {
-  console.log('props: ', props)
   return (
     <NavLink
       to={props.path || ''}

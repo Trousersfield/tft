@@ -57,9 +57,8 @@ class MetaComposition extends React.Component {
           <p>
             {name}
           </p>
-
         </div>
-        <div className="flex flex-no-wrap w-full">
+        <div className="flex flex-no-wrap">
           {champions.map(champion => (
             <div className="w-16 m-1" key={id + champion.championId}>
               <div className="border border-black">

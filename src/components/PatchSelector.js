@@ -7,8 +7,6 @@ class PatchSelector extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      // patches: this.props.patches,
-      // selectedPatch: this.props.selectedPatch
       patches: [],
       selectedPatch: null
     }
@@ -28,8 +26,7 @@ class PatchSelector extends React.Component {
 
   handlePatchSelected (patchNumber) {
     const patchObj = this.state.patches.find(p => p.patch === patchNumber)
-    console.log('patch obj: ', patchObj)
-    // this.props.onSelected(patchObj)
+    console.log('handle patch selected! ', patchObj)
     this.setState({ selectedPatch: patchObj })
     http.setPatch(patchObj.patch)
   }
@@ -45,7 +42,7 @@ class PatchSelector extends React.Component {
         options={options}
         preselect={selectedPatch ? selectedPatch.patch : null}
         onSelected={(patchNumber) => this.handlePatchSelected(patchNumber)}
-        size='sm'
+        size='md'
       />
     )
   }

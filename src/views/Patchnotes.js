@@ -31,7 +31,9 @@ class PatchNotes extends React.Component {
   scrollToElement (id) {
     const element = document.getElementById(id)
     const container = document.getElementById('patch-notes-content')
-    if (!element || !container) return
+    if (!element || !container) {
+      return
+    }
     const elementTop = element.getBoundingClientRect().top
     const containerTop = container.getBoundingClientRect().top
     const scrollPos = elementTop - containerTop
