@@ -41,8 +41,7 @@ export default [{
     {
       path: '/stats',
       name: 'Statistics',
-      component: Statistics,
-      exact: true
+      component: Statistics
     }//, {
     //   path: '/stats/items',
     //   // category: '/stats',

@@ -8,31 +8,26 @@ class PatchSelector extends React.Component {
     super(props)
     this.state = {
       patches: [],
-      selectedPatch: null
+      selected: null
     }
   }
 
   async componentDidMount () {
     const { data } = await http.get('patches', false)
-    this.setState({
-      patches: data
-    }, () => {
-      // preselect latest patch
-      if (data.length) {
-        this.handlePatchSelected(data[0].patch)
-      }
-    })
+
+    if (data && data.length > 0) {
+      this.handlePatchSelected(data[0].patch)
+      this.setState({ patches: data })
+    }
   }
 
   handlePatchSelected (patchNumber) {
-    const patchObj = this.state.patches.find(p => p.patch === patchNumber)
-    console.log('handle patch selected! ', patchObj)
-    this.setState({ selectedPatch: patchObj })
-    http.setPatch(patchObj.patch)
+    this.setState({ selected: patchNumber })
+    http.setPatch(patchNumber)
   }
 
   render () {
-    const { patches, selectedPatch } = this.state
+    const { patches, selected } = this.state
     const options = patches.map(p => {
       return { name: p.patch.toString(), value: p.patch }
     })
@@ -40,7 +35,7 @@ class PatchSelector extends React.Component {
     return (
       <Dropdown
         options={options}
-        preselect={selectedPatch ? selectedPatch.patch : null}
+        preselect={selected}
         onSelected={(patchNumber) => this.handlePatchSelected(patchNumber)}
         size='md'
       />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Link, Route, Switch, withRouter } from 'react-router-dom'
 
 // components
 const Champions = React.lazy(() => import('./Champions'))
@@ -16,15 +16,33 @@ class Statistics extends React.Component {
   render () {
     const { path, url } = this.props.match
 
+    console.log('path: ', path)
+    console.log('url: ', url)
+
     return (
       <div>
+        <ul>
+          <li>
+            <Link to={`${url}/champions`}>
+              Champions
+            </Link>
+          </li>
+          <li>
+            <Link to={`${url}/items`}>
+              Items
+            </Link>
+          </li>
+        </ul>
         <Switch>
-          <Route exact path={'/champions'}>
-            <Champions />
-          </Route>
-          <Route>
-            <Items exact path={'/items'} />
-          </Route>
+          <Route
+            path={`${path}/champions`}
+            exact
+            component={Champions}
+          />
+          <Route path={`${path}/items`}
+            exact
+            component={Items}
+          />
         </Switch>
       </div>
     )

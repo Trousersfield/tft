@@ -22,8 +22,6 @@ class App extends React.Component {
   }
 
   render () {
-    console.log('routes: ', routes)
-
     return (
       <Router>
         <div className="h-screen overflow-hidden">
