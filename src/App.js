@@ -31,7 +31,7 @@ class App extends React.Component {
                 to={'/meta-compositions'}
                 className=""
               >
-                <div className="w-12 h-12 rounded-full overflow-hidden ml-2">
+                <div className="w-12 h-12 rounded-full overflow-hidden ml-2 border-2 border-gray-300 hover:border-green-500">
                   <img src="favicon.jpg" alt="" />
                 </div>
               </NavLink>

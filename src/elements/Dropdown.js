@@ -16,12 +16,8 @@ class Dropdown extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      displayMenu: false,
-      placeholder: this.props.placeholder || 'Choose option',
-      selected: this.props.preselect,
-      options: this.props.options || [],
-      size: (this.props.size && SIZE[this.props.size]) ?
-        SIZE[this.props.size] : SIZE['md']
+      menuVisible: false,
+      selected: null
     }
     this.showDropdownMenu = this.showDropdownMenu.bind(this)
     this.hideDropdownMenu = this.hideDropdownMenu.bind(this)
@@ -29,13 +25,14 @@ class Dropdown extends React.Component {
 
   showDropdownMenu (event) {
     event.preventDefault()
-    this.setState({ displayMenu: true }, () => {
+    this.setState({ menuVisible: true }, () => {
       document.addEventListener('click', this.hideDropdownMenu);
     })
   }
 
   hideDropdownMenu (event) {
-    this.setState({ displayMenu: false}, () => {
+    event.preventDefault()
+    this.setState({ menuVisible: false}, () => {
       document.removeEventListener('click', this.hideDropdownMenu)
     })
   }
@@ -45,34 +42,58 @@ class Dropdown extends React.Component {
     this.props.onSelected(value)
   }
 
+  getSizeClass () {
+    const size = this.props.size
+
+    if (size && SIZE[size]) {
+      return SIZE[this.props.size]
+    }
+    return SIZE['md']
+  }
+
+  componentDidMount () {
+    if (this.props.preselect) {
+      this.setSelected(this.props.preselect)
+    }
+  }
+
   render () {
-    const { displayMenu, placeholder, selected, options, size } = this.state
+    const { menuVisible, selected } = this.state
+    const {
+      options,
+      placeholder,
+      selectedPrefix
+    } = this.props
+
+    const sizeClass = this.getSizeClass()
+
     const header = selected && options.length ?
       options.find(option => option.value === selected).name :
-      placeholder
-
-    console.log('header: ', header)
-    console.log('selected: ', selected)
+      placeholder || 'Select option'
 
     return (
-      <div className={`relative inline-block cursor-pointer ${size}`}>
-        <div className="w-full flex flex-no-wrap justify-between items-center
-          py-1 px-3 bg-white border border-gray-900 rounded"
-          onClick={this.showDropdownMenu}>
-          <p className="mr-2">{header}</p>
-          {displayMenu ?
+      <div className={`relative inline-block cursor-pointer ${sizeClass}`}>
+        <div className="w-full flex flex-no-wrap justify-between items-center rounded
+          py-1 px-3 bg-transparent border-2 border-gray-600 text-gray-100"
+          onClick={this.showDropdownMenu}
+        >
+          <p className="mr-2">
+            {(selectedPrefix ? `${selectedPrefix} ` : '') + header}
+          </p>
+          {menuVisible ?
             <IoIosArrowDropupCircle /> :
-            <IoIosArrowDropdownCircle />}
+            <IoIosArrowDropdownCircle />
+          }
         </div>
-        {displayMenu ? (
-          <div className="flex flex-col absolute w-full z-50 shadow">
+        {menuVisible ? (
+          <div className="bg-gray-700 flex flex-col absolute w-full z-50 shadow">
             {options.map(option => (
               <div
                 key={'option-' + option.value}
                 className={'flex flex-no-wrap justify-between align-middle ' +
-                  'bg-white py-1 px-3 whitespace-no-wrap hover:bg-gray-200 ' +
+                  'py-1 px-3 whitespace-no-wrap hover:bg-gray-600 ' +
                   (selected === option.value ?
-                    'font-semibold text-indigo-800 bg-gray-200' : '')}
+                    'font-semibold text-green-300' : '')}
                 onClick={() => this.setSelected(option.value)}
               >
                 {option.name}
