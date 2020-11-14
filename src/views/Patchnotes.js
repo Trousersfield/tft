@@ -1,6 +1,6 @@
 import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
-import patches from '../static/patchNotes/'
+import patches from '../static/patchNotes'
 import { NavLink } from 'react-router-dom'
 
 class PatchNotes extends React.Component {
