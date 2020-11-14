@@ -1,11 +1,13 @@
 import React from 'react'
-import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
+import {
+  IoIosArrowDropdownCircle,
+  IoIosArrowDropupCircle
+} from 'react-icons/io'
 
 const SIZE = {
-  'xs': 'w-20',
-  'sm': 'w-32',
-  'md': 'w-40',
-  'lg': 'w-68',
+  'sm': 'w-64',
+  'md': 'w-96',
+  'lg': 'w-128',
   'full': 'w-full',
   'auto': 'w-auto'
 }
@@ -15,7 +17,7 @@ class Dropdown extends React.Component {
     super (props)
     this.state = {
       displayMenu: false,
-      placeholder: this.props.placeholder || 'Select..',
+      placeholder: this.props.placeholder || 'Choose option',
       selected: this.props.preselect,
       options: this.props.options || [],
       size: (this.props.size && SIZE[this.props.size]) ?
@@ -48,6 +50,9 @@ class Dropdown extends React.Component {
     const header = selected && options.length ?
       options.find(option => option.value === selected).name :
       placeholder
+
+    console.log('header: ', header)
+    console.log('selected: ', selected)
 
     return (
       <div className={`relative inline-block cursor-pointer ${size}`}>

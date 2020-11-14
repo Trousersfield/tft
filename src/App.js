@@ -25,14 +25,18 @@ class App extends React.Component {
     return (
       <Router>
         <div className="h-screen overflow-hidden">
-          <nav className="flex bg-white h-16 border-b border-gray-500 text-indigo-800 text-xl w-full">
-            <div className="flex-1 flex items-center pl-2">
+          <nav className="flex h-16 bg-gray-800 text-gray-100 text-xl antialiased w-full">
+            <div className="flex items-center">
               <NavLink
-                to={'/'}
-                className="uppercase tracking-wide"
+                to={'/meta-compositions'}
+                className=""
               >
-                Teamfight Tracker
+                <div className="w-12 h-12 rounded-full overflow-hidden ml-2">
+                  <img src="favicon.jpg" alt="" />
+                </div>
               </NavLink>
+            </div>
+            <div className="flex-1 flex justify-center items-center pl-2">
               {routes.map((route) =>
                 <TopNavLink key={'top-navigation-item-' + route.path}
                   path={route.path}
@@ -47,7 +51,7 @@ class App extends React.Component {
             </div>
           </nav>
 
-          <div className="relative h-full overflow-auto pb-16">
+          <div className="relative h-full overflow-auto pb-16 bg-gray-900">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 {routes.map((route) =>
@@ -71,8 +75,8 @@ const TopNavLink = (props) => {
   return (
     <NavLink
       to={props.path || ''}
-      activeClassName="font-bold border-b-2 border-indigo-800"
-      className="p-2 mx-1 my-auto whitespace-no-wrap"
+      activeClassName="border-b-2 border-gray-200"
+      className="font-semibold tracking-wide p-2 mx-1 my-auto whitespace-no-wrap"
     >
       {props.name}
     </NavLink>

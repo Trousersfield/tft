@@ -37,7 +37,7 @@ class PatchSelector extends React.Component {
         options={options}
         preselect={selected}
         onSelected={(patchNumber) => this.handlePatchSelected(patchNumber)}
-        size='md'
+        size='sm'
       />
     )
   }
