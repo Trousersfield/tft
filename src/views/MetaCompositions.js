@@ -2,10 +2,6 @@ import React, { Suspense } from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 import { data as setData } from '../util/setDataImporter'
 import http from '../util/http'
-import Button from '../elements/Button'
-import {
-  GoKebabVertical
-} from 'react-icons/go'
 
 // components
 const MetaComposition = React.lazy(() => import('../components/MetaComposition'))
@@ -15,8 +11,7 @@ class MetaCompositions extends React.Component {
     super(props)
     this.state = {
       allCompositions: [],
-      numberOfTopItems: 6,
-      showMenu: false
+      numberOfTopItems: 6
     }
 
     this.handleIncrease = this.handleIncrease.bind(this)
@@ -46,7 +41,7 @@ class MetaCompositions extends React.Component {
 
   render () {
     const menuItemClassNames = 'flex items-center justify-center text-gray-100'
-    const { showMenu, numberOfTopItems, allCompositions } = this.state
+    const { numberOfTopItems, allCompositions } = this.state
     const metaCompositions = allCompositions.reduce((acc, curr) => {
       // TODO: think about removing .slice()
       // find most played champions
@@ -78,33 +73,23 @@ class MetaCompositions extends React.Component {
           ))}
         </div>
 
-        <div className="fixed left-0 top-0 flex flex-col border-2 border-gray-500 rounded-full
+        <div className="fixed left-0 top-0 flex flex-col w-16 border-2 border-gray-500 rounded-full
           transform translate-x-2 translate-y-20 overflow-hidden select-none">
-          <div
-            className={menuItemClassNames + ' w-12 h-12 cursor-pointer hover:text-green-500'}
-            onClick={() => this.setState({ showMenu: !showMenu })}
-          >
-            <GoKebabVertical size="2em" />
+          <div className={menuItemClassNames + ' font-semibold mt-4'}>
+            Items
           </div>
-          {showMenu &&
-          <>
-            <div className={menuItemClassNames + ' border-t-2 border-gray-700 pt-2'}>
-              Items
-            </div>
-            <div
-              className={menuItemClassNames + ' cursor-pointer hover:text-green-500 text-3xl'}
-              onClick={this.handleIncrease}
-            >
-              +
-            </div>
-            <div
-              className={menuItemClassNames + ' cursor-pointer hover:text-green-500 text-4xl'}
-              onClick={this.handleDecrease}
-            >
-              -
-            </div>
-          </>
-          }
+          <div
+            className={menuItemClassNames + ' cursor-pointer hover:text-green-300 text-3xl'}
+            onClick={this.handleIncrease}
+          >
+            +
+          </div>
+          <div
+            className={menuItemClassNames + ' cursor-pointer hover:text-green-300 text-4xl'}
+            onClick={this.handleDecrease}
+          >
+            -
+          </div>
         </div>
       </div>
     )

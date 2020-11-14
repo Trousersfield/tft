@@ -51,6 +51,7 @@ class LeagueSelector extends React.Component {
             options={dropdownOptions}
             preselect={selected}
             onSelected={this.setSelected}
+            size="sm"
           />
         </div>
       </div>
