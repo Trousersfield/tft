@@ -1,3 +1,5 @@
+import { data } from "./setDataImporter"
+
 const makePercent = (number, decimals = 2) => {
   const pow = Math.pow(10, decimals)
   return (Math.floor(number.toFixed(decimals) * pow)) /
@@ -36,7 +38,10 @@ const printTraitName = (trait) => {
       const prefix = value.substring(0, index + 1)
       const suffix = value.substring(index + 1)
       const result = prefix + ' ' + suffix
-      if (result.search(/[a-z][A-Z]/g) > -1) return addWhiteSpaces(result)
+
+      if (result.search(/[a-z][A-Z]/g) > -1) {
+        return addWhiteSpaces(result)
+      }
       return result
     }
     return value
@@ -44,9 +49,30 @@ const printTraitName = (trait) => {
   return addWhiteSpaces(trait)
 }
 
+const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp)
+
+  let duration = new Date() - date
+
+  duration -= duration % 1000
+  duration /= 1000 // cut milliseconds
+  duration -= duration % 60
+  duration /= 60 // cut seconds
+  duration -= duration % 60
+  duration /= 60 // cut minutes
+  const hours = duration % 24
+  duration /= hours
+  const days = duration % 7
+  duration /= days
+
+
+  return 0
+}
+
 export {
   makePercent,
   scaleToPercent,
   makeRanking,
-  printTraitName
+  printTraitName,
+  formatTimestamp
 }
