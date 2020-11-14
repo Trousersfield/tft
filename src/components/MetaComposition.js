@@ -67,7 +67,6 @@ class MetaComposition extends React.Component {
                   alt=""
                   onMouseEnter={() => this.setChampionId(champion.championId)}
                   onMouseLeave={() => this.setChampionId(null)}
-                  // style={{width: imageSize.width, height: imageSize.height}}
                 />
 
                 {showChampionId === champion.championId &&

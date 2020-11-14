@@ -86,7 +86,7 @@ class Dropdown extends React.Component {
           }
         </div>
         {menuVisible ? (
-          <div className="bg-gray-700 flex flex-col absolute w-full z-50 shadow">
+          <div className="bg-gray-700 flex flex-col absolute w-full z-50 shadow rounded overflow-hidden">
             {options.map(option => (
               <div
                 key={'option-' + option.value}
