@@ -1,5 +1,3 @@
-import { data } from "./setDataImporter"
-
 const makePercent = (number, decimals = 2) => {
   const pow = Math.pow(10, decimals)
   return (Math.floor(number.toFixed(decimals) * pow)) /
@@ -53,20 +51,22 @@ const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp)
 
   let duration = new Date() - date
+  console.log('duration: ', duration)
 
   duration -= duration % 1000
   duration /= 1000 // cut milliseconds
   duration -= duration % 60
   duration /= 60 // cut seconds
   duration -= duration % 60
-  duration /= 60 // cut minutes
+  duration /= 60 // cut minutes 4683
   const hours = duration % 24
-  duration /= hours
-  const days = duration % 7
-  duration /= days
+  duration -= hours
+  duration /= 24 // cut hours
+  const days = duration
+  duration -= days // cut days
+  duration /= 7
 
-
-  return 0
+  return `${days} days ${hours} hours old`
 }
 
 export {

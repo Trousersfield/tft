@@ -90,13 +90,14 @@ class Dropdown extends React.Component {
             {options.map(option => (
               <div
                 key={'option-' + option.value}
-                className={'flex flex-no-wrap justify-between align-middle ' +
-                  'py-1 px-3 whitespace-no-wrap hover:bg-gray-600 ' +
-                  (selected === option.value ?
-                    'font-semibold text-green-300' : '')}
+                className={'flex flex-no-wrap justify-between items-center h-12 hover:bg-gray-600 ' +
+                  (selected === option.value ? 'font-semibold text-green-300' : '')}
                 onClick={() => this.setSelected(option.value)}
               >
-                {option.name}
+                <p className="ml-2">{option.name}</p>
+                <p className="mr-2 text-sm font-normal italic tracking-wide whitespace-no-wrap">
+                  {option.meta}
+                </p>
               </div>
             ))}
           </div>
