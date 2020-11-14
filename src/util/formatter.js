@@ -51,7 +51,6 @@ const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp)
 
   let duration = new Date() - date
-  console.log('duration: ', duration)
 
   duration -= duration % 1000
   duration /= 1000 // cut milliseconds

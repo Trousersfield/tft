@@ -3,6 +3,9 @@ import { cache as imageCache, importImages } from '../util/imageImporter'
 import { data as setData } from '../util/setDataImporter'
 import http from '../util/http'
 import Button from '../elements/Button'
+import {
+  GoKebabVertical
+} from 'react-icons/go'
 
 // components
 const MetaComposition = React.lazy(() => import('../components/MetaComposition'))
@@ -12,7 +15,8 @@ class MetaCompositions extends React.Component {
     super(props)
     this.state = {
       allCompositions: [],
-      numberOfTopItems: 6
+      numberOfTopItems: 6,
+      showMenu: false
     }
 
     this.handleIncrease = this.handleIncrease.bind(this)
@@ -41,7 +45,8 @@ class MetaCompositions extends React.Component {
   }
 
   render () {
-    const { numberOfTopItems, allCompositions } = this.state
+    const menuItemClassNames = 'flex items-center justify-center text-gray-100'
+    const { showMenu, numberOfTopItems, allCompositions } = this.state
     const metaCompositions = allCompositions.reduce((acc, curr) => {
       // TODO: think about removing .slice()
       // find most played champions
@@ -59,29 +64,8 @@ class MetaCompositions extends React.Component {
     }, [])
 
     return (
-      <div className="w-md lg:w-lg flex flex-col lg:flex-row justify-between mx-auto">
-        <div className="flex flex-grow flex-row lg:flex-col order-1 lg:order-2">
-          <p className="text-gray-900 p-2 border-b-2 border-gray-900 text-lg font-semibold">Options</p>
-          <div className="flex items-center mt-2">
-            <p className="w-1/2">Number of items</p>
-            <span className="w-1/2 flex items-center border-2 border-gray-600">
-              <Button
-                text="-"
-                color="gray"
-                onClick={this.handleDecrease}
-              />
-              <p className="mx-3 font-bold text-gray-900">
-                {numberOfTopItems}
-              </p>
-              <Button
-                text="+"
-                color="gray"
-                onClick={this.handleIncrease}
-              />
-            </span>
-          </div>
-        </div>
-        <div className="order-2 lg:order-1">
+      <div className="w-md mx-auto">
+        <div className="">
           {metaCompositions.map(comb => (
             <Suspense key={comb.id}>
               <MetaComposition
@@ -92,6 +76,35 @@ class MetaCompositions extends React.Component {
               />
             </Suspense>
           ))}
+        </div>
+
+        <div className="fixed left-0 top-0 flex flex-col border-2 border-gray-500 rounded-full
+          transform translate-x-2 translate-y-20 overflow-hidden select-none">
+          <div
+            className={menuItemClassNames + ' w-12 h-12 cursor-pointer hover:text-green-500'}
+            onClick={() => this.setState({ showMenu: !showMenu })}
+          >
+            <GoKebabVertical size="2em" />
+          </div>
+          {showMenu &&
+          <>
+            <div className={menuItemClassNames + ' border-t-2 border-gray-700 pt-2'}>
+              Items
+            </div>
+            <div
+              className={menuItemClassNames + ' cursor-pointer hover:text-green-500 text-3xl'}
+              onClick={this.handleIncrease}
+            >
+              +
+            </div>
+            <div
+              className={menuItemClassNames + ' cursor-pointer hover:text-green-500 text-4xl'}
+              onClick={this.handleDecrease}
+            >
+              -
+            </div>
+          </>
+          }
         </div>
       </div>
     )
