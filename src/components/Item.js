@@ -32,15 +32,15 @@ class Item extends React.Component {
           alt=""
         />
         {showComponents &&
-          <div className="absolute z-10 transform -translate-y-100% bg-gray-100 border-2 border-gray-300 shadow-lg w-96 p-2 rounded">
-            <div className="flex">
+          <div className="absolute z-10 transform -translate-y-100% bg-gray-800 w-96 rounded text-gray-100 overflow-hidden">
+            <div className="flex m-2">
               <img
                 src={imageCache.items[id]}
                 alt=""
-                className="w-10 h-10"
+                className="w-12 h-12 border-2 border-gray-100"
               />
-              <div className="flex items-center justify-between w-full ml-2 pb-1 border-b-2 border-gray-400">
-                <p className="font-semibold">
+              <div className="flex-1 flex items-center justify-between">
+                <p className="text-lg font-semibold tracking-wider ml-2">
                   {item.name}
                 </p>
                 <div className="flex">
@@ -55,7 +55,7 @@ class Item extends React.Component {
                 </div>
               </div>
             </div>
-            <p className="text-sm">
+            <p className="text-sm bg-gray-700 p-2">
               {item.description}
             </p>
           </div>

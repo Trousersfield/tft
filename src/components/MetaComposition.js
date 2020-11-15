@@ -58,9 +58,9 @@ class MetaComposition extends React.Component {
             {name}
           </p>
         </div>
-        <div className="flex flex-no-wrap">
+        <div className="flex flex-no-wrap mt-4">
           {champions.map(champion => (
-            <div className="w-16 m-1" key={id + champion.championId}>
+            <div className="w-16 ml-2" key={id + champion.championId}>
               <div className="border border-black">
                 <img
                   src={imageCache.champions[champion.championId]}
