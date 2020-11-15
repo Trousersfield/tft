@@ -75,8 +75,8 @@ const TopNavLink = (props) => {
   return (
     <NavLink
       to={props.path || ''}
-      activeClassName="border-b-2 border-gray-200"
-      className="font-semibold tracking-wide p-2 mx-1 my-auto whitespace-no-wrap"
+      activeClassName="border-b-2 border-gray-200 hover:border-green-500"
+      className="font-semibold tracking-wide p-2 mx-1 my-auto whitespace-no-wrap hover:text-green-500"
     >
       {props.name}
     </NavLink>

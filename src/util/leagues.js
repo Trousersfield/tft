@@ -22,18 +22,6 @@ const leagues = [{
   name: 'Diamond',
   key: 'diamond',
   image: 'Emblem_Diamond'
-}, {
-  name: 'Master',
-  key: 'master',
-  image: 'Emblem_Master'
-}, {
-  name: 'Grandmaster',
-  key: 'grandmaster',
-  image: 'Emblem_Grandmaster'
-}, {
-  name: 'Challenger',
-  key: 'challenger',
-  image: 'Emblem_Challenger'
 }]
 
 export default leagues
