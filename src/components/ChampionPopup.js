@@ -24,19 +24,19 @@ class ChampionPopup extends React.Component {
     const champion = setData.champions[id]
 
     return (
-      <div className="absolute z-10 transform -translate-y-100% bg-gray-100 border-2 border-gray-300 shadow-lg w-96 p-2 rounded">
-        <div className="flex">
+      <div className="absolute z-10 transform -translate-y-100% -translate-x-1/2 bg-gray-800 w-96 rounded text-gray-100 overflow-hidden">
+        <div className="flex m-2">
           <img
             src={imageCache.champions[id]}
             alt=""
-            className="w-10 h-10"
+            className="w-12 h-12 border-2 border-gray-100"
           />
-          <div className="flex items-center justify-between w-full ml-2 pb-1 border-b-2 border-gray-400">
-            <p className="text-lg font-semibold text-gray-900">
+          <div className="flex items-center justify-between w-full ml-2 pb-1">
+            <p className="text-lg font-semibold tracking-wider">
               {champion.name}
             </p>
             <div className="flex items-center">
-              <p className="font-semibold mr-1">
+              <p className="font-semibold mr-2">
                 {champion.cost}
               </p>
               <img
@@ -46,30 +46,31 @@ class ChampionPopup extends React.Component {
             </div>
           </div>
         </div>
-        <div className="flex justify-around mt-2">
-          {setData.champions[id].traits.map(traitId => (
-            <div
-              key={'champion-' + id + 'trait-' + traitId}
-              className="flex items-center"
-            >
-              <p className="mr-2">
-                {setData.traits[traitId].name}
-              </p>
-              <img
-                src={imageCache.traits[traitId.toLowerCase()]}
-                alt=""
-                className="w-10 h-10"
-              />
-            </div>
-          ))}
-        </div>
-        {items &&
-          <div className="flex items-center mt-2">
-            <p className="mr-2">
-              Popular items:
-            </p>
+        <div className="flex bg-gray-700">
+          <div className="w-1/2">
+            {setData.champions[id].traits.map(traitId => (
+              <div
+                key={'champion-' + id + 'trait-' + traitId}
+                className="flex items-center p-2"
+              >
+                <img
+                  src={imageCache.traits[traitId.toLowerCase()]}
+                  alt=""
+                  className="w-8 h-8"
+                />
+                <p className="ml-2 text-lg tracking-wide">
+                  {setData.traits[traitId].name}
+                </p>
+              </div>
+            ))}
+          </div>
+          {items &&
+          <div className="w-1/2 flex justify-center items-center">
             {items.map((item, index) => (
-              <div key={'item-' + id + '-' + item.itemId} className={`w-10 h-10 rounded-sm overflow-hidden ${index > 0 ? 'ml-1' : ''}`}>
+              <div
+                key={'item-' + id + '-' + item.itemId}
+                className={`w-10 h-10 rounded-sm overflow-hidden ${index > 0 ? 'ml-1' : ''}`}
+              >
                 <img
                   src={imageCache.items[item.itemId]}
                   alt=""
@@ -78,6 +79,7 @@ class ChampionPopup extends React.Component {
             ))}
           </div>
         }
+        </div>
       </div>
     )
   }
