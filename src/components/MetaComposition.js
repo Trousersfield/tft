@@ -52,9 +52,9 @@ class MetaComposition extends React.Component {
     const slicedTopItems = topItems.slice(0, numberOfTopItems)
 
     return (
-      <div className="flex justify-between items-center m-2 p-1 shadow-lg">
-        <div className="w-24 bg-orange-200">
-          <p>
+      <div className="relative my-4 border-2 border-gray-300 rounded h-28">
+        <div className="absolute top-0 transform -translate-y-1/2 translate-x-6 bg-gray-900 px-3">
+          <p className="whitespace-no-wrap font-semibold text-lg tracking-widest text-gray-100">
             {name}
           </p>
         </div>
