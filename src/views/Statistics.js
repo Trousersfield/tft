@@ -20,27 +20,34 @@ class Statistics extends React.Component {
 
   render () {
     const { path, url } = this.props.match
+    const statCardClassNames = "w-96 h-64 bg-gray-800 rounded overflow-hidden cursor-pointer"
 
     return (
       <div className="">
         <div className="flex justify-center space-x-8 pt-12">
           <div
-            className="w-96 h-64 bg-gray-800 rounded overflow-hidden cursor-pointer"
+            className={statCardClassNames}
             onClick={() => this.handleNavigation(`${url}/champions`)}
           >
             <div className="h-32 overflow-hidden">
               <img src={pengu} alt="" />
             </div>
-            <div className="py-2 px-3 tracking-wide text-gray-100">
-              <p className="font-semibold text-lg">Champions</p>
-              <p className="">Find out how often champions are played within each tier, how many one, two and three star units are made</p>
+            <div className="py-2 px-3 tracking-wide">
+              <p className="font-semibold text-lg text-gray-100">Champions</p>
+              <p className="text-gray-300">Find out how often champions are played within each tier, how many one, two and three star units are made</p>
             </div>
           </div>
           <div
-            className="w-96 h-64 bg-gray-400"
+            className={statCardClassNames}
             onClick={() => this.handleNavigation(`${url}/items`)}
           >
-            HELLO!!! items
+            <div className="h-32 overflow-hidden">
+              <img src={pengu} alt="" />
+            </div>
+            <div className="py-2 px-3 tracking-wide">
+              <p className="font-semibold text-lg text-gray-100">Items</p>
+              <p className="text-gray-300">Check the most build items in end-game teams</p>
+            </div>
           </div>
         </div>
         <Switch>
