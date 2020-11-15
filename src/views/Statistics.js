@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, Route, Switch, withRouter } from 'react-router-dom'
+import pengu from '../assets/images/pengu.jpg'
 
 // components
 const Champions = React.lazy(() => import('./Champions'))
@@ -13,26 +14,35 @@ class Statistics extends React.Component {
     }
   }
 
+  handleNavigation (to) {
+    this.props.history.push(to)
+  }
+
   render () {
     const { path, url } = this.props.match
 
-    console.log('path: ', path)
-    console.log('url: ', url)
-
     return (
-      <div>
-        <ul>
-          <li>
-            <Link to={`${url}/champions`}>
-              Champions
-            </Link>
-          </li>
-          <li>
-            <Link to={`${url}/items`}>
-              Items
-            </Link>
-          </li>
-        </ul>
+      <div className="">
+        <div className="flex justify-center space-x-8 pt-12">
+          <div
+            className="w-96 h-64 bg-gray-800 rounded overflow-hidden cursor-pointer"
+            onClick={() => this.handleNavigation(`${url}/champions`)}
+          >
+            <div className="h-32 overflow-hidden">
+              <img src={pengu} alt="" />
+            </div>
+            <div className="py-2 px-3 tracking-wide text-gray-100">
+              <p className="font-semibold text-lg">Champions</p>
+              <p className="">Find out how often champions are played within each tier, how many one, two and three star units are made</p>
+            </div>
+          </div>
+          <div
+            className="w-96 h-64 bg-gray-400"
+            onClick={() => this.handleNavigation(`${url}/items`)}
+          >
+            HELLO!!! items
+          </div>
+        </div>
         <Switch>
           <Route
             path={`${path}/champions`}

@@ -36,7 +36,10 @@ class MetaCompositions extends React.Component {
 
   async componentDidMount() {
     const { data } = await http.get('topCombs', false)
-    this.setState({ allCompositions: data })
+
+    if (data) {
+      this.setState({ allCompositions: data })
+    }
   }
 
   render () {
