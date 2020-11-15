@@ -1,5 +1,8 @@
 import React from 'react'
-import { Link, Route, Switch, withRouter } from 'react-router-dom'
+import {
+  Route,
+  Switch,
+  withRouter } from 'react-router-dom'
 import pengu from '../assets/images/pengu.jpg'
 
 // components

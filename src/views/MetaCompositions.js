@@ -62,7 +62,7 @@ class MetaCompositions extends React.Component {
     }, [])
 
     return (
-      <div className="w-md mx-auto">
+      <div className="w-md mx-auto mb-64">
         <div className="">
           {metaCompositions.map(comb => (
             <Suspense key={comb.id}>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
+import { data as setData } from '../util/setDataImporter'
 import Item from './Item'
 
 // components
@@ -30,8 +31,20 @@ class MetaComposition extends React.Component {
 
   componentDidMount () {
     let topItems = []
+    let traits = {}
 
     for (const champion of this.props.champions) {
+      const championTraits = setData.champions[champion.championId].traits
+      if (championTraits) {
+        for (const trait in championTraits) {
+          if (traits[trait]) {
+            traits[trait] += 1
+          } else {
+            traits[trait] = 1
+          }
+        }
+      }
+
       const topThreeItems = champion.itemCounts
         .sort((a, b) => a.count > b.count ? -1 : 1)
         .slice(0, 3)
@@ -39,6 +52,7 @@ class MetaComposition extends React.Component {
 
       topItems = topItems.concat(topThreeItems)
     }
+    console.log('team traits: ', traits)
 
     topItems = topItems.sort((a, b) => a.count > b.count ? -1 : 1)
 
@@ -49,13 +63,20 @@ class MetaComposition extends React.Component {
     const { topItems, showChampionId } = this.state
     const { id, name, champions, numberOfTopItems } = this.props
 
+    // will be changed in the future
+    const teamName = name.trim().split(' ').reduce((acc, curr) => {
+      curr = curr.replace('Set4_', '')
+      acc = acc + (curr === 'Chosen' ? curr : setData.traits[curr].name) + ' '
+      return acc
+    }, '')
+
     const slicedTopItems = topItems.slice(0, numberOfTopItems)
 
     return (
       <div className="relative my-4 border-2 border-gray-300 rounded h-28">
         <div className="absolute top-0 transform -translate-y-1/2 translate-x-6 bg-gray-900 px-3">
           <p className="whitespace-no-wrap font-semibold text-lg tracking-widest text-gray-100">
-            {name}
+            {teamName.trim()}
           </p>
         </div>
         <div className="flex flex-no-wrap mt-4">
