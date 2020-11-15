@@ -7,19 +7,14 @@ const Statistics = React.lazy(() => import('./views/Statistics'))
 const MetaCompositions = React.lazy(() => import('./views/MetaCompositions'))
 
 export default [{
-      path: '/meta-compositions',
-      name: 'Meta Teams',
+      path: '/',
+      name: 'Meta',
       component: MetaCompositions,
       exact: true
     }, {
       path: '/team-compositions',
       name: 'Teams',
       component: Compositions,
-      exact: true
-    }, {
-      path: '/patch-notes',
-      name: 'Patch Notes',
-      component: PatchNotes,
       exact: true
     },// {
     //   path: '/patch-notes/classify/:patchNumber',
@@ -32,5 +27,10 @@ export default [{
       path: '/stats',
       name: 'Statistics',
       component: Statistics
+    }, {
+      path: '/patch-notes',
+      name: 'Patch Notes',
+      component: PatchNotes,
+      exact: true
     }
   ]

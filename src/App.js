@@ -26,9 +26,9 @@ class App extends React.Component {
       <Router>
         <div className="h-screen overflow-hidden">
           <nav className="flex h-16 bg-gray-800 text-gray-100 text-xl antialiased w-full">
-            <div className="flex items-center">
+            <div className="w-64 flex items-center">
               <NavLink
-                to={'/meta-compositions'}
+                to={'/'}
                 className=""
               >
                 <div className="w-12 h-12 rounded-full overflow-hidden ml-2 border-2 border-gray-300 hover:border-green-500">
@@ -74,9 +74,19 @@ class App extends React.Component {
 const TopNavLink = (props) => {
   return (
     <NavLink
-      to={props.path || ''}
+      to={props.path}
       activeClassName="border-b-2 border-gray-200 hover:border-green-500"
       className="font-semibold tracking-wide p-2 mx-1 my-auto whitespace-no-wrap hover:text-green-500"
+      isActive={(match, location) => {
+        if (!match) {
+          return false
+        }
+
+        if (match.url === "" || match.isExact) {
+          return match.url === location.pathname
+        }
+        return location.pathname.includes(match.url)
+      }}
     >
       {props.name}
     </NavLink>
