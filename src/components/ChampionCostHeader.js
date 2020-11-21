@@ -62,7 +62,7 @@ class ChampionCostHeader extends React.Component {
         className="w-full flex justify-center relative"
       >
         <img
-          src={imageCache['tiers']['tier' + cost]}
+          src={imageCache.tiers['tier' + cost]}
           alt={`Tier ${cost}`}
           className="absolute top-0"
         />
