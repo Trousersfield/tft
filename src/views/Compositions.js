@@ -25,7 +25,7 @@ class Compositions extends React.Component {
 
   render () {
     return (
-      <div className="lg:w-full xl:w-3/5 mx-auto pt-10">
+      <div className="lg:w-full xl:w-3/5 mx-auto pt-10 mb-10">
         <Suspense fallback={<div>Loading Comb...</div>}>
           <CompositionChart />
         </Suspense>

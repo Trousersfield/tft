@@ -20,7 +20,7 @@ class PatchNotes extends React.Component {
       selectedPatch: patches[0],
       patchNumbers: patches.map(p => p.number)
     })
-    console.log('state: ', this.state)
+    // console.log('patches: ', patches)
   }
 
   selectPatch (patchNumber) {
