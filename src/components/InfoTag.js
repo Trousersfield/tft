@@ -8,9 +8,11 @@ class InfoTag extends React.Component {
 
   render () {
     return (
-      <div className="flex flex-no-wrap items-center border-2 border-indigo-500 rounded">
-        <p className="px-3">{this.props.title}</p>
-        <p className="p-3 tracking-wider bg-indigo-500 font-bold text-white">
+      <div className="flex flex-no-wrap items-center text-white border-2 border-gray-700 rounded">
+        <p className="px-3">
+          {this.props.title}
+        </p>
+        <p className="p-3 tracking-wider bg-gray-700 font-bold">
           {this.props.value}
         </p>
       </div>

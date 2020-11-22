@@ -1,7 +1,7 @@
 import React from 'react'
 import {
-  IoIosArrowDropdownCircle,
-  IoIosArrowDropupCircle
+  IoIosArrowDown,
+  IoIosArrowUp
 } from 'react-icons/io'
 
 const SIZE = {
@@ -74,15 +74,15 @@ class Dropdown extends React.Component {
     return (
       <div className={`relative inline-block cursor-pointer ${sizeClass}`}>
         <div className="w-full flex flex-no-wrap justify-between items-center rounded
-          py-1 px-3 bg-transparent border-2 border-gray-600 text-gray-100"
+          h-12 py-1 px-3 bg-transparent border-2 border-gray-600 text-gray-100"
           onClick={this.showDropdownMenu}
         >
           <p className="mr-2">
             {(selectedPrefix ? `${selectedPrefix} ` : '') + header}
           </p>
           {menuVisible ?
-            <IoIosArrowDropupCircle /> :
-            <IoIosArrowDropdownCircle />
+            <IoIosArrowUp size="1.5em" /> :
+            <IoIosArrowDown size="1.5em" />
           }
         </div>
         {menuVisible ? (

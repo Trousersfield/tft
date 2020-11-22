@@ -28,6 +28,9 @@ const makeRanking = (number, whitespace = false) => {
 }
 
 const printTraitName = (trait) => {
+  if (trait === 'Chosen') {
+    return trait
+  }
 
   const addWhiteSpaces = (value) => {
     const index = value.search(/[a-z][A-Z]/g)

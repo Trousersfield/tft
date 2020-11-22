@@ -25,7 +25,10 @@ class Compositions extends React.Component {
 
   render () {
     return (
-      <div className="lg:w-full xl:w-3/5 mx-auto pt-10 mb-10">
+      <div className="lg:w-full xl:w-3/5 mx-auto pt-8 mb-10">
+        <p className="italic text-white tracking-wide font-semibold text-lg mb-8 max-w-128 text-center">
+          Absolute number of games where the following teams are played
+        </p>
         <Suspense fallback={<div>Loading Comb...</div>}>
           <CompositionChart />
         </Suspense>
