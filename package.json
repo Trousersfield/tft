@@ -11,7 +11,7 @@
     "chartjs-plugin-datalabels": "^0.7.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-icons": "^3.11.0",
+    "react-icons": "^4.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
     "simplebar-react": "^2.3.0",
