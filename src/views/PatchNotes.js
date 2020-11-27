@@ -45,7 +45,7 @@ class PatchNotes extends React.Component {
     return (
       <div className="flex relative h-full">
         <div className="h-full bg-gray-200">
-          {selectedPatch &&
+          {false && selectedPatch &&
             <NavLink
               to={`/patch-notes/classify/${selectedPatch.number}`}
               exact

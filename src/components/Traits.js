@@ -13,13 +13,12 @@ class Traits extends React.Component {
 
   render () {
     const traitIds = this.props.traitIds
-
     return (
       <div className="flex flex-no-wrap">
         {traitIds.map((id, index) =>
           <img
             key={'trait-' + id}
-            src={imageCache.traits[id]}
+            src={imageCache.traits[id.toLowerCase()]}
             alt=""
             className={`w-10 h-10 ${index > 0 ? 'ml-1' : ''}`}
           />

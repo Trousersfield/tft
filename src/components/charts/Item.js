@@ -137,7 +137,7 @@ class Item extends React.Component {
             display: true,
             anchor: 'end',
             align: 'right',
-            color: 'black',
+            color: 'white',
             font: { size: '16' },
             formatter: (value, context) => {
               return Math.floor(value)
@@ -162,10 +162,7 @@ class Item extends React.Component {
     } = this.state
 
     return (
-      <div className="flex flex-col">
-        <div className="text-xl font-semibold leading-relaxed p-2 mt-2">
-          <p className="text-center">Absolute Numbers of Items</p>
-        </div>
+      <div className="flex flex-col mt-5">
         <div className="flex justify-between items-center px-5 pb-5">
           <Button
             onClick={this.toggleItemInclusion}

@@ -73,7 +73,7 @@ class Champion extends React.Component {
           </div>
           <div className={`flex flex-no-wrap items-center border-2
             border-${color}-500 rounded-full`}>
-            <p className="pl-4 pr-2 text-center">Played</p>
+            <p className="pl-4 pr-2 text-center text-white">Played</p>
             <div className={`w-64 flex justify-between p-3
               bg-${color}-500 font-bold text-white rounded-r-full`}>
               <StarsCount
