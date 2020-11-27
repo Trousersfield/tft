@@ -24,8 +24,8 @@ class App extends React.Component {
   render () {
     return (
       <Router>
-        <div className="h-screen overflow-hidden">
-          <nav className="flex h-16 bg-gray-800 text-gray-100 text-xl antialiased w-full">
+        <div className="h-screen relative overflow-hidden">
+          <nav className="absolute z-10 flex h-16 bg-gray-800 text-gray-100 text-xl antialiased w-full">
             <div className="w-64 flex items-center">
               <NavLink
                 to={'/'}
@@ -51,7 +51,7 @@ class App extends React.Component {
             </div>
           </nav>
 
-          <div className="relative h-full overflow-auto pb-16 bg-gray-900">
+          <div className="relative h-full pt-16 overflow-auto bg-gray-900">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 {routes.map((route) =>
@@ -64,6 +64,13 @@ class App extends React.Component {
                 )}
               </Switch>
             </Suspense>
+            <div className="w-full h-24 bg-gray-800 flex justify-center items-center">
+              <p className="tracking-wide font-semibold text-gray-100 italic text-center">
+                TFTracker isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone
+                officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties
+                are trademarks or registered trademarks of Riot Games, Inc.
+              </p>
+            </div>
           </div>
         </div>
       </Router>

@@ -7,7 +7,7 @@ import http from '../../util/http'
 
 // components
 const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
-const CompositionDistribution = React.lazy(() => import('./CompositionDistribution'))
+const TeamChampionDistribution = React.lazy(() => import('./TeamChampionDistribution'))
 
 Chart.plugins.unregister(ChartDataLabels)
 
@@ -63,15 +63,12 @@ class Composition extends React.Component {
     const slicedData = bestX < data.length ? data.slice(0, bestX) : data
 
     // construct gained-LP, lost-LP and sum datasets
-    const [ win, loss, sum ] = slicedData.reduce((result, curr) => {
+    const [ win, loss ] = slicedData.reduce((result, curr) => {
       result[0].push(curr.placement1Amount + curr.placement2Amount +
         curr.placement3Amount + curr.placement4Amount)
       result[1].push(curr.totalAmount - result[0][result[0].length - 1])
-      result[2] += curr.totalAmount
       return result
-    }, [[], [], 0])
-    const averageLineData = Array(slicedData.length).fill(
-      sum / slicedData.length)
+    }, [[], []])
 
     // prepare percentage labels
     const percentLabels = slicedData.reduce((result, curr, currIndex) => {
@@ -86,17 +83,6 @@ class Composition extends React.Component {
       data: {
         labels: slicedData.map(comb => comb.name),
         datasets: [{
-          label: 'Average',
-          data: averageLineData,
-          borderColor: 'red',
-          borderCapStyle: 'round',
-          borderWidth: 2,
-          pointRadius: 0,
-          pointBackgroundColor: 'red',
-          fill: false,
-          spanGaps: true,
-          type: 'line'
-        }, {
           label: 'Loose LP: Placement 5 - 8',
           data: loss,
           backgroundColor: 'rgb(194, 72, 38)',
@@ -126,7 +112,7 @@ class Composition extends React.Component {
             scaleStartValue: 0,
             scaleLabel: {
               display: true,
-              labelString: 'Comb Count',
+              labelString: 'success rate',
             },
             stacked: true,
             ticks: {
@@ -157,8 +143,7 @@ class Composition extends React.Component {
             color: 'black',
             font: { size: '16' },
             formatter: (value, context) => {
-              if (context.datasetIndex === 0) return '' // skip avg line
-              return percentLabels[context.datasetIndex - 1][context.dataIndex]
+              return percentLabels[context.datasetIndex][context.dataIndex]
             }
           }
         }
@@ -188,13 +173,21 @@ class Composition extends React.Component {
         <div className="relative w-full">
           <canvas ref={this.chartRef} />
         </div>
-        {selectedComb &&
-          <Suspense fallback={<div>Loading Comb Details ...</div>}>
-            <CompositionDistribution
-              key={'composition-distribution-' + selectedComb.id}
-              data={selectedComb}
-            />
-          </Suspense>}
+        <div className="h-64">
+          {selectedComb ?
+            <Suspense fallback={<div>loading team member distribution ...</div>}>
+              <TeamChampionDistribution
+                key={'team-distribution-' + selectedComb.id}
+                data={selectedComb}
+              />
+            </Suspense> :
+            <div className="h-full flex justify-center items-center">
+              <p className="text-white italic font-semibold tracking-wide text-xl">
+                Select a bar to view a placement distribution
+              </p>
+            </div>
+          }
+        </div>
       </div>
     )
   }

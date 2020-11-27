@@ -37,7 +37,7 @@ class LeagueSelector extends React.Component {
       selected === league.key).image
 
     return (
-      <div className="flex flex-no-wrap p-5">
+      <div className="flex flex-no-wrap items-center">
         <div className="w-12 h-12 mr-4">
           <img
             src={imageCache['ranked-emblems'][imageName]}
@@ -45,15 +45,12 @@ class LeagueSelector extends React.Component {
             className="w-12"
           />
         </div>
-        <div className="flex flex-no-wrap items-center">
-          <p className="mr-3 text-lg sm:hidden">Frequently played Champions in</p>
-          <Dropdown
-            options={dropdownOptions}
-            preselect={selected}
-            onSelected={this.setSelected}
-            size="sm"
-          />
-        </div>
+        <Dropdown
+          options={dropdownOptions}
+          preselect={selected}
+          onSelected={this.setSelected}
+          size="sm"
+        />
       </div>
     )
   }

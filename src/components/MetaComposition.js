@@ -52,7 +52,6 @@ class MetaComposition extends React.Component {
 
       topItems = topItems.concat(topThreeItems)
     }
-    console.log('team traits: ', traits)
 
     topItems = topItems.sort((a, b) => a.count > b.count ? -1 : 1)
 

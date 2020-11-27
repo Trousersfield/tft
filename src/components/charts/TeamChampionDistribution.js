@@ -4,7 +4,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { scaleToPercent, makeRanking } from '../../util/formatter'
 import { placementColors } from '../../util/styles'
 import InfoTag from '../InfoTag'
-import Comb from '../Composition'
+import TraitsTag from '../TraitsTag'
 
 Chart.plugins.unregister(ChartDataLabels)
 
@@ -69,7 +69,7 @@ class CompositionDistribution extends React.Component {
               title: {
                 font: { weight: 'bold' },
                 formatter: (value, context) => {
-                  return `${makeRanking(context.datasetIndex + 1)} place`
+                  return `${makeRanking(context.datasetIndex + 1)}`
                 },
                 align: 'top'
               },
@@ -90,20 +90,18 @@ class CompositionDistribution extends React.Component {
   }
 
   render () {
-    const comb = this.state.data
+    const team = this.state.data
+    const traitIds = team.name.trim().replace(/Set4_/g, '').split(' ')
 
     return (
-      <div className="flex flex-col">
-        <div className="flex justify-between p-5">
-          <Comb name={comb.name} />
-          <div className="flex flex-no-wrap items-center">
-            <p className="text-lg">
-              End Game Placement Distribution
-            </p>
-          </div>
+      <div className="relative">
+        <div className="w-full flex justify-between p-5">
+          <TraitsTag
+            ids={traitIds}
+          />
           <InfoTag
             title={'Records'}
-            value={comb.totalAmount}
+            value={team.totalAmount}
           />
         </div>
         <div className="relative h-1/2 w-full px-4">

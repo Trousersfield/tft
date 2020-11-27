@@ -35,9 +35,6 @@ const importAll = (directory, type, r) => {
     const fileName = path.basename(file, `.${type}`)
     // set images' src: webpack module.default required
     cache[directory][fileName] = r(file).default
-    if (type === 'svg') {
-      console.log('svg file: ', file)
-    }
   }
 }
 
