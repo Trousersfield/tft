@@ -31,20 +31,8 @@ class MetaComposition extends React.Component {
 
   componentDidMount () {
     let topItems = []
-    let traits = {}
 
     for (const champion of this.props.champions) {
-      const championTraits = setData.champions[champion.championId].traits
-      if (championTraits) {
-        for (const trait in championTraits) {
-          if (traits[trait]) {
-            traits[trait] += 1
-          } else {
-            traits[trait] = 1
-          }
-        }
-      }
-
       const topThreeItems = champion.itemCounts
         .sort((a, b) => a.count > b.count ? -1 : 1)
         .slice(0, 3)
@@ -78,34 +66,39 @@ class MetaComposition extends React.Component {
             {teamName.trim()}
           </p>
         </div>
-        <div className="flex flex-no-wrap mt-4">
-          {champions.map(champion => (
-            <div className="w-16 ml-2" key={id + champion.championId}>
-              <div className="border border-black">
-                <img
-                  src={imageCache.champions[champion.championId]}
-                  alt=""
-                  onMouseEnter={() => this.setChampionId(champion.championId)}
-                  onMouseLeave={() => this.setChampionId(null)}
-                />
-
-                {showChampionId === champion.championId &&
-                <ChampionPopup
-                  id={champion.championId}
-                  items={topItems.filter(i => i.championId === champion.championId)}
-                />}
-              </div>
-              <div className="flex flex-no-wrap justify-center mt-1">
-                {slicedTopItems.filter(item => item.championId === champion.championId).map(item => (
-                  <Item
-                    key={id + champion.championId + item.itemId}
-                    id={item.itemId}
-                    size="w-1/3"
+        <div className="flex mt-4">
+          <div className="flex-1 flex flex-no-wrap">
+            {champions.map(champion => (
+              <div className="w-16 ml-2" key={id + champion.championId}>
+                <div className="border border-black">
+                  <img
+                    src={imageCache.champions[champion.championId]}
+                    alt=""
+                    onMouseEnter={() => this.setChampionId(champion.championId)}
+                    onMouseLeave={() => this.setChampionId(null)}
                   />
-                ))}
+
+                  {showChampionId === champion.championId &&
+                  <ChampionPopup
+                    id={champion.championId}
+                    items={topItems.filter(i => i.championId === champion.championId)}
+                  />}
+                </div>
+                <div className="flex flex-no-wrap justify-center mt-1">
+                  {slicedTopItems.filter(item => item.championId === champion.championId).map(item => (
+                    <Item
+                      key={id + champion.championId + item.itemId}
+                      id={item.itemId}
+                      size="w-1/3"
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div className="w-48 text-white">
+            right content
+          </div>
         </div>
       </div>
     )

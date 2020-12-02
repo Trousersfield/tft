@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { cache as imageCache, importImages } from '../util/imageImporter'
 
 // components
-const CompositionChart = React.lazy(() => import('../components/charts/Composition'))
+const TeamsChart = React.lazy(() => import('../components/charts/TeamsChart'))
 
 class Compositions extends React.Component {
   constructor(props) {
@@ -16,13 +16,6 @@ class Compositions extends React.Component {
     }
   }
 
-  componentDidMount () {
-    this.setState({ loading: true })
-    /* const { data } = await axios.get(
-      "http://localhost:3000/comboStats/diamond") */
-    this.setState({ loading: false })
-  }
-
   render () {
     return (
       <div className="lg:w-full xl:w-3/5 mx-auto pt-8 mb-10">
@@ -30,7 +23,7 @@ class Compositions extends React.Component {
           Absolute number of games where the following teams are played
         </p>
         <Suspense fallback={<div>Loading Comb...</div>}>
-          <CompositionChart />
+          <TeamsChart />
         </Suspense>
       </div>
     )

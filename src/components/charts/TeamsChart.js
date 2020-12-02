@@ -7,20 +7,19 @@ import http from '../../util/http'
 
 // components
 const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
-const TeamChampionDistribution = React.lazy(() => import('./TeamChampionDistribution'))
+const TeamDistributionChart = React.lazy(() => import('./TeamDistributionChart'))
 
 Chart.plugins.unregister(ChartDataLabels)
 
-class Composition extends React.Component {
+class TeamsChart extends React.Component {
   constructor (props) {
     super (props)
     this.chartRef = React.createRef()
     this.state = {
-      selectedLeague: 'diamond', // find good default
-      data: {},
-      combChart: null,
-      bestX: 10,
-      selectedComb: null
+      selectedLeague: 'diamond',
+      teamsByLeague: {},
+      teamsChartRef: null,
+      selectedTeam: null
     }
 
     if (!imageCache['ranked-emblems']) {
@@ -33,19 +32,50 @@ class Composition extends React.Component {
   }
 
   async loadData () {
-    // use cache of already loaded league in data[selectedLeague]? Only if there is new data
     const selectedLeague = this.state.selectedLeague
-    const { data } = await http.get(`comboStats/${selectedLeague}`)
 
-    this.setState(state => {
-      // set data itself
-      const stateDataObj = Object.assign({}, state.data)
-      stateDataObj[selectedLeague] = data
-
-      return { data: stateDataObj }
-    }, () => {
+    if (this.state.teamsByLeague[selectedLeague]) {
       this.makeGraph()
-    })
+    } else {
+      let { data } = await http.get(`comboStats/${selectedLeague}`)
+
+      if (data) {
+        this.setState(state => {
+
+          data = data.sort((a, b) => {
+            return a.totalAmount < b.totalAmount ? 1 : -1
+          }).slice(0, 10)
+
+          // construct graph data
+          const [ win, loss, nameLabels ] = data.reduce((result, curr, index) => {
+            // gained LP
+            result[0].push(curr.placement1Amount + curr.placement2Amount +
+              curr.placement3Amount + curr.placement4Amount)
+
+            // lost LP
+            result[1].push(curr.totalAmount - result[0][result[0].length - 1])
+
+            // team name
+            result[2].push(curr.name)
+            return result
+          }, [[], [], []])
+
+          // percent labels within bars
+          const percentLabels = data.reduce((result, curr, currIndex) => {
+             result[0].push(makePercent(loss[currIndex] / curr.totalAmount))
+             result[1].push(makePercent(win[currIndex] / curr.totalAmount))
+             return result
+          }, [[], []])
+
+          const newTeamsObj = Object.assign({}, state.teamsByLeague)
+          newTeamsObj[state.selectedLeague] = { win, loss, percentLabels, nameLabels, teams: data }
+
+          return { teamsByLeague: newTeamsObj }
+        }, () => {
+          this.makeGraph()
+        })
+      }
+    }
   }
 
   setSelectedLeague = (value) => {
@@ -53,35 +83,24 @@ class Composition extends React.Component {
   }
 
   makeGraph () {
-    if (this.state.combChart) {
-      this.state.combChart.destroy()
+    const { teamsChartRef, teamsByLeague } = this.state
+
+    if (teamsChartRef) {
+      teamsChartRef.destroy()
     }
-    const data = this.state.data[this.state.selectedLeague].sort((a, b) => {
-      return a.totalAmount < b.totalAmount ? 1 : -1
-    })
-    const bestX = this.state.bestX
-    const slicedData = bestX < data.length ? data.slice(0, bestX) : data
 
-    // construct gained-LP, lost-LP and sum datasets
-    const [ win, loss ] = slicedData.reduce((result, curr) => {
-      result[0].push(curr.placement1Amount + curr.placement2Amount +
-        curr.placement3Amount + curr.placement4Amount)
-      result[1].push(curr.totalAmount - result[0][result[0].length - 1])
-      return result
-    }, [[], []])
-
-    // prepare percentage labels
-    const percentLabels = slicedData.reduce((result, curr, currIndex) => {
-        result[0].push(makePercent(loss[currIndex] / curr.totalAmount))
-        result[1].push(makePercent(win[currIndex] / curr.totalAmount))
-        return result
-      }, [[], []])
+    const {
+      win,
+      loss,
+      percentLabels,
+      nameLabels
+    } = teamsByLeague[this.state.selectedLeague]
 
     const combChart = new Chart(this.chartRef.current, {
       type: 'bar',
       plugins: [ChartDataLabels],
       data: {
-        labels: slicedData.map(comb => comb.name),
+        labels: nameLabels,
         datasets: [{
           label: 'Loose LP: Placement 5 - 8',
           data: loss,
@@ -129,7 +148,9 @@ class Composition extends React.Component {
           }]
         },
         onClick: (event, activeElements) => {
-          if (!activeElements.length) return
+          if (!activeElements.length) {
+            return
+          }
           this.handleBarClick(activeElements[0]._index)
         },
         hover: {
@@ -153,12 +174,12 @@ class Composition extends React.Component {
   }
 
   handleBarClick (dataIndex) {
-    const selectedComb = this.state.data[this.state.selectedLeague][dataIndex]
-    this.setState({ selectedComb })
+    const selectedTeam = this.state.teamsByLeague[this.state.selectedLeague].teams[dataIndex]
+    this.setState({ selectedTeam })
   }
 
   render () {
-    const { selectedLeague, selectedComb } = this.state
+    const { selectedLeague, selectedTeam } = this.state
 
     return (
       <div className="relative flex flex-col">
@@ -174,11 +195,11 @@ class Composition extends React.Component {
           <canvas ref={this.chartRef} />
         </div>
         <div className="h-64">
-          {selectedComb ?
-            <Suspense fallback={<div>loading team member distribution ...</div>}>
-              <TeamChampionDistribution
-                key={'team-distribution-' + selectedComb.id}
-                data={selectedComb}
+          {selectedTeam ?
+            <Suspense fallback={<div>Loading placement distribution ...</div>}>
+              <TeamDistributionChart
+                key={'team-distribution-' + selectedTeam.id}
+                data={selectedTeam}
               />
             </Suspense> :
             <div className="h-full flex justify-center items-center">
@@ -193,4 +214,4 @@ class Composition extends React.Component {
   }
 }
 
-export default Composition
+export default TeamsChart

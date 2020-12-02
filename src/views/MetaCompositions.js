@@ -10,7 +10,7 @@ class MetaCompositions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      allCompositions: [],
+      metaTeams: [],
       numberOfTopItems: 6
     }
 
@@ -38,33 +38,34 @@ class MetaCompositions extends React.Component {
     const { data } = await http.get('topCombs', false)
 
     if (data) {
-      this.setState({ allCompositions: data })
+      const metaTeams = data.reduce((acc, curr) => {
+        // TODO: think about removing .slice()
+        // find most played champions
+        let champions = JSON.parse(curr.TopCombChamps).sort((a, b) => a.count < b.count ? 1 : -1).slice(0, 8)
+
+        // sort champions by cost
+        champions = champions.sort((a, b) => setData.champions[a.championId].cost < setData.champions[b.championId].cost ? -1 : 1)
+
+        acc.push({
+          id: curr.id,
+          name: curr.Name,
+          champions: champions
+        })
+        return acc
+      }, [])
+
+      this.setState({ metaTeams })
     }
   }
 
   render () {
     const menuItemClassNames = 'flex items-center justify-center text-gray-100'
-    const { numberOfTopItems, allCompositions } = this.state
-    const metaCompositions = allCompositions.reduce((acc, curr) => {
-      // TODO: think about removing .slice()
-      // find most played champions
-      let champions = JSON.parse(curr.TopCombChamps).sort((a, b) => a.count < b.count ? 1 : -1).slice(0, 8)
-
-      // sort champions by cost
-      champions = champions.sort((a, b) => setData.champions[a.championId].cost < setData.champions[b.championId].cost ? -1 : 1)
-
-      acc.push({
-        id: curr.id,
-        name: curr.Name,
-        champions: champions
-      })
-      return acc
-    }, [])
+    const { numberOfTopItems, metaTeams } = this.state
 
     return (
       <div className="w-md mx-auto mb-64">
         <div className="">
-          {metaCompositions.map(comb => (
+          {metaTeams.map(comb => (
             <Suspense key={comb.id}>
               <MetaComposition
                 id={comb.id}
