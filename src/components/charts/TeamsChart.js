@@ -18,7 +18,7 @@ class TeamsChart extends React.Component {
     this.state = {
       selectedLeague: 'diamond',
       teamsByLeague: {},
-      teamsChartRef: null,
+      graph: null,
       selectedTeam: null
     }
 
@@ -83,10 +83,10 @@ class TeamsChart extends React.Component {
   }
 
   makeGraph () {
-    const { teamsChartRef, teamsByLeague } = this.state
+    const teamsByLeague = this.state.teamsByLeague
 
-    if (teamsChartRef) {
-      teamsChartRef.destroy()
+    if (this.state.graph) {
+      this.state.graph.destroy()
     }
 
     const {
@@ -96,7 +96,7 @@ class TeamsChart extends React.Component {
       nameLabels
     } = teamsByLeague[this.state.selectedLeague]
 
-    const combChart = new Chart(this.chartRef.current, {
+    const graph = new Chart(this.chartRef.current, {
       type: 'bar',
       plugins: [ChartDataLabels],
       data: {
@@ -170,7 +170,7 @@ class TeamsChart extends React.Component {
         }
       }
     })
-    this.setState({ combChart })
+    this.setState({ graph })
   }
 
   handleBarClick (dataIndex) {

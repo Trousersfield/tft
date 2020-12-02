@@ -49,7 +49,8 @@ class MetaCompositions extends React.Component {
         acc.push({
           id: curr.id,
           name: curr.Name,
-          champions: champions
+          champions: champions,
+          traits: JSON.parse(curr.TraitCount)
         })
         return acc
       }, [])
@@ -61,16 +62,18 @@ class MetaCompositions extends React.Component {
   render () {
     const menuItemClassNames = 'flex items-center justify-center text-gray-100'
     const { numberOfTopItems, metaTeams } = this.state
+    console.log('traits: ', metaTeams)
 
     return (
       <div className="w-md mx-auto mb-64">
         <div className="">
-          {metaTeams.map(comb => (
-            <Suspense key={comb.id}>
+          {metaTeams.map(team => (
+            <Suspense key={team.id}>
               <MetaComposition
-                id={comb.id}
-                name={comb.name}
-                champions={comb.champions}
+                id={team.id}
+                name={team.name}
+                champions={team.champions}
+                traits={team.traits}
                 numberOfTopItems={numberOfTopItems}
               />
             </Suspense>

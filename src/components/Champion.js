@@ -27,6 +27,7 @@ class Champion extends React.Component {
   }
 
   setChampionId (id) {
+    console.log('set id: ', id)
     this.setState({ showChampionId: id })
   }
 

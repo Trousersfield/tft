@@ -48,7 +48,7 @@ class MetaComposition extends React.Component {
 
   render () {
     const { topItems, showChampionId } = this.state
-    const { id, name, champions, numberOfTopItems } = this.props
+    const { id, name, champions, traits, numberOfTopItems } = this.props
 
     // will be changed in the future
     const teamName = name.trim().split(' ').reduce((acc, curr) => {
@@ -97,7 +97,9 @@ class MetaComposition extends React.Component {
             ))}
           </div>
           <div className="w-48 text-white">
-            right content
+            {traits.map(trait => (
+              <div>{trait.key}</div>
+            ))}
           </div>
         </div>
       </div>
