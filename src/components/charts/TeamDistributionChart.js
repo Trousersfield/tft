@@ -8,7 +8,7 @@ import TraitsTag from '../TraitsTag'
 
 Chart.plugins.unregister(ChartDataLabels)
 
-class CompositionDistribution extends React.Component {
+class TeamDistributionChart extends React.Component {
   constructor (props) {
     super (props)
     this.chartRef = React.createRef()
@@ -112,4 +112,4 @@ class CompositionDistribution extends React.Component {
   }
 }
 
-export default CompositionDistribution
+export default TeamDistributionChart

@@ -12,7 +12,7 @@ const LeagueSelector = React.lazy(() => import('../LeagueSelector'))
 
 let debounce = null
 
-class Item extends React.Component {
+class ItemChart extends React.Component {
   constructor (props) {
     super (props)
     this.chartRef = React.createRef()
@@ -284,4 +284,4 @@ const ItemTooltip = (props) => {
   )
 }
 
-export default Item
+export default ItemChart

@@ -25,7 +25,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="h-screen relative overflow-hidden">
-          <nav className="absolute z-10 flex h-16 bg-gray-800 text-gray-100 text-xl antialiased w-full">
+          <nav className="absolute z-20 flex h-16 bg-gray-800 text-gray-100 text-xl antialiased w-full">
             <div className="w-64 flex items-center">
               <NavLink
                 to={'/'}
@@ -51,7 +51,7 @@ class App extends React.Component {
             </div>
           </nav>
 
-          <div className="relative h-full pt-16 overflow-auto bg-gray-900">
+          <div className="relative h-full mt-16 pb-16 overflow-auto bg-gray-900">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 {routes.map((route) =>
