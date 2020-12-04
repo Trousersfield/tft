@@ -50,7 +50,10 @@ class MetaCompositions extends React.Component {
           id: curr.id,
           name: curr.Name,
           champions: champions,
-          traits: JSON.parse(curr.TraitCount)
+          traits: JSON.parse(curr.TraitCount).map(t => ({
+            id: t.key.replace('Set4_', ''),
+            count: t.value
+          }))
         })
         return acc
       }, [])

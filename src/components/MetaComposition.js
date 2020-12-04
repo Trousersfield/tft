@@ -23,6 +23,9 @@ class MetaComposition extends React.Component {
     if (!imageCache.items) {
       importImages('items')
     }
+    if (!imageCache.traits) {
+      importImages('traits')
+    }
   }
 
   setChampionId(id) {
@@ -66,11 +69,13 @@ class MetaComposition extends React.Component {
             {teamName.trim()}
           </p>
         </div>
-        <div className="flex mt-4">
-          <div className="flex-1 flex flex-no-wrap">
+        <div className="flex">
+          <div className="flex-1 flex flex-no-wrap mt-4">
             {champions.map(champion => (
               <div className="w-16 ml-2" key={id + champion.championId}>
-                <div className="border border-black">
+                <div
+                  className="border-2 border-gray-300"
+                >
                   <img
                     src={imageCache.champions[champion.championId]}
                     alt=""
@@ -96,9 +101,21 @@ class MetaComposition extends React.Component {
               </div>
             ))}
           </div>
-          <div className="w-48 text-white">
+          <div className="w-48 mt-1 text-white flex flex-wrap justify-center">
             {traits.map(trait => (
-              <div>{trait.key}</div>
+              trait.count > 1 &&
+              <div
+                key={id + trait.id}
+                className="relative w-10 h-10 flex items-center justify-center cursor-default text-white m-1 border-2 border-gray-300 rounded-full"
+                title={setData.traits[trait.id].name}
+              >
+                <div className="w-6 h-6 flex justify-center items-center">
+                  <img src={imageCache.traits[trait.id.toLowerCase()]} alt=""/>
+                </div>
+                <p className="absolute right-0 bottom-0 font-semibold text-lg transform translate-y-2 rounded-full bg-gray-900">
+                  {trait.count}
+                </p>
+              </div>
             ))}
           </div>
         </div>
