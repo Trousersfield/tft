@@ -40,7 +40,9 @@ class ChampionCostHeader extends React.Component {
   }
 
   sizeHeader = async () => {
-    if (unmounting) return
+    if (unmounting) {
+      return
+    }
     const width = document.getElementById('champ-header-lines')
     .getBoundingClientRect().width
 
@@ -49,8 +51,7 @@ class ChampionCostHeader extends React.Component {
 
   render () {
     const { width, cost } = this.state
-    // const imageName = getImageName(`tier${cost}`)
-    const strokeColor = costColor(cost)
+    const strokeColor = costColor(cost, 'rgb')
 
     // svg sizing
     const center = width/2

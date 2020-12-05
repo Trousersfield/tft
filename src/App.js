@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import routes from './routes'
 import { importSetData } from './util/setDataImporter'
+import { loadTailwindConfig } from './util/styles'
 
 // components
 const PatchSelector = React.lazy(() => import('./components/PatchSelector'))
@@ -19,6 +20,9 @@ class App extends React.Component {
 
     // import static set data
     importSetData()
+
+    // initialize styles
+    loadTailwindConfig()
   }
 
   render () {

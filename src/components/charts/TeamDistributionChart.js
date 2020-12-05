@@ -21,7 +21,7 @@ class TeamDistributionChart extends React.Component {
   async componentDidMount () {
     const data = this.state.data
     let placement = 0
-    const colors = await placementColors()
+    const colors = placementColors()
 
     const [ datasets, rawData ] = Object.keys(data)
       .reduce((result, key) => {

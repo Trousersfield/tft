@@ -1,11 +1,5 @@
-// do not access directly, use getTailwindCache()
 let tailwindCache = null
 let loading = false
-
-const getTailwindConfig = async () => {
-  if (!tailwindCache) await loadTailwindConfig()
-  return tailwindCache
-}
 
 const loadTailwindConfig = async () => {
   if (loading) return
@@ -26,9 +20,11 @@ const dropdownStyle = {
   option: 'flex flex-no-wrap cursor-pointer hover:bg-indigo-400'
 }
 
-const placementColors = async () => {
-  const cache = await getTailwindConfig()
-  const colors = cache.theme.colors
+const placementColors = () => {
+  if (!tailwindCache) {
+    return
+  }
+  const colors = tailwindCache.theme.colors
   return [colors.green[600],
     colors.green[500],
     colors.green[400],
@@ -39,15 +35,49 @@ const placementColors = async () => {
     colors.red[600]]
 }
 
-const costColor = (cost) => {
-  const costColors = { 1: 'gray', 2: 'green', 3: 'blue', 4: 'purple',
-    5: 'orange', 7: 'red' }
-  return costColors[cost]
+const costColor = (cost, format = 'class') => {
+  if (!tailwindCache) {
+    return
+  }
+  const colors = tailwindCache.theme.colors
+  const costColors = {
+    1: {
+      class: 'gray-500',
+      rgb: colors.gray[500]
+    },
+    2: {
+      class: 'green-500',
+      rgb: colors.green[500]
+    },
+    3: {
+      class: 'blue-500',
+      rgb: colors.blue[500]
+    },
+    4: {
+      class: 'purple-500',
+      rgb: colors.purple[500]
+    },
+    5: {
+      class: 'yellow-500',
+      rgb: colors.yellow[500]
+    },
+    7: {
+      class: 'red-500',
+      rgb: colors.red[500]
+    }
+  }
+
+  if (format === 'rgb') {
+    return costColors[cost].rgb
+  }
+  return costColors[cost].class
 }
 
 const getColorCode = async (color, intensity = 500) => {
-  const cache = await getTailwindConfig()
-  const colors = cache.theme.colors
+  if (!tailwindCache) {
+    return
+  }
+  const colors = tailwindCache.theme.colors
   if (!color || !colors[color]) return color
   return colors[color][intensity]
 }
@@ -56,5 +86,6 @@ export {
   dropdownStyle,
   placementColors,
   costColor,
-  getColorCode
+  getColorCode,
+  loadTailwindConfig
 }
