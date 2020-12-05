@@ -44,7 +44,7 @@ class PatchNotes extends React.Component {
 
     return (
       <div className="flex relative h-full">
-        <div className="h-full bg-gray-200">
+        <div className="h-full">
           {false && selectedPatch &&
             <NavLink
               to={`/patch-notes/classify/${selectedPatch.number}`}
@@ -54,11 +54,11 @@ class PatchNotes extends React.Component {
               Classify {selectedPatch.number}
             </NavLink>
           }
-          <ul className="w-20 mt-10 mx-3 border-r-2 border-gray-500 text-xl">
+          <ul className="w-20 mt-10 mx-3 text-xl">
             {patchNumbers.map(number =>
               <li key={`patch-list-item-${number}`}
-                className={'cursor-pointer ' +
-                  (number === selectedPatch.number ? 'font-bold text-indigo-800' : '')}
+                className={'cursor-pointer text-gray-200 border-r-2 border-gray-200 ' +
+                  (number === selectedPatch.number ? 'font-bold text-green-500 border-green-500' : '')}
                 onClick={() => this.selectPatch(number)}
               >
                 {number}
@@ -68,7 +68,7 @@ class PatchNotes extends React.Component {
         </div>
         <div
           id="patch-notes-content"
-          className="flex-1 overflow-auto px-2 leading-relaxed bg-white"
+          className="flex-1 overflow-auto px-2 pt-2 leading-relaxed tracking-wide"
         >
           {selectedPatch &&
             <div className="flex flex-col">
@@ -78,30 +78,27 @@ class PatchNotes extends React.Component {
                   key={`category-${catIndex}`}
                 >
                   <div className="flex flex-no-wrap items-center">
-                    <div className="w-1/4 align-middle
-                      border-t-2 border-indigo-200" />
+                    <div className="w-1/4 h-1.5 bg-red-600 rounded-full" />
                     {cat.title ?
-                      <p className="mx-3 text-indigo-800 text-2xl tracking-wide">
+                      <p className="mx-3 text-gray-200 font-semibold tracking-wider text-2xl">
                         {cat.title}
                       </p> :
                       null
                     }
-                    <div className="flex-1 align-middle
-                      border-t-2 border-indigo-200" />
+                    <div className="flex-1 h-1.5 bg-red-600 rounded-full" />
                     </div>
                   {cat.sections.map((sec, secIndex) =>
                     <div
                       key={'cat-' + catIndex + '-sec-' + secIndex}
-                      className="mx-2 lg:mx-auto my-4 p-2 bg-indigo-100 shadow-xl
-                        max-w-6xl"
+                      className="mx-2 lg:mx-auto my-4 p-2 bg-gray-700 rounded max-w-6xl"
                     >
                       {sec.title ?
-                        <p className="text-lg text-indigo-800 tracking-wide mb-2">
+                        <p className="ml-8 text-lg text-gray-200 font-semibold mb-2">
                           {sec.title}
                         </p> :
                         null
                       }
-                      <ul className="list-disc ml-5">
+                      <ul className="list-disc ml-8 text-gray-100">
                         {sec.notes.map((note, noteIndex) =>
                           <li key={'cat-' + catIndex + '-sec-' +
                             secIndex + '-note-' + noteIndex}>
@@ -116,12 +113,12 @@ class PatchNotes extends React.Component {
             </div>
           }
         </div>
-        <div className="h-full bg-gray-200 xs:hidden sm:hidden md:block">
+        <div className="h-full xs:hidden sm:hidden md:block">
           {selectedPatch &&
-          <ul className="mt-10 mx-3 pl-4 border-l-2 border-gray-500 text-xl">
+          <ul className="mt-10 mx-3 pl-4 border-l-2 border-gray-200 text-gray-100 text-xl">
             {selectedPatch.categories.map(cat =>
               <li key={`category-list-item-${cat.title}`}
-                className={'cursor-pointer'}
+                className={'cursor-pointer hover:text-green-500'}
                 onClick={() => this.scrollToElement('category-' + cat.title)}
               >
                 {cat.title}

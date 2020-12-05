@@ -65,7 +65,6 @@ class MetaCompositions extends React.Component {
   render () {
     const menuItemClassNames = 'flex items-center justify-center text-gray-100'
     const { numberOfTopItems, metaTeams } = this.state
-    console.log('traits: ', metaTeams)
 
     return (
       <div className="w-md mx-auto mb-64">
