@@ -9,16 +9,16 @@ Based on latest patch notes, an arrow indicates if a champion received a buff or
 
 ## Champion play-rate and details
 Overview of each champion with its play-rate by stars-level and trait information.  
-![ChampStats](/ChampStats.PNG)
+![ChampStats](/public/preview/ChampStats.PNG)
 
 ## Team composition
 Play- and win-rate for popular team compositions. Detailed placement at the end of a game for selected team composition.  
-![CombStats](/CombStats.PNG)
+![CombStats](/public/preview/CombStats.PNG)
 
 ## Item popularity
 Overview of items and how often each item is built.  
-![ItemStats](/ItemStats.PNG)
+![ItemStats](/public/preview/ItemStats.PNG)
 
 ## Patch Notes
 Latest patch information.  
-![PatchNotes](/PatchNotes.PNG)
+![PatchNotes](/public/preview/PatchNotes.PNG)
