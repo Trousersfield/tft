@@ -4,7 +4,7 @@ Playing guides and visualisation of [Teamfight Tactics](https://teamfighttactics
 
 # Features
 ## Buff or nerf indicator
-Based on latest Patch notes, an arrow indicates if a champion received a buff or nerf since the last game update. A blue dot indicates adaptions, where it is uncertain if the change affects in a positive or negative way.
+Based on latest Patch notes, an arrow indicates if a champion received a buff or nerf since the last game update. A blue dot indicates adaptions, where it is uncertain if the change affects in a positive or negative way.  
 <img style="float: left;" src="/BuffNerfIndicator.PNG" />
 
 ## Champion play-rate and defails
