@@ -4,19 +4,21 @@ Playing guides and visualisation of [Teamfight Tactics](https://teamfighttactics
 
 ### Features
 #### Buff or nerf indicator
-![BuffNerfIndicator](/BuffNerfIndicator.PNG)
+Based on latest Patch notes, an arrow indicate if a champion received a buff or nerf since the last game update
+![BuffNerfIndicator](/preview/BuffNerfIndicator.PNG)
 
-#### Play-rate and defails each champion
-![ChampStats](/ChampStats.PNG)
+#### Champion play-rate and defails
+Overview of each champion with its play-rate by stars-level and trait information
+![ChampStats](/preview/ChampStats.PNG)
 
 #### Team composition
 Play- and win-rate for popular team compositions. Detailled placement at the end of a game for selected team composition
-![CombStats](/CombStats.PNG)
+![CombStats](/preview/CombStats.PNG)
 
 #### Item popularity
 Overview of items and how often each item is build
-![ItemStats](/ItemStats.PNG)
+![ItemStats](/preview/ItemStats.PNG)
 
 #### Patch Notes
 Latest patch information
-![PatchNotes](/PatchNotes.PNG)
+![PatchNotes](/preview/PatchNotes.PNG)
