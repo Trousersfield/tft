@@ -5,7 +5,7 @@ Playing guides and visualisation of [Teamfight Tactics](https://teamfighttactics
 # Features
 ## Buff or nerf indicator
 Based on latest Patch notes, an arrow indicate if a champion received a buff or nerf since the last game update
-![BuffNerfIndicator](/BuffNerfIndicator.PNG)
+<img style="float: left;" src="/BuffNerfIndicator.PNG" />
 
 ## Champion play-rate and defails
 Overview of each champion with its play-rate by stars-level and trait information
