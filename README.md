@@ -8,17 +8,17 @@ Based on latest Patch notes, an arrow indicates if a champion received a buff or
 <img style="float: left;" src="/BuffNerfIndicator.PNG" />
 
 ## Champion play-rate and defails
-Overview of each champion with its play-rate by stars-level and trait information.
+Overview of each champion with its play-rate by stars-level and trait information.  
 ![ChampStats](/ChampStats.PNG)
 
 ## Team composition
-Play- and win-rate for popular team compositions. Detailled placement at the end of a game for selected team composition.
+Play- and win-rate for popular team compositions. Detailled placement at the end of a game for selected team composition.  
 ![CombStats](/CombStats.PNG)
 
 ## Item popularity
-Overview of items and how often each item is build.
+Overview of items and how often each item is build.  
 ![ItemStats](/ItemStats.PNG)
 
 ## Patch Notes
-Latest patch information.
+Latest patch information.  
 ![PatchNotes](/PatchNotes.PNG)
